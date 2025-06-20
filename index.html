@@ -1,64 +1,319 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tony Ciobanu - Personal Webpage</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Simion Ciobanu - Data Analyst Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* A light gray background */
+        }
+        .text-glow {
+            text-shadow: 0 0 8px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #3B82F6;
+            border: 3px solid #DBEAFE;
+        }
+        /* Custom scrollbar for a more modern look (optional) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Tony Ciobanu</h1>
-            <nav>
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+<body class="text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-gray-900">
+                Simion (Toni) Ciobanu
+            </a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-300">About</a>
+                <a href="#experience" class="text-gray-600 hover:text-blue-600 transition duration-300">Experience</a>
+                <a href="#projects" class="text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
+                <a href="#skills" class="text-gray-600 hover:text-blue-600 transition duration-300">Skills</a>
+                <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden">
+                <i data-feather="menu" class="h-6 w-6 text-gray-800"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#about" class="block py-2 text-gray-600 hover:text-blue-600">About</a>
+            <a href="#experience" class="block py-2 text-gray-600 hover:text-blue-600">Experience</a>
+            <a href="#projects" class="block py-2 text-gray-600 hover:text-blue-600">Projects</a>
+            <a href="#skills" class="block py-2 text-gray-600 hover:text-blue-600">Skills</a>
+            <a href="#contact" class="block mt-2 bg-blue-600 text-white px-4 py-2 rounded-md text-center hover:bg-blue-700">Contact</a>
         </div>
     </header>
-    <main>
-        <section id="about">
-            <div class="container">
-                <h2>About Me</h2>
-                <p>Hi, I'm Tony Ciobanu, a Sales Manager at Red Wireless with a passion for telecommunications and a strong background in mathematics and psychology. I have a Bachelor's degree in Mathematics from the University of Waterloo.</p>
-                <p>Originally from Ontario, I have been exploring the idea of moving to Saskatchewan. I have a small dog named Nova who needs outdoor access, such as a backyard.</p>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+
+        <!-- Hero Section -->
+        <section id="home" class="flex flex-col md:flex-row items-center justify-between min-h-[calc(100vh-80px)] md:min-h-0 md:py-20">
+            <div class="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-4">
+                    Simion (Toni) Ciobanu
+                </h1>
+                <h2 class="text-2xl md:text-3xl font-medium text-blue-600 mb-6 text-glow">
+                    Data Analyst
+                </h2>
+                <p class="text-lg text-gray-600 mb-8 max-w-xl mx-auto md:mx-0">
+                    A University of Waterloo Mathematics student passionate about transforming raw data into meaningful stories and actionable insights. Eager to apply my analytical skills to solve real-world problems.
+                </p>
+                <a href="#projects" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg hover:shadow-xl">
+                    View My Work
+                </a>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://placehold.co/400x400/E2E8F0/4A5568?text=SC" alt="Simion Ciobanu Professional Headshot" class="rounded-full shadow-2xl w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-white">
             </div>
         </section>
-        <section id="experience">
-            <div class="container">
-                <h2>Experience</h2>
-                <h3>Sales Manager - Red Wireless</h3>
-                <p>Currently, I am a Sales Manager at Red Wireless, where I lead a team of sales representatives and work to achieve company sales goals. Prior to this role, I was a Sales Representative at the same company.</p>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-20 bg-white rounded-xl shadow-md my-20">
+            <div class="max-w-4xl mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">About Me</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-10"></div>
+                <div class="text-center text-gray-600 space-y-4 leading-relaxed">
+                    <p>
+                        Hello! I'm Simion, a Bachelor of Mathematics Graduate from the University of Waterloo. My academic journey in mathematics and computer science has equipped me with a strong foundation in statistics, data structures, and algorithmic problem-solving. This, combined with my coursework in Computational Statistics and Data Analysis using R, has fueled my passion for uncovering the narratives hidden within data.
+                    </p>
+                    <p>
+                        My professional experience has allowed me to apply these analytical skills in real-world settings. As a Sales Manager, I leveraged data to drive strategy, boosting team KPIs by an average of 73%. As an Instructional Support Assistant, I managed student performance data for over 700 students and automated reporting tasks with Python, significantly improving efficiency.
+                    </p>
+                    <p>
+                        I am actively seeking a data analyst role where I can contribute my unique blend of technical ability and business acumen to a data-driven team and help turn complex data into clear, actionable insights.
+                    </p>
+                </div>
             </div>
         </section>
-        <section id="skills">
-            <div class="container">
-                <h2>Skills</h2>
-                <ul>
-                    <li>Sales Management</li>
-                    <li>Telecommunications</li>
-                    <li>Mathematics</li>
-                    <li>Psychology</li>
-                    <li>Languages: English, Romanian (Native/Bilingual), French (Limited Working Proficiency)</li>
-                </ul>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-20">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Professional Experience</h2>
+            <div class="w-24 h-1 bg-blue-600 mx-auto mb-12"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="relative border-l-2 border-gray-200 pl-8 space-y-12">
+                     <!-- Experience Item 0 (New) -->
+                    <div class="relative timeline-item">
+                        <h3 class="text-xl font-bold text-gray-900">Sales Representative</h3>
+                        <p class="font-semibold text-gray-600">Telus | Cambridge, ON | Mar 2025 – Present</p>
+                        <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                            <li>Self-evaluate performance by analyzing personal sales metrics to adapt my sales pitch and consistently hit targets.</li>
+                            <li>Averaging 180% Sales Value per Hour through data-informed sales strategies.</li>
+                        </ul>
+                    </div>
+                    <!-- Experience Item 1 -->
+                    <div class="relative timeline-item">
+                        <h3 class="text-xl font-bold text-gray-900">Sales Manager</h3>
+                        <p class="font-semibold text-gray-600">Red Wireless (Remote) | Jan 2024 – Jul 2024</p>
+                        <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                            <li>Increased sales points per hour for a 12-person team from 0.13 to 0.51 by implementing targeted training.</li>
+                            <li>Boosted individual KPIs by an average of 73% in 3 months through personalized coaching and performance reviews.</li>
+                        </ul>
+                    </div>
+                     <!-- Experience Item 2 -->
+                    <div class="relative timeline-item">
+                        <h3 class="text-xl font-bold text-gray-900">Sales/Support Representative</h3>
+                        <p class="font-semibold text-gray-600">Red Wireless (Remote) | Sep 2023 – Jan 2024</p>
+                        <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                            <li>Implemented data-driven sales strategies, including customer segmentation, resulting in a 23% departmental sales boost.</li>
+                        </ul>
+                    </div>
+                    <!-- Experience Item 3 -->
+                    <div class="relative timeline-item">
+                        <h3 class="text-xl font-bold text-gray-900">Instructional Support Assistant</h3>
+                        <p class="font-semibold text-gray-600">University of Waterloo | Sep 2022 – Sep 2023</p>
+                        <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                            <li>Managed and maintained databases with performance data for over 700 students.</li>
+                            <li>Automated routine reporting tasks using Python scripts and Excel macros, reducing workload by 15%.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
-        <section id="contact">
-            <div class="container">
-                <h2>Contact</h2>
-                <p>Email: <a href="mailto:tony.ciobanu@example.com">tony.ciobanu@example.com</a></p>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 bg-white rounded-xl shadow-md my-20">
+            <div class="max-w-6xl mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Projects</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-12"></div>
+                <p class="text-center text-gray-600 mb-10">Below are examples of projects I can build. I am eager to apply my skills to real datasets. <br class="hidden sm:block">Please feel free to browse my GitHub for coursework and personal projects.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Project Card 1 -->
+                    <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
+                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Sales+Dashboard" alt="Sales Analysis Project Thumbnail" class="rounded-md mb-4 h-48 w-full object-cover">
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Retail Sales Analysis</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">Analyze a retail dataset to identify sales trends, top-performing products, and customer segments. Develop an interactive dashboard to visualize key performance indicators.</p>
+                        <div class="mb-4">
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Python</span>
+                            <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">SQL</span>
+                            <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Tableau</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
+                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Churn+Prediction" alt="Customer Churn Project Thumbnail" class="rounded-md mb-4 h-48 w-full object-cover">
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Customer Churn Prediction</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">Build a machine learning model to predict customer churn. Utilize feature engineering, statistical analysis, and classification models to identify key churn drivers.</p>
+                         <div class="mb-4">
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">R</span>
+                            <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Scikit-learn</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3 -->
+                    <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
+                        <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=Data+Automation" alt="Data Automation Project Thumbnail" class="rounded-md mb-4 h-48 w-full object-cover">
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Data Pipeline Automation</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">Develop Python scripts to automate data collection, cleaning, and reporting processes, reducing manual effort and ensuring data consistency for analysis.</p>
+                        <div class="mb-4">
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Python</span>
+                            <span class="inline-block bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">SQL</span>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+            <div class="max-w-4xl mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Skills & Competencies</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-12"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 flex items-center"><i data-feather="code" class="mr-2 text-blue-500"></i>Technical Skills</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li><strong class="font-medium">Languages:</strong> Python, R, SQL, C, HTML, LaTeX</li>
+                            <li><strong class="font-medium">Tools:</strong> Excel, Git, Linux, Google Suite</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 flex items-center"><i data-feather="bar-chart-2" class="mr-2 text-blue-500"></i>Data Analysis</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li>Data Analysis & Reporting</li>
+                            <li>Performance Metrics & KPIs</li>
+                            <li>Computational Statistics (R)</li>
+                             <li>Critical Thinking & Problem-Solving</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 flex items-center"><i data-feather="briefcase" class="mr-2 text-blue-500"></i>Business & Management</h4>
+                        <ul class="space-y-2 text-gray-600">
+                             <li>Leadership & Team Management</li>
+                            <li>Sales Strategy & Planning</li>
+                            <li>Customer Relationship Management (CRM)</li>
+                            <li>Coaching & Evaluation</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 flex items-center"><i data-feather="book-open" class="mr-2 text-blue-500"></i>Education</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li><strong class="font-medium">Bachelor of Mathematics</strong>, University of Waterloo</li>
+                            <li><strong class="font-medium">Relevant Courses:</strong> Data Structures, Algorithmic Problem Solving, Financial Accounting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-gray-800 text-white rounded-xl my-20">
+            <div class="max-w-2xl mx-auto text-center px-6">
+                 <h2 class="text-3xl font-bold text-center mb-4">Get In Touch</h2>
+                <div class="w-24 h-1 bg-blue-500 mx-auto mb-10"></div>
+                <p class="text-lg text-gray-300 mb-8">
+                    I'm actively seeking a Data Analyst role and would love to hear from you. Please feel free to reach out via email or connect with me on LinkedIn.
+                </p>
+                <a href="mailto:simion.ciobanu1@gmail.com" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg hover:shadow-xl">
+                    simion.ciobanu1@gmail.com
+                </a>
+                <div class="flex justify-center space-x-6 mt-10">
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition duration-300" aria-label="LinkedIn">
+                        <i data-feather="linkedin" class="h-8 w-8"></i>
+                    </a>
+                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition duration-300" aria-label="GitHub">
+                        <i data-feather="github" class="h-8 w-8"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Tony Ciobanu. All rights reserved.</p>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p>&copy; <span id="current-year"></span> Simion Ciobanu | Kitchener, ON</p>
         </div>
     </footer>
-    <script src="script.js"></script>
+
+    <script>
+        // Feather Icons
+        feather.replace();
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Close mobile menu when a link is clicked
+        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Add shadow to header on scroll
+        const header = document.getElementById('header');
+        window.onscroll = function() {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+        };
+    </script>
 </body>
 </html>
