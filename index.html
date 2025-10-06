@@ -44,6 +44,20 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+        .tab-link {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            color: #6b7280;
+            font-weight: 500;
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .active-tab {
+            color: #3B82F6;
+            border-bottom-color: #3B82F6;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -169,43 +183,87 @@
             <div class="max-w-6xl mx-auto px-6">
                 <h2 class="text-3xl font-bold text-center mb-4 text-gray-900">Projects</h2>
                 <div class="w-24 h-1 bg-blue-600 mx-auto mb-12"></div>
-                <p class="text-center text-gray-600 mb-10">Below are examples of projects I can build. I am eager to apply my skills to real datasets. <br class="hidden sm:block">Please feel free to browse my GitHub for coursework and personal projects.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
-                    <!-- Project Card 1 -->
-                    <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
-                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Sales+Dashboard" alt="Sales Analysis Project Thumbnail" class="rounded-md mb-4 h-48 w-full object-cover">
-                        <h3 class="text-xl font-bold mb-2 text-gray-900">Retail Sales Analysis</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">Analyze a retail dataset to identify sales trends, top-performing products, and customer segments. Develop an interactive dashboard to visualize key performance indicators.</p>
-                        <div class="mb-4">
-                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Python</span>
-                            <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">SQL</span>
-                            <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Tableau</span>
+
+                <!-- Tab Navigation -->
+                <div class="flex justify-center border-b border-gray-200 mb-10">
+                    <button class="tab-link active-tab" onclick="openTab(event, 'personal')">Personal Projects</button>
+                    <button class="tab-link" onclick="openTab(event, 'nda')">NDA Projects</button>
+                </div>
+
+                <!-- Personal Projects Tab Content -->
+                <div id="personal" class="tab-content">
+                    <p class="text-center text-gray-600 mb-10">Below are examples of projects I can build. I am eager to apply my skills to real datasets. <br class="hidden sm:block">Please feel free to browse my GitHub for coursework and personal projects.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Project Card 1 -->
+                        <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
+                            <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Sales+Dashboard" alt="Sales Analysis Project Thumbnail" class="rounded-md mb-4 h-48 w-full object-cover">
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Retail Sales Analysis</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Analyze a retail dataset to identify sales trends, top-performing products, and customer segments. Develop an interactive dashboard to visualize key performance indicators.</p>
+                            <div class="mb-4">
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Python</span>
+                                <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">SQL</span>
+                                <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Tableau</span>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 2 -->
+                        <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
+                            <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Churn+Prediction" alt="Customer Churn Project Thumbnail" class="rounded-md mb-4 h-48 w-full object-cover">
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Customer Churn Prediction</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Build a machine learning model to predict customer churn. Utilize feature engineering, statistical analysis, and classification models to identify key churn drivers.</p>
+                             <div class="mb-4">
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">R</span>
+                                <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Scikit-learn</span>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 3 -->
+                        <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
+                            <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=Data+Automation" alt="Data Automation Project Thumbnail" class="rounded-md mb-4 h-48 w-full object-cover">
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Data Pipeline Automation</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Develop Python scripts to automate data collection, cleaning, and reporting processes, reducing manual effort and ensuring data consistency for analysis.</p>
+                            <div class="mb-4">
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Python</span>
+                                <span class="inline-block bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">SQL</span>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Project Card 2 -->
-                    <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
-                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Churn+Prediction" alt="Customer Churn Project Thumbnail" class="rounded-md mb-4 h-48 w-full object-cover">
-                        <h3 class="text-xl font-bold mb-2 text-gray-900">Customer Churn Prediction</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">Build a machine learning model to predict customer churn. Utilize feature engineering, statistical analysis, and classification models to identify key churn drivers.</p>
-                         <div class="mb-4">
-                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">R</span>
-                            <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Scikit-learn</span>
+                <!-- NDA Projects Tab Content -->
+                <div id="nda" class="tab-content" style="display:none;">
+                    <p class="text-center text-gray-600 mb-10">Due to non-disclosure agreements, I cannot share the specifics of these projects publicly. <br class="hidden sm:block">The following are high-level descriptions of my responsibilities and the technologies used.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                        <!-- NDA Project Card 1 -->
+                        <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
+                            <div class="h-48 w-full bg-gray-200 rounded-md mb-4 flex items-center justify-center">
+                                <i data-feather="lock" class="h-16 w-16 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Internal KPI Dashboard</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Developed and maintained a real-time dashboard for a sales team to track key performance indicators, leading to a significant uplift in team productivity and target achievement.</p>
+                            <div class="mb-4">
+                                <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">NDA Project</span>
+                                <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Excel (VBA)</span>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Python</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Project Card 3 -->
-                    <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
-                        <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=Data+Automation" alt="Data Automation Project Thumbnail" class="rounded-md mb-4 h-48 w-full object-cover">
-                        <h3 class="text-xl font-bold mb-2 text-gray-900">Data Pipeline Automation</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">Develop Python scripts to automate data collection, cleaning, and reporting processes, reducing manual effort and ensuring data consistency for analysis.</p>
-                        <div class="mb-4">
-                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Python</span>
-                            <span class="inline-block bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">SQL</span>
+                        <!-- NDA Project Card 2 -->
+                        <div class="bg-slate-50 rounded-lg shadow-md p-6 flex flex-col transition duration-300 card-hover">
+                            <div class="h-48 w-full bg-gray-200 rounded-md mb-4 flex items-center justify-center">
+                                <i data-feather="lock" class="h-16 w-16 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900">Student Data Management System</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Designed and implemented a system for managing and analyzing performance data for over 700 students, automating reporting and providing insights into academic trends.</p>
+                            <div class="mb-4">
+                                <span class="inline-block bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">NDA Project</span>
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Python</span>
+                                <span class="inline-block bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">SQL</span>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </section>
@@ -275,7 +333,7 @@
         </section>
 
     </main>
-    
+
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-6">
         <div class="container mx-auto px-6 text-center text-gray-400">
@@ -314,6 +372,25 @@
                 header.classList.remove('shadow-lg');
             }
         };
+
+        // Tab functionality
+        function openTab(event, tabName) {
+            // Get all elements with class="tab-content" and hide them
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tab-link" and remove the class "active-tab"
+            const tablinks = document.getElementsByClassName("tab-link");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active-tab", "");
+            }
+
+            // Show the current tab, and add an "active-tab" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            event.currentTarget.className += " active-tab";
+        }
     </script>
 </body>
 </html>
