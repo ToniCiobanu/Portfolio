@@ -33,7 +33,6 @@
             overflow-x: hidden;
         }
 
-        /* Animated Background */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -62,7 +61,6 @@
             50% { opacity: 1; }
         }
 
-        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -183,7 +181,6 @@
             transform: translateY(-2px);
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -246,7 +243,6 @@
             padding: 0 20px;
         }
 
-        /* Section Styles */
         section {
             padding: 100px 0;
             position: relative;
@@ -272,7 +268,6 @@
             font-size: 1.2em;
         }
 
-        /* Stats Section */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -307,306 +302,6 @@
             font-size: 1em;
         }
 
-        /* Experience Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 50px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--uwaterloo-gold) 0%, transparent 100%);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 50px;
-            padding-left: 30px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -36px;
-            top: 5px;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--uwaterloo-gold);
-            border: 3px solid var(--dark-bg);
-            box-shadow: 0 0 0 3px rgba(253, 181, 21, 0.2);
-        }
-
-        .timeline-content {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid rgba(253, 181, 21, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .timeline-content:hover {
-            border-color: var(--uwaterloo-gold);
-            transform: translateX(5px);
-        }
-
-        .timeline-content h3 {
-            color: var(--uwaterloo-gold);
-            font-size: 1.4em;
-            margin-bottom: 5px;
-        }
-
-        .timeline-content .company {
-            color: var(--text-primary);
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .timeline-content .date {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-
-        .timeline-content .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .skill-tag {
-            background: rgba(253, 181, 21, 0.1);
-            color: var(--uwaterloo-gold);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            border: 1px solid rgba(253, 181, 21, 0.2);
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(253, 181, 21, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--uwaterloo-gold);
-            box-shadow: 0 20px 60px rgba(253, 181, 21, 0.2);
-        }
-
-        .project-header {
-            background: linear-gradient(135deg, rgba(253, 181, 21, 0.2) 0%, rgba(253, 181, 21, 0.05) 100%);
-            padding: 25px;
-            border-bottom: 1px solid rgba(253, 181, 21, 0.1);
-        }
-
-        .project-header h3 {
-            color: var(--uwaterloo-gold);
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-
-        .project-type {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-        }
-
-        .project-body {
-            padding: 25px;
-        }
-
-        .project-body p {
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            line-height: 1.8;
-        }
-
-        /* Clickable Project Cards */
-        .project-card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-        
-        .project-card-link:hover .project-card {
-            transform: translateY(-10px);
-            border-color: var(--uwaterloo-gold);
-            box-shadow: 0 20px 60px rgba(253, 181, 21, 0.3);
-        }
-        
-        .project-card-link:hover .project-header h3 {
-            color: var(--accent-hover);
-        }
-        
-        .project-card-link .project-card {
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .project-card-link .project-card::after {
-            content: '→';
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            font-size: 1.5em;
-            color: var(--uwaterloo-gold);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .project-card-link:hover .project-card::after {
-            opacity: 1;
-        }
-
-        .project-metrics {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .metric {
-            flex: 1;
-            min-width: 120px;
-        }
-
-        .metric-value {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: var(--uwaterloo-gold);
-        }
-
-        .metric-label {
-            font-size: 0.85em;
-            color: var(--text-secondary);
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .skill-category {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(253, 181, 21, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            border-color: var(--uwaterloo-gold);
-            transform: translateY(-5px);
-        }
-
-        .skill-category h3 {
-            color: var(--uwaterloo-gold);
-            font-size: 1.3em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .skill-category ul {
-            list-style: none;
-        }
-
-        .skill-category ul li {
-            padding: 10px 0;
-            color: var(--text-secondary);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s;
-        }
-
-        .skill-category ul li:hover {
-            color: var(--uwaterloo-gold);
-            padding-left: 10px;
-        }
-
-        .skill-category ul li:last-child {
-            border-bottom: none;
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .contact-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(253, 181, 21, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .contact-card:hover {
-            border-color: var(--uwaterloo-gold);
-            transform: translateY(-5px);
-        }
-
-        .contact-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-
-        .contact-card h3 {
-            color: var(--uwaterloo-gold);
-            margin-bottom: 10px;
-        }
-
-        .contact-card p {
-            color: var(--text-secondary);
-        }
-
-        .contact-card a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .contact-card a:hover {
-            color: var(--uwaterloo-gold);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--uwaterloo-black);
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid rgba(253, 181, 21, 0.1);
-        }
-
-        footer p {
-            color: var(--text-secondary);
-        }
-
-        /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -616,7 +311,6 @@
             cursor: pointer;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             nav ul {
                 display: none;
@@ -637,22 +331,8 @@
             .mobile-menu-btn {
                 display: block;
             }
-
-            .hero h1 {
-                font-size: 2.5em;
-            }
-
-            .timeline {
-                padding-left: 30px;
-            }
-
-            .projects-grid,
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
-        /* Scroll animations */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -663,39 +343,11 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* Certificate Badge Styles */
-        .cert-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(253, 181, 21, 0.1);
-            border: 1px solid rgba(253, 181, 21, 0.3);
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 0.9em;
-            color: var(--uwaterloo-gold);
-            font-weight: 600;
-            margin: 5px;
-        }
-
-        .cert-badge.completed {
-            background: rgba(34, 197, 94, 0.1);
-            border-color: rgba(34, 197, 94, 0.3);
-            color: #22c55e;
-        }
-
-        .cert-badge.in-progress {
-            background: rgba(59, 130, 246, 0.1);
-            border-color: rgba(59, 130, 246, 0.3);
-            color: #3b82f6;
-        }
     </style>
 </head>
 <body>
     <div class="bg-animation"></div>
 
-    <!-- Navigation -->
     <nav>
         <div class="container">
             <div class="logo">TC</div>
@@ -703,17 +355,11 @@
             <ul id="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#transition">My Story</a></li>
-                <li><a href="#impact">Impact</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#certifications">Certifications</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-badge">🎓 University of Waterloo Mathematics Graduate</div>
@@ -732,7 +378,6 @@
         </div>
     </section>
 
-    <!-- Transition Story Section -->
     <section id="transition" style="padding: 80px 0; background: rgba(253, 181, 21, 0.03);">
         <div class="container">
             <div class="section-header fade-in">
@@ -740,26 +385,26 @@
                 <p>Why I'm making the transition</p>
             </div>
             <div style="max-width: 900px; margin: 0 auto; font-size: 1.1em; line-height: 1.9; color: var(--text-secondary);">
-                <p style="margin-bottom: 25px;">
+                <p style="margin-bottom: 25px; color: var(--text-secondary);">
                     <strong style="color: var(--uwaterloo-gold);">The realization:</strong> 
                     While managing a 20-person sales team, I discovered I was more energized by analyzing customer 
                     behavior patterns and building data systems than by closing deals. The highlight of my month 
                     wasn't hitting quota—it was finding insights in the data that changed how my team approached customers.
                 </p>
-                <p style="margin-bottom: 25px;">
+                <p style="margin-bottom: 25px; color: var(--text-secondary);">
                     <strong style="color: var(--uwaterloo-gold);">What I built:</strong> 
                     CRM automation from scratch (Pipedrive), Excel-based performance tracking for 20 reps, monthly 
                     self-analysis reports, customer behavior segmentation that drove 23% revenue growth, and predictive 
                     models for operational efficiency.
                 </p>
-                <p style="margin-bottom: 25px;">
+                <p style="margin-bottom: 25px; color: var(--text-secondary);">
                     <strong style="color: var(--uwaterloo-gold);">What I want:</strong> 
                     To use my Mathematics degree and analytical mindset full-time. I want to work with stakeholders 
                     and data—not customers and quotas. I'm ready to trade my sales title for an analyst role where 
                     I can focus on what I'm actually good at: understanding patterns, optimizing processes, and turning 
                     data into decisions.
                 </p>
-                <p>
+                <p style="color: var(--text-secondary);">
                     <strong style="color: var(--uwaterloo-gold);">My goal:</strong> 
                     Entry-level Data or Business Analyst position where I can leverage my operational experience, 
                     customer behavior expertise, and mathematical foundation while continuing to develop technical skills 
@@ -769,363 +414,53 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section id="impact">
+    <section id="contact">
         <div class="container">
             <div class="section-header fade-in">
-                <h2>Business Impact Through Analysis</h2>
-                <p>Results from applying analytical thinking to sales operations</p>
+                <h2>Let's Connect</h2>
+                <p>Open to entry-level Data Analyst and Business Analyst opportunities</p>
             </div>
-            <div class="stats-grid">
-                <div class="stat-card fade-in">
-                    <div class="stat-number">292%</div>
-                    <div class="stat-label">Team Performance Increase</div>
-                </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-number">23%</div>
-                    <div class="stat-label">Revenue Growth via Segmentation</div>
-                </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-number">130%</div>
-                    <div class="stat-label">Consistent Target Achievement</div>
-                </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-number">94.87%</div>
-                    <div class="stat-label">Team Customer Satisfaction Score</div>
-                </div>
+            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 1.1em; color: var(--text-secondary); margin-bottom: 30px;">
+                    📧 <a href="mailto:simion.ciobanu1@gmail.com" style="color: var(--uwaterloo-gold); text-decoration: none;">simion.ciobanu1@gmail.com</a><br>
+                    💼 <a href="https://linkedin.com/in/toni-ciobanu" target="_blank" style="color: var(--uwaterloo-gold); text-decoration: none;">LinkedIn</a><br>
+                    📱 <a href="tel:+15195016578" style="color: var(--uwaterloo-gold); text-decoration: none;">(519) 501-6578</a><br>
+                    📍 Kitchener, ON, Canada
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Experience Section -->
-    <section id="experience">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Professional Journey</h2>
-                <p>Analytical work across telecommunications and education</p>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Sales Representative (Operations & Analytics Focus)</h3>
-                        <div class="company">TELUS</div>
-                        <div class="date">March 2025 - Present | Cambridge, ON</div>
-                        
-                        <p><strong style="color: var(--uwaterloo-gold);">Self-Directed Analytics Projects:</strong></p>
-                        <p>• Built custom Google Sheets KPI tracker integrating Domo exports, tracking 8+ performance metrics to maintain consistent 130% of target</p>
-                        <p>• Developed customer insights database in Excel analyzing purchase patterns across 275 retail locations to identify cross-selling opportunities</p>
-                        <p>• Conducted monthly self-evaluation analysis: extracted sales data from Domo/Tableau, performed comparative analysis against targets, identified focus areas, and documented improvement strategies (3-4 hours monthly)</p>
-                        <p>• Created predictive model using weighted 6-month averages to forecast store returns, enabling operational efficiency improvements in call center processes</p>
-                        
-                        <p><strong style="color: var(--uwaterloo-gold);">Process Optimization:</strong></p>
-                        <p>• Analyzed underperforming product sales through Domo data, identified root causes, implemented targeted promotional strategy (4x commission increase in 2 weeks)</p>
-                        <p>• Tracked individual customer interactions in Excel, analyzing product preferences and future sales potential for strategic follow-up</p>
-                        
-                        <div class="skills">
-                            <span class="skill-tag">Excel Analysis</span>
-                            <span class="skill-tag">Domo</span>
-                            <span class="skill-tag">Google Sheets</span>
-                            <span class="skill-tag">Predictive Modeling</span>
-                            <span class="skill-tag">KPI Development</span>
-                            <span class="skill-tag">Customer Behavior Analysis</span>
-                        </div>
-                    </div>
-                </div>
+    <script>
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
 
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Sales Manager (Team Analytics & Operations)</h3>
-                        <div class="company">Red Wireless</div>
-                        <div class="date">January 2024 - August 2024 | Saskatoon, SK (Remote)</div>
-                        
-                        <p><strong style="color: var(--uwaterloo-gold);">Team Performance Analytics:</strong></p>
-                        <p>• Designed and implemented Excel-based tracking system for 20 sales representatives, monitoring individual sales performance and customer support metrics</p>
-                        <p>• Conducted manual analysis of 20 individual Excel files monthly, identifying performance patterns and coaching opportunities</p>
-                        <p>• Used data-driven insights during one-on-ones: showed reps time allocation between support vs. sales calls, resulting in 400% month-over-month improvement for one rep</p>
-                        <p>• Achieved 73% average KPI improvement across team through personalized, data-backed coaching</p>
-                        
-                        <p><strong style="color: var(--uwaterloo-gold);">Customer Behavior Analysis:</strong></p>
-                        <p>• Performed customer segmentation analysis using purchase history data from Pipedrive CRM and internal sales tools</p>
-                        <p>• Identified key insight: support callers remained interested in products due to competitive pricing—tracked customer issues and developed cross-selling strategy</p>
-                        <p>• Translated analysis into team training, driving 23% departmental revenue increase while maintaining 94.87% CSAT score</p>
-                        
-                        <p><strong style="color: var(--uwaterloo-gold);">CRM System Development:</strong></p>
-                        <p>• Built Pipedrive CRM automation from ground up with management team, designing sales pipelines, logistics handoff processes, and retention follow-ups</p>
-                        <p>• Created instructional documentation for CRM navigation, reducing manual tracking burden across 20-person team</p>
-                        <p>• Troubleshot automation bugs (text sending failures, pipeline movement errors), maintaining system reliability</p>
-                        
-                        <div class="skills">
-                            <span class="skill-tag">Pipedrive CRM</span>
-                            <span class="skill-tag">Excel</span>
-                            <span class="skill-tag">Customer Segmentation</span>
-                            <span class="skill-tag">Performance Analytics</span>
-                            <span class="skill-tag">Process Documentation</span>
-                            <span class="skill-tag">Team Coaching</span>
-                        </div>
-                    </div>
-                </div>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.getElementById('nav-menu').classList.remove('active');
+                }
+            });
+        });
 
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Telephone Sales Consultant</h3>
-                        <div class="company">Red Wireless</div>
-                        <div class="date">September 2023 - January 2024 | Saskatoon, SK (Remote)</div>
-                        
-                        <p>• Utilized Pipedrive CRM for sales pipeline management and customer tracking</p>
-                        <p>• Developed foundational understanding of sales data analysis and customer behavior patterns</p>
-                        <div class="skills">
-                            <span class="skill-tag">Pipedrive</span>
-                            <span class="skill-tag">Sales Analytics</span>
-                            <span class="skill-tag">Customer Communication</span>
-                        </div>
-                    </div>
-                </div>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Instructional Support Assistant</h3>
-                        <div class="company">University of Waterloo</div>
-                        <div class="date">September 2022 - December 2023 | Waterloo, ON</div>
-                        <p>• Managed databases containing 700+ students' performance data with automated validation processes</p>
-                        <p>• Automated routine reporting tasks using Python scripts and Excel macros, reducing administrative workload by 15%</p>
-                        <p>• Provided technical instruction in Python, DrRacket (functional programming), and Linux environments</p>
-                        <div class="skills">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Excel Automation</span>
-                            <span class="skill-tag">Database Management</span>
-                            <span class="skill-tag">Linux</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Featured Projects</h2>
-                <p>Professional and academic analytics initiatives</p>
-            </div>
-            
-            <div class="projects-grid">
-                
-                <!-- Store Returns Prediction -->
-                <div class="project-card fade-in">
-                    <div class="project-header">
-                        <div style="display: inline-block; background: rgba(75, 0, 130, 0.1); border: 1px solid rgba(75, 0, 130, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #9370DB; font-weight: 600;">
-                            🏢 TELUS
-                        </div>
-                        
-                        <h3>Store Returns Forecasting Model</h3>
-                        <div class="project-type">Predictive Analytics | Excel & Statistical Modeling</div>
-                        
-                        <div style="margin-top: 10px; font-size: 0.75em; color: var(--text-secondary); font-style: italic;">
-                            *Self-initiated project - data confidential per NDA
-                        </div>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Challenge:</strong> Call center faced inefficiencies due to unpredictable return volumes across retail network.</p>
-                        
-                        <p><strong>Approach:</strong> Developed Excel-based predictive model using weighted 6-month sales averages across 275 retail locations. Calculated store-level return probabilities to forecast call center demand.</p>
-                        
-                        <p><strong>Tools:</strong> Excel (weighted averages, statistical functions), Domo (data extraction)</p>
-                        
-                        <p><strong>Business Impact:</strong> Analysis contributed to team report presented to upper management, resulting in implementation of new system to reduce call frequency and increase operational efficiency.</p>
-                        
-                        <div class="project-metrics">
-                            <div class="metric">
-                                <div class="metric-value">275</div>
-                                <div class="metric-label">Stores Analyzed</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">6</div>
-                                <div class="metric-label">Months Historical Data</div>
-                            </div>
-                        </div>
-                        
-                        <p style="margin-top: 15px; padding: 12px; background: rgba(253, 181, 21, 0.05); border-left: 3px solid var(--uwaterloo-gold); font-size: 0.85em; color: var(--text-secondary);">
-                            <strong>Note:</strong> This was a self-initiated project demonstrating my ability to identify business problems and develop analytical solutions independently.
-                        </p>
-                        
-                        <div class="skills">
-                            <span class="skill-tag">Excel</span>
-                            <span class="skill-tag">Predictive Modeling</span>
-                            <span class="skill-tag">Statistical Analysis</span>
-                            <span class="skill-tag">Domo</span>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- Customer Segmentation -->
-                <div class="project-card fade-in">
-                    <div class="project-header">
-                        <div style="display: inline-block; background: rgba(220, 20, 60, 0.1); border: 1px solid rgba(220, 20, 60, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #DC143C; font-weight: 600;">
-                            🏢 Red Wireless
-                        </div>
-                        
-                        <h3>Customer Behavior Segmentation Analysis</h3>
-                        <div class="project-type">Customer Analytics | Purchase History Analysis</div>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Challenge:</strong> Team was treating all customer interactions the same, missing cross-selling opportunities.</p>
-                        
-                        <p><strong>Approach:</strong> Analyzed purchase history data from Pipedrive CRM and internal sales tools. Segmented customers by behavior patterns and identified key insight: support callers remained highly interested in products due to competitive pricing.</p>
-                        
-                        <p><strong>Solution:</strong> Developed cross-selling strategy based on customer issue tracking. Trained 20-person team to address support issues quickly while identifying product fit.</p>
-                        
-                        <p><strong>Business Impact:</strong> 23% departmental revenue increase while maintaining 94.87% customer satisfaction score.</p>
-                        
-                        <div class="project-metrics">
-                            <div class="metric">
-                                <div class="metric-value">23%</div>
-                                <div class="metric-label">Revenue Increase</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">94.87%</div>
-                                <div class="metric-label">CSAT Score</div>
-                            </div>
-                        </div>
-                        
-                        <div class="skills">
-                            <span class="skill-tag">Customer Segmentation</span>
-                            <span class="skill-tag">Pipedrive</span>
-                            <span class="skill-tag">Behavioral Analysis</span>
-                            <span class="skill-tag">Strategy Development</span>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- KPI Dashboard -->
-                <div class="project-card fade-in">
-                    <div class="project-header">
-                        <div style="display: inline-block; background: rgba(75, 0, 130, 0.1); border: 1px solid rgba(75, 0, 130, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #9370DB; font-weight: 600;">
-                            🏢 TELUS
-                        </div>
-                        
-                        <h3>Personal KPI Dashboard Development</h3>
-                        <div class="project-type">Business Intelligence | Performance Tracking</div>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Challenge:</strong> Needed real-time visibility into personal performance metrics to make data-driven daily decisions.</p>
-                        
-                        <p><strong>Solution:</strong> Built custom Google Sheets dashboard integrating Tableau data exports. Automated performance monitoring across 8+ KPIs to track progress against targets.</p>
-                        
-                        <p><strong>Process:</strong> Monthly extraction of sales data from Domo/Tableau, comparative analysis against targets, identification of focus areas, and documentation of improvement strategies (3-4 hours monthly).</p>
-                        
-                        <p><strong>Business Impact:</strong> Maintained consistent 130% target achievement through data-driven decision making and strategic product focus adjustments.</p>
-                        
-                        <div class="project-metrics">
-                            <div class="metric">
-                                <div class="metric-value">130%</div>
-                                <div class="metric-label">Target Achievement</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">8+</div>
-                                <div class="metric-label">KPIs Tracked</div>
-                            </div>
-                        </div>
-                        
-                        <div class="skills">
-                            <span class="skill-tag">Google Sheets</span>
-                            <span class="skill-tag">Tableau</span>
-                            <span class="skill-tag">Domo</span>
-                            <span class="skill-tag">KPI Development</span>
-                            <span class="skill-tag">Dashboard Design</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team Performance Tracking System -->
-                <div class="project-card fade-in">
-                    <div class="project-header">
-                        <div style="display: inline-block; background: rgba(220, 20, 60, 0.1); border: 1px solid rgba(220, 20, 60, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #DC143C; font-weight: 600;">
-                            🏢 Red Wireless
-                        </div>
-                        
-                        <h3>Team Performance Tracking System</h3>
-                        <div class="project-type">Operations Analytics | Excel System Design</div>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Challenge:</strong> Managing 20 sales reps with no reliable way to track individual performance or identify coaching opportunities.</p>
-                        
-                        <p><strong>Solution:</strong> Created Excel-based tracking system (2 sheets per rep: sales and support inquiries). Designed template collaboratively with team input, tracking sales by reference number for CRM cross-verification.</p>
-                        
-                        <p><strong>Analysis Process:</strong> Monthly manual review of 20 Excel files to identify patterns, time allocation issues, and performance trends. Used insights during one-on-one coaching sessions.</p>
-                        
-                        <p><strong>Example Impact:</strong> Showed one rep they spent disproportionate time on support vs. sales calls. Coached them to incorporate sales tactics into support interactions, resulting in 400% month-over-month sales improvement.</p>
-                        
-                        <div class="project-metrics">
-                            <div class="metric">
-                                <div class="metric-value">20</div>
-                                <div class="metric-label">Reps Tracked</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">73%</div>
-                                <div class="metric-label">Avg KPI Improvement</div>
-                            </div>
-                        </div>
-                        
-                        <div class="skills">
-                            <span class="skill-tag">Excel</span>
-                            <span class="skill-tag">System Design</span>
-                            <span class="skill-tag">Performance Analysis</span>
-                            <span class="skill-tag">Data-Driven Coaching</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Assignment 3: Robust Regression - CLICKABLE -->
-                <a href="assets/documents/Assignment-3-Robust-Regression.pdf" target="_blank" class="project-card-link">
-                    <div class="project-card fade-in">
-                        <div class="project-header">
-                            <div style="display: inline-block; background: rgba(253, 181, 21, 0.1); border: 1px solid rgba(253, 181, 21, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: var(--uwaterloo-gold); font-weight: 600;">
-                                🎓 UWaterloo - STAT 341
-                            </div>
-                            
-                            <h3>Robust Regression Analysis</h3>
-                            <div class="project-type">Computational Statistics | R Programming</div>
-                        </div>
-                        <div class="project-body">
-                            <p>Implemented Hampel robust regression to analyze EEG data, identifying influential observations and mitigating their impact. Developed custom R functions for gradient descent optimization and influence calculation.</p>
-                            
-                            <p><strong>Key Techniques:</strong> Least squares regression, influence analysis, Hampel objective functions, gradient descent optimization</p>
-                            
-                            <p style="margin-top: 15px; padding: 10px; background: rgba(253, 181, 21, 0.05); border-left: 3px solid var(--uwaterloo-gold); font-size: 0.85em; color: var(--text-secondary);">
-                                <strong>Academic Foundation:</strong> This project demonstrates my statistical modeling capabilities and R programming skills developed during my Mathematics degree.
-                            </p>
-                            
-                            <div class="skills">
-                                <span class="skill-tag">R Programming</span>
-                                <span class="skill-tag">Statistical Modeling</span>
-                                <span class="skill-tag">Data Visualization</span>
-                                <span class="skill-tag">Optimization</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-    
-                <!-- Assignment 1: KDE - CLICKABLE -->
-                <a href="assets/documents/Assignment-1-KDE.pdf" target="_blank" class="project-card-link">
-                    <div class="project-card fade-in">
-                        <div class="project-header">
-                            <div style="display: inline-block; background: rgba(253, 181, 21, 0.1); border: 1px solid rgba(253, 181, 21, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: var(--uwaterloo-gold); font-weight: 600;">
-                                🎓 UWaterloo - STAT 341
-                            </div>
-                            
-                            <h3>Kernel Density Estimation</h3>
-                            <div class="project-type">Data Analysis | R & Optimization</div>
-                        </div>
-                        <div class="project-body">
-                            <p>Optimized bandwidth selection for kernel density estimation of Billboard Hot 100 streaming data. Implemented cost function minimization and power transformations to improve distribution normality.</p>
-                            
-                            <p><strong>Methods:</strong> Silverman's rule of thumb, cost function optimization, power transformations, Gaussian kernels</p>
-                            
-                            <p style="margin-top: 15px; padding: 10px; background: rgba(253, 181, 21, 0.05); border-left: 3px solid var(--uwaterloo-gold); font-size: 0.85em; color: var(--text-secondary);">
-                                <strong>Academic Foundation:</strong> Demonstrates my understanding of statistical computing and data transformation techniques.
-                            </p>
-                            
-                            <div class="skills">
-                                <span class="skill-tag">R</span>
-                                <span class="skill-
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
