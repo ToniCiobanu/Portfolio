@@ -438,6 +438,46 @@
             line-height: 1.8;
         }
 
+        /* Clickable Project Cards */
+        .project-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card-link:hover .project-card {
+            transform: translateY(-10px);
+            border-color: var(--uwaterloo-gold);
+            box-shadow: 0 20px 60px rgba(253, 181, 21, 0.3);
+        }
+        
+        .project-card-link:hover .project-header h3 {
+            color: var(--accent-hover);
+        }
+        
+        /* Add a subtle indicator that it's clickable */
+        .project-card-link .project-card {
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .project-card-link .project-card::after {
+            content: '→';
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 1.5em;
+            color: var(--uwaterloo-gold);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-card-link:hover .project-card::after {
+            opacity: 1;
+        }
+
+
         .project-metrics {
             display: flex;
             gap: 20px;
@@ -803,84 +843,81 @@
                     </div>
                 </div>
 
-                <!-- Assignment 1: KDE -->
-<div class="project-card fade-in">
-    <div class="project-header">
-        <h3>Kernel Density Estimation</h3>
-        <div class="project-type">STAT 331 - Data Analysis | R & Optimization</div>
-    </div>
-    <div class="project-body">
-        <p>Optimized bandwidth selection for kernel density estimation of Billboard Hot 100 streaming data. Implemented cost function minimization and power transformations to improve distribution normality.</p>
-        <p><strong>Methods:</strong> Silverman's rule of thumb, cost function optimization, power transformations, Gaussian kernels</p>
+        <!-- Assignment 1: KDE - CLICKABLE CARD -->
+        <a href="assets/documents/Assignment-1-KDE.pdf" 
+           target="_blank" 
+           class="project-card-link">
+            
+            <div class="project-card fade-in">
+                <div class="project-header">
+                    <h3>Kernel Density Estimation</h3>
+                    <div class="project-type">STAT 331 - Data Analysis | R & Optimization</div>
+                </div>
+                <div class="project-body">
+                    <p>Optimized bandwidth selection for kernel density estimation of Billboard Hot 100 streaming data. Implemented cost function minimization and power transformations to improve distribution normality.</p>
+                    
+                    <p><strong>Methods:</strong> Silverman's rule of thumb, cost function optimization, power transformations, Gaussian kernels</p>
+                    
+                    <div class="skills">
+                        <span class="skill-tag">R</span>
+                        <span class="skill-tag">Statistical Computing</span>
+                        <span class="skill-tag">Data Transformation</span>
+                    </div>
+                </div>
+            </div>
+            
+        </a>
         
-        <div style="margin-top: 20px;">
-            <a href="assets/documents/Assignment-1-KDE.pdf" 
-               target="_blank" 
-               class="project-download-btn">
-                📄 View Full Assignment
-            </a>
-        </div>
+        <!-- Assignment 2: Gradient Descent - CLICKABLE CARD -->
+        <a href="assets/documents/Assignment-2-Prices-Function.pdf" 
+           target="_blank" 
+           class="project-card-link">
+            
+            <div class="project-card fade-in">
+                <div class="project-header">
+                    <h3>Gradient Descent Optimization</h3>
+                    <div class="project-type">STAT 331 - Optimization | R Programming</div>
+                </div>
+                <div class="project-body">
+                    <p>Explored Price's Function surface using gradient descent from multiple starting values. Analyzed convergence behavior, local minima identification, and stepsize parameter tuning for optimization performance.</p>
+                    
+                    <p><strong>Insights:</strong> Demonstrated importance of starting point selection and stepsize adjustment in non-convex optimization problems</p>
+                    
+                    <div class="skills">
+                        <span class="skill-tag">Optimization</span>
+                        <span class="skill-tag">Algorithm Design</span>
+                        <span class="skill-tag">R</span>
+                    </div>
+                </div>
+            </div>
+            
+        </a>
         
-        <div class="skills">
-            <span class="skill-tag">R</span>
-            <span class="skill-tag">Statistical Computing</span>
-            <span class="skill-tag">Data Transformation</span>
-        </div>
-    </div>
-</div>
-
-<!-- Assignment 2: Gradient Descent -->
-<div class="project-card fade-in">
-    <div class="project-header">
-        <h3>Gradient Descent Optimization</h3>
-        <div class="project-type">STAT 331 - Optimization | R Programming</div>
-    </div>
-    <div class="project-body">
-        <p>Explored Price's Function surface using gradient descent from multiple starting values. Analyzed convergence behavior, local minima identification, and stepsize parameter tuning.</p>
-        <p><strong>Insights:</strong> Demonstrated importance of starting point selection and stepsize adjustment in non-convex optimization problems</p>
-        
-        <div style="margin-top: 20px;">
-            <a href="assets/documents/Assignment-2-Prices-Function.pdf" 
-               target="_blank" 
-               class="project-download-btn">
-                📄 View Full Assignment
-            </a>
-        </div>
-        
-        <div class="skills">
-            <span class="skill-tag">Optimization</span>
-            <span class="skill-tag">Algorithm Design</span>
-            <span class="skill-tag">R</span>
-        </div>
-    </div>
-</div>
-
-<!-- Assignment 3: Robust Regression -->
-<div class="project-card fade-in">
-    <div class="project-header">
-        <h3>Robust Regression Analysis</h3>
-        <div class="project-type">STAT 331 - Computational Statistics | R Programming</div>
-    </div>
-    <div class="project-body">
-        <p>Implemented Hampel robust regression to analyze EEG data, identifying influential observations and mitigating their impact. Developed custom R functions for gradient descent optimization.</p>
-        <p><strong>Key Techniques:</strong> Least squares regression, influence analysis, Hampel objective functions, gradient descent optimization</p>
-        
-        <div style="margin-top: 20px;">
-            <a href="assets/documents/Assignment-3-Robust-Regression.pdf" 
-               target="_blank" 
-               class="project-download-btn">
-                📄 View Full Assignment
-            </a>
-        </div>
-        
-        <div class="skills">
-            <span class="skill-tag">R Programming</span>
-            <span class="skill-tag">Statistical Modeling</span>
-            <span class="skill-tag">Data Visualization</span>
-            <span class="skill-tag">Optimization</span>
-        </div>
-    </div>
-</div>
+        <!-- Assignment 3: Robust Regression - CLICKABLE CARD -->
+        <a href="assets/documents/Assignment-3-Robust-Regression.pdf" 
+           target="_blank" 
+           class="project-card-link">
+            
+            <div class="project-card fade-in">
+                <div class="project-header">
+                    <h3>Robust Regression Analysis</h3>
+                    <div class="project-type">STAT 331 - Computational Statistics | R Programming</div>
+                </div>
+                <div class="project-body">
+                    <p>Implemented Hampel robust regression to analyze EEG data, identifying influential observations and mitigating their impact. Developed custom R functions for gradient descent optimization and influence calculation.</p>
+                    
+                    <p><strong>Key Techniques:</strong> Least squares regression, influence analysis, Hampel objective functions, gradient descent optimization</p>
+                    
+                    <div class="skills">
+                        <span class="skill-tag">R Programming</span>
+                        <span class="skill-tag">Statistical Modeling</span>
+                        <span class="skill-tag">Data Visualization</span>
+                        <span class="skill-tag">Optimization</span>
+                    </div>
+                </div>
+            </div>
+            
+        </a>
 
 
                 <div class="project-card fade-in">
