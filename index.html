@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toni Ciobanu | Aspiring Data Analyst Portfolio</title>
+    <title>Toni Ciobanu | Data Analyst Portfolio</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
@@ -302,6 +302,171 @@
             font-size: 1em;
         }
 
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(253, 181, 21, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            border-color: var(--uwaterloo-gold);
+            transform: translateY(-3px);
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .skill-level {
+            color: var(--uwaterloo-gold);
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(253, 181, 21, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--uwaterloo-gold), var(--accent-hover));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .skill-description {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 15px;
+            border: 1px solid rgba(253, 181, 21, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--uwaterloo-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(253, 181, 21, 0.2);
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: rgba(253, 181, 21, 0.1);
+            color: var(--uwaterloo-gold);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .project-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .project-impact {
+            background: rgba(253, 181, 21, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--uwaterloo-gold);
+        }
+
+        .project-impact strong {
+            color: var(--uwaterloo-gold);
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .cert-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(253, 181, 21, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover {
+            border-color: var(--uwaterloo-gold);
+            transform: translateY(-3px);
+        }
+
+        .cert-badge {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .cert-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cert-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .cert-completed {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+        }
+
+        .cert-progress {
+            background: rgba(253, 181, 21, 0.1);
+            color: var(--uwaterloo-gold);
+        }
+
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -331,6 +496,11 @@
             .mobile-menu-btn {
                 display: block;
             }
+
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .fade-in {
@@ -355,6 +525,9 @@
             <ul id="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#transition">My Story</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#certifications">Certifications</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -364,12 +537,12 @@
         <div class="hero-content">
             <div class="hero-badge">🎓 University of Waterloo Mathematics Graduate</div>
             <h1>Toni Ciobanu</h1>
-            <p class="subtitle">Sales Operations Analyst | Aspiring Data Analyst</p>
+            <p class="subtitle">Analyst Who Happened to Work in Sales</p>
             <p class="description">
-                University of Waterloo Mathematics graduate transitioning from sales operations to data analytics. 
-                2+ years building CRM systems, analyzing customer behavior, and optimizing team performance through 
-                Excel, Domo, and process automation. Seeking entry-level Data/Business Analyst role to apply 
-                analytical mindset and technical foundation to full-time data work.
+                I realized I loved the analysis part of sales more than the selling. With a Mathematics degree from 
+                University of Waterloo and 2+ years building CRM systems, predicting operational trends, and analyzing 
+                customer behavior, I'm ready to transition from unofficial analyst work to a full-time Data/Business 
+                Analyst role where I can use my brain—not just make sales all day.
             </p>
             <div class="cta-buttons">
                 <a href="#transition" class="btn btn-primary">My Story</a>
@@ -378,38 +551,280 @@
         </div>
     </section>
 
-    <section id="transition" style="padding: 80px 0; background: rgba(253, 181, 21, 0.03);">
+    <section style="padding: 60px 0; background: rgba(253, 181, 21, 0.03);">
+        <div class="container">
+            <div class="stats-grid fade-in">
+                <div class="stat-card">
+                    <div class="stat-number">23%</div>
+                    <div class="stat-label">Revenue Growth Driven</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">275</div>
+                    <div class="stat-label">Stores Analyzed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Sales Reps Managed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">94.87%</div>
+                    <div class="stat-label">Team CSAT Score</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="transition" style="padding: 80px 0;">
         <div class="container">
             <div class="section-header fade-in">
                 <h2>From Sales Operations to Data Analytics</h2>
                 <p>Why I'm making the transition</p>
             </div>
             <div style="max-width: 900px; margin: 0 auto; font-size: 1.1em; line-height: 1.9; color: var(--text-secondary);">
-                <p style="margin-bottom: 25px; color: var(--text-secondary);">
+                <p style="margin-bottom: 25px;">
                     <strong style="color: var(--uwaterloo-gold);">The realization:</strong> 
-                    While managing a 20-person sales team, I discovered I was more energized by analyzing customer 
-                    behavior patterns and building data systems than by closing deals. The highlight of my month 
-                    wasn't hitting quota—it was finding insights in the data that changed how my team approached customers.
+                    As a Sales Team Lead at Red Wireless managing 20 reps, I discovered I was more energized by analyzing 
+                    customer behavior patterns and building data systems than by closing deals. The highlight of my month 
+                    wasn't hitting quota—it was finding insights that drove a 23% revenue increase and coaching reps to 
+                    400% sales growth using data.
                 </p>
-                <p style="margin-bottom: 25px; color: var(--text-secondary);">
-                    <strong style="color: var(--uwaterloo-gold);">What I built:</strong> 
-                    CRM automation from scratch (Pipedrive), Excel-based performance tracking for 20 reps, monthly 
-                    self-analysis reports, customer behavior segmentation that drove 23% revenue growth, and predictive 
-                    models for operational efficiency.
+                <p style="margin-bottom: 25px;">
+                    <strong style="color: var(--uwaterloo-gold);">What I built (unofficially):</strong> 
+                    CRM automation from scratch using Pipedrive, Excel-based performance tracking for 20 reps, monthly 
+                    self-analysis reports in Domo/Tableau, customer behavior segmentation, and a predictive model for 
+                    store returns across 275 locations that improved operational efficiency.
                 </p>
-                <p style="margin-bottom: 25px; color: var(--text-secondary);">
+                <p style="margin-bottom: 25px;">
+                    <strong style="color: var(--uwaterloo-gold);">Who I am:</strong> 
+                    I'm the type of guy who puts TV prices in a graph and does comparative value analysis to get the best 
+                    deal. I took psychology and philosophy courses alongside my math degree because customer behavior 
+                    fascinates me. I can't stop learning—even after finishing university, I completed the Google Data 
+                    Analytics certificate and I'm currently working on a Generative AI Leader certification.
+                </p>
+                <p style="margin-bottom: 25px;">
                     <strong style="color: var(--uwaterloo-gold);">What I want:</strong> 
-                    To use my Mathematics degree and analytical mindset full-time. I want to work with stakeholders 
-                    and data—not customers and quotas. I'm ready to trade my sales title for an analyst role where 
-                    I can focus on what I'm actually good at: understanding patterns, optimizing processes, and turning 
-                    data into decisions.
+                    To use my Mathematics degree and analytical mindset full-time. I want to work with stakeholders and 
+                    data—not customers and quotas. I'd rather talk to shareholders and investors than customers. Long-term, 
+                    I want to transition into consulting where I can combine my analytical skills with my ability to 
+                    communicate (I am good at talking and math, after all).
                 </p>
-                <p style="color: var(--text-secondary);">
+                <p>
                     <strong style="color: var(--uwaterloo-gold);">My goal:</strong> 
-                    Entry-level Data or Business Analyst position where I can leverage my operational experience, 
-                    customer behavior expertise, and mathematical foundation while continuing to develop technical skills 
-                    in SQL, Python, and advanced analytics.
+                    Entry-level Data or Business Analyst position (full-time permanent, not co-op) where I can leverage my 
+                    operational experience, customer behavior expertise, and mathematical foundation while continuing to 
+                    develop technical skills in SQL, Python, and advanced analytics.
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" style="padding: 80px 0; background: rgba(253, 181, 21, 0.03);">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Analytical Projects</h2>
+                <p>Real business impact through data analysis</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <div class="project-tag">TELUS</div>
+                    <h3 class="project-title">Store Returns Prediction Model</h3>
+                    <p class="project-description">
+                        Analyzed 6 months of sales data across 275 stores using Excel and Domo to predict return volumes 
+                        through weighted average calculations. Performed all mathematical analysis while teammates incorporated 
+                        findings into upper management reports.
+                    </p>
+                    <div class="project-impact">
+                        <strong>Impact:</strong> Upper management implemented new system to reduce call center frequency, 
+                        leading to increased operational efficiency (specific savings under NDA).
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-tag">Red Wireless</div>
+                    <h3 class="project-title">Customer Behavior Segmentation</h3>
+                    <p class="project-description">
+                        Segmented customers by purchase history using manual data entry from 20 sales reps, Pipedrive CRM, 
+                        and company reporting tools. Discovered customers seeking support were still interested in products 
+                        due to competitive discounts, then trained team to cross-sell during support interactions.
+                    </p>
+                    <div class="project-impact">
+                        <strong>Impact:</strong> 23% revenue increase, 94.87% team CSAT score, and all 20 reps learned to 
+                        take phone calls seriously and cross-sell effectively.
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-tag">Red Wireless</div>
+                    <h3 class="project-title">Pipedrive CRM Automation</h3>
+                    <p class="project-description">
+                        Built CRM automations from the ground up with management team, including automated texts/emails, 
+                        pipeline management, seamless handoffs between teams, and retention follow-ups. Debugged automation 
+                        issues, created instructional templates, and trained 20 sales reps on navigation.
+                    </p>
+                    <div class="project-impact">
+                        <strong>Impact:</strong> Transformed chaotic manual tracking into organized, automated system for 
+                        entire sales team, solving scalability issues with large client base.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" style="padding: 80px 0;">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Technical Skills</h2>
+                <p>Honest assessment of current proficiency levels</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <span class="skill-name">Pipedrive CRM</span>
+                        <span class="skill-level">5/5</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width: 100%;"></div>
+                    </div>
+                    <p class="skill-description">
+                        Expert level: automation, reporting, customization. Built pipelines from ground up with management 
+                        team at Red Wireless.
+                    </p>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <span class="skill-name">Domo</span>
+                        <span class="skill-level">4/5</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width: 80%;"></div>
+                    </div>
+                    <p class="skill-description">
+                        Export, create filters, change visualization aspects. Main KPI tracking tool at current workplace.
+                    </p>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <span class="skill-name">R</span>
+                        <span class="skill-level">4/5</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width: 80%;"></div>
+                    </div>
+                    <p class="skill-description">
+                        Used in 4 university classes, very knowledgeable. Mainly academic usage, comfortable with data 
+                        structures and analysis.
+                    </p>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <span class="skill-name">Excel</span>
+                        <span class="skill-level">3/5</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width: 60%;"></div>
+                    </div>
+                    <p class="skill-description">
+                        Formulas, pivot tables, macros, VBA. Proctored CS100 exam (advanced Excel macros), uses extensively 
+                        in work. Often uses AI for complex formulas.
+                    </p>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <span class="skill-name">Google Sheets</span>
+                        <span class="skill-level">3/5</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width: 60%;"></div>
+                    </div>
+                    <p class="skill-description">
+                        Same capabilities as Excel, uses more frequently due to accessibility.
+                    </p>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <span class="skill-name">Python</span>
+                        <span class="skill-level">3/5</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width: 60%;"></div>
+                    </div>
+                    <p class="skill-description">
+                        CS116, CS230 coursework. Data types, structures, intro to Python. Attempted automation projects 
+                        using Selenium. Currently building proficiency through personal projects.
+                    </p>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <span class="skill-name">SQL</span>
+                        <span class="skill-level">1/5</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width: 20%;"></div>
+                    </div>
+                    <p class="skill-description">
+                        Basic understanding from coursework. Actively working on personal projects to build confidence and 
+                        practical experience.
+                    </p>
+                </div>
+
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <span class="skill-name">Tableau</span>
+                        <span class="skill-level">0/5</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width: 0%;"></div>
+                    </div>
+                    <p class="skill-description">
+                        Never used, but work is planning to implement in next month for sales data visualization. Ready to 
+                        be first adopter and learn hands-on.
+                    </p>
+                </div>
+            
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" style="padding: 80px 0; background: rgba(253, 181, 21, 0.03);">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Certifications</h2>
+                <p>Continuous learning and professional development</p>
+            </div>
+            <div class="cert-grid">
+                <div class="cert-card fade-in">
+                    <div class="cert-badge">🎓</div>
+                    <h3 class="cert-title">Bachelor's Degree in Mathematics</h3>
+                    <div class="cert-status cert-completed">✓ Completed</div>
+                    <p style="color: var(--text-secondary); margin-top: 10px;">
+                        University of Waterloo<br>
+                        Including CS116, CS230, STAT 341 (Data Analysis), psychology, and philosophy courses
+                    </p>
+                </div>
+
+                <div class="cert-card fade-in">
+                    <div class="cert-badge">📊</div>
+                    <h3 class="cert-title">Google Data Analytics Professional Certificate</h3>
+                    <div class="cert-status cert-completed">✓ Completed</div>
+                    <p style="color: var(--text-secondary); margin-top: 10px;">
+                        Comprehensive data analytics training covering Excel, SQL, R, Tableau, and data visualization
+                    </p>
+                </div>
+
+                <div class="cert-card fade-in">
+                    <div class="cert-badge">🤖</div>
+                    <h3 class="cert-title">Generative AI Leader Certificate</h3>
+                    <div class="cert-status cert-progress">⏳ In Progress</div>
+                    <p style="color: var(--text-secondary); margin-top: 10px;">
+                        Currently learning AI applications and using NotebookLM daily for organizing thoughts and ideas
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -418,7 +833,7 @@
         <div class="container">
             <div class="section-header fade-in">
                 <h2>Let's Connect</h2>
-                <p>Open to entry-level Data Analyst and Business Analyst opportunities</p>
+                <p>Open to entry-level Data Analyst and Business Analyst opportunities (full-time permanent)</p>
             </div>
             <div style="max-width: 600px; margin: 0 auto; text-align: center;">
                 <p style="font-size: 1.1em; color: var(--text-secondary); margin-bottom: 30px;">
@@ -426,6 +841,10 @@
                     💼 <a href="https://linkedin.com/in/toni-ciobanu" target="_blank" style="color: var(--uwaterloo-gold); text-decoration: none;">LinkedIn</a><br>
                     📱 <a href="tel:+15195016578" style="color: var(--uwaterloo-gold); text-decoration: none;">(519) 501-6578</a><br>
                     📍 Kitchener, ON, Canada
+                </p>
+                <p style="font-size: 0.95em; color: var(--text-secondary); font-style: italic; margin-top: 30px;">
+                    "I realized I loved the analysis part of sales more than the selling, and with a math degree recently 
+                    acquired, I am fully equipped to join the big boy world."
                 </p>
             </div>
         </div>
@@ -461,6 +880,20 @@
         }, observerOptions);
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Animate skill bars when they come into view
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fills = entry.target.querySelectorAll('.skill-fill');
+                    fills.forEach(fill => {
+                        fill.style.width = fill.style.width;
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.skill-card').forEach(card => skillObserver.observe(card));
     </script>
 </body>
 </html>
