@@ -690,12 +690,29 @@ new Chart(document.getElementById('c4'), {
     }
 });
 
-// Download CSV
 function downloadCSV() {
     const headers = ['vehicle_id','vehicle','category','description','diy_cost','mechanic_est','savings','savings_pct','parts_source','diy_performed'];
     const rows = DATA.map(r => [r.vid, `"${r.v}"`, `"${r.cat}"`, `"${r.desc}"`, r.diy, r.mech, r.sav, r.pct, r.src, 'Yes']);
     const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-    window.fs.downloadFile(new Blob([csv], { type: 'text/csv' }), 'automotive_repair_analysis_final.csv');
+    
+    // 1. Create the Blob from your CSV string
+    const blob = new Blob([csv], { type: 'text/csv' });
+    
+    // 2. Create a temporary URL for the Blob
+    const url = URL.createObjectURL(blob);
+    
+    // 3. Create a temporary anchor element
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'automotive_repair_analysis_final.csv';
+    
+    // 4. Append the anchor to the body, click it, and remove it
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // 5. Clean up the URL object to free memory
+    URL.revokeObjectURL(url);
 }
 </script>
 </body>
