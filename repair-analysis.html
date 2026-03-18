@@ -1,192 +1,246 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automotive DIY Repair Cost Analysis</title>
+    <title>Automotive DIY Repair Cost Analysis | Toni Ciobanu</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        :root {
+            --uwaterloo-gold: #FDB515;
+            --uwaterloo-black: #000000;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent-hover: #ffcc4d;
+            --pos-color: #4ade80; /* Muted semantic green */
+            --neg-color: #f87171; /* Muted semantic red */
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--dark-bg); 
+            color: var(--text-primary); 
+            line-height: 1.6; 
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(253, 181, 21, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(253, 181, 21, 0.04) 0%, transparent 50%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--uwaterloo-gold);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-link:hover { transform: translateX(-5px); }
+
         .header {
-            background: linear-gradient(135deg, #1a1f2e, #2d3561);
-            border: 1px solid #4a5568; border-radius: 12px;
-            padding: 40px; margin-bottom: 30px; text-align: center;
+            background: var(--card-bg);
+            border: 1px solid rgba(253, 181, 21, 0.2); 
+            border-radius: 15px;
+            padding: 50px 40px; margin-bottom: 40px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .header h1 { font-size: 2em; color: #7c9ef5; margin-bottom: 8px; }
-        .header .sub { color: #a0aec0; font-size: 0.95em; margin-bottom: 4px; }
-        .header .author { color: #68d391; font-size: 1.05em; font-weight: 600; margin-top: 8px; }
-        .section { background: #1a1f2e; border: 1px solid #2d3748; border-radius: 12px; padding: 28px; margin-bottom: 25px; }
-        .section h2 { color: #7c9ef5; font-size: 1.3em; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #2d3748; }
-        .section h3 { color: #68d391; font-size: 1.05em; margin: 18px 0 10px; }
-        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 20px; }
-        .kpi { background: #0f1117; border: 1px solid #2d3748; border-radius: 10px; padding: 18px; text-align: center; transition: transform 0.2s; }
-        .kpi:hover { transform: translateY(-3px); }
-        .kpi .val { font-size: 1.7em; font-weight: 700; margin-bottom: 4px; }
-        .kpi .lbl { color: #a0aec0; font-size: 0.82em; }
-        .kpi.green .val { color: #68d391; }
-        .kpi.blue .val { color: #7c9ef5; }
-        .kpi.orange .val { color: #f6ad55; }
-        .kpi.red .val { color: #fc8181; }
-        .kpi.purple .val { color: #b794f4; }
+        .header h1 { 
+            font-size: clamp(2em, 4vw, 3em); 
+            font-weight: 800;
+            margin-bottom: 15px; 
+            background: linear-gradient(135deg, #ffffff 0%, var(--uwaterloo-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header .sub { color: var(--text-secondary); font-size: 1.1em; margin-bottom: 8px; }
+        .header .author { color: var(--uwaterloo-gold); font-size: 1.05em; font-weight: 600; margin-top: 15px; }
+        
+        .section { 
+            background: var(--card-bg); 
+            border: 1px solid rgba(253, 181, 21, 0.1); 
+            border-radius: 15px; 
+            padding: 35px; margin-bottom: 30px; 
+        }
+        .section h2 { color: var(--uwaterloo-gold); font-size: 1.5em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .section h3 { color: #fff; font-size: 1.1em; font-weight: 600; margin: 25px 0 15px; }
+        
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px; margin-bottom: 25px; }
+        .kpi { 
+            background: var(--dark-bg); 
+            border: 1px solid rgba(253, 181, 21, 0.1); 
+            border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s; 
+        }
+        .kpi:hover { transform: translateY(-5px); border-color: var(--uwaterloo-gold); box-shadow: 0 10px 20px rgba(253, 181, 21, 0.1); }
+        .kpi .val { font-size: 1.8em; font-weight: 800; margin-bottom: 5px; color: var(--text-primary); }
+        .kpi .lbl { color: var(--text-secondary); font-size: 0.85em; }
+        .kpi.gold .val { color: var(--uwaterloo-gold); }
+        .kpi.green .val { color: var(--pos-color); }
+        
         .sql-block {
-            background: #0d1117; border: 1px solid #30363d; border-radius: 8px;
-            padding: 18px; font-family: 'Courier New', monospace; font-size: 0.8em;
-            overflow-x: auto; margin: 12px 0; position: relative; white-space: pre;
+            background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+            padding: 20px; font-family: 'Courier New', monospace; font-size: 0.85em;
+            overflow-x: auto; margin: 15px 0; position: relative; white-space: pre;
+            line-height: 1.5;
         }
-        .sql-block .kw { color: #ff7b72; }
+        .sql-block .kw { color: var(--uwaterloo-gold); }
         .sql-block .fn { color: #d2a8ff; }
         .sql-block .str { color: #a5d6ff; }
         .sql-block .cm { color: #8b949e; font-style: italic; }
         .sql-block .num { color: #79c0ff; }
-        .sql-block .tbl { color: #ffa657; }
+        .sql-block .tbl { color: #fff; font-weight: bold; }
+        
         .copy-btn {
             position: absolute; top: 10px; right: 10px;
-            background: #2d3748; border: 1px solid #4a5568; color: #a0aec0;
-            padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 0.78em;
+            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.2); color: var(--text-secondary);
+            padding: 5px 12px; border-radius: 5px; cursor: pointer; font-size: 0.8em; transition: all 0.2s;
         }
-        .copy-btn:hover { background: #4a5568; color: #fff; }
-        .tabs { display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 2px solid #2d3748; }
+        .copy-btn:hover { background: var(--uwaterloo-gold); color: #000; }
+        
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; }
         .tab-btn {
-            background: none; border: none; color: #a0aec0; padding: 9px 18px;
-            cursor: pointer; font-size: 0.9em; border-bottom: 2px solid transparent;
-            margin-bottom: -2px; transition: all 0.2s;
+            background: none; border: none; color: var(--text-secondary); padding: 10px 20px;
+            cursor: pointer; font-size: 0.95em; font-family: 'Inter', sans-serif; font-weight: 600;
+            border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s;
         }
-        .tab-btn.active { color: #7c9ef5; border-bottom-color: #7c9ef5; }
-        .tab-btn:hover { color: #e2e8f0; }
+        .tab-btn.active { color: var(--uwaterloo-gold); border-bottom-color: var(--uwaterloo-gold); }
+        .tab-btn:hover:not(.active) { color: #fff; }
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.86em; }
-        th { background: #2d3561; color: #7c9ef5; padding: 10px 12px; text-align: left; font-weight: 600; }
-        td { padding: 8px 12px; border-bottom: 1px solid #2d3748; }
-        tr:hover td { background: #1e2535; }
-        .pos { color: #68d391; font-weight: 600; }
-        .neg { color: #fc8181; }
-        .neu { color: #a0aec0; }
-        .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0; }
-        .chart-box { background: #0f1117; border: 1px solid #2d3748; border-radius: 10px; padding: 18px; }
-        .chart-box h4 { color: #a0aec0; font-size: 0.88em; margin-bottom: 12px; text-align: center; }
-        .insight { background: #0d1117; border-left: 4px solid #7c9ef5; padding: 14px 18px; margin: 12px 0; border-radius: 0 8px 8px 0; }
-        .insight.green { border-left-color: #68d391; }
-        .insight.orange { border-left-color: #f6ad55; }
-        .insight.red { border-left-color: #fc8181; }
-        .insight.purple { border-left-color: #b794f4; }
-        .insight p { color: #cbd5e0; font-size: 0.93em; }
-        .insight strong { color: #e2e8f0; }
-        .bv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
-        .bv-card { border-radius: 10px; padding: 20px; }
-        .bv-card.best { background: #0d2a1a; border: 1px solid #68d391; }
-        .bv-card.worst { background: #2a0d0d; border: 1px solid #fc8181; }
-        .bv-card h4 { font-size: 1em; margin-bottom: 12px; }
-        .bv-card.best h4 { color: #68d391; }
-        .bv-card.worst h4 { color: #fc8181; }
-        .bv-card .bv-pct { font-size: 2.5em; font-weight: 700; margin-bottom: 6px; }
-        .bv-card.best .bv-pct { color: #68d391; }
-        .bv-card.worst .bv-pct { color: #fc8181; }
-        .bv-card .bv-detail { font-size: 0.85em; color: #a0aec0; line-height: 1.8; }
-        .bv-card .bv-detail span { color: #e2e8f0; }
-        .assump { background: #0d1117; border: 1px solid #2d3748; border-radius: 8px; padding: 14px 18px; margin-bottom: 18px; font-size: 0.86em; color: #a0aec0; }
-        .assump span { color: #f6ad55; font-weight: 600; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9em; }
+        th { background: rgba(253, 181, 21, 0.1); color: var(--uwaterloo-gold); padding: 12px 15px; text-align: left; font-weight: 600; border-bottom: 1px solid rgba(253, 181, 21, 0.2); }
+        td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-secondary); }
+        tr:hover td { background: rgba(255,255,255,0.02); color: #fff; }
+        
+        .pos { color: var(--pos-color) !important; font-weight: 600; }
+        .neg { color: var(--neg-color) !important; }
+        
+        .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 25px 0; }
+        .chart-box { background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; }
+        .chart-box h4 { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px; text-align: center; font-weight: 600; }
+        
+        .insight { background: rgba(253, 181, 21, 0.05); border-left: 4px solid var(--uwaterloo-gold); padding: 20px; margin: 15px 0; border-radius: 0 8px 8px 0; }
+        .insight.green { border-left-color: var(--pos-color); background: rgba(74, 222, 128, 0.05); }
+        .insight.orange { border-left-color: #f6ad55; background: rgba(246, 173, 85, 0.05); }
+        .insight p { color: var(--text-secondary); font-size: 0.95em; }
+        .insight strong { color: #fff; font-weight: 600; }
+        
+        .bv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        .bv-card { border-radius: 12px; padding: 25px; background: var(--dark-bg); }
+        .bv-card.best { border: 1px solid var(--pos-color); position: relative; overflow: hidden; }
+        .bv-card.best::before { content:''; position: absolute; top:0; left:0; width:100%; height:4px; background: var(--pos-color); }
+        .bv-card.worst { border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+        .bv-card.worst::before { content:''; position: absolute; top:0; left:0; width:100%; height:4px; background: var(--neg-color); }
+        
+        .bv-card h4 { font-size: 1.05em; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .bv-card.best h4 { color: var(--pos-color); }
+        .bv-card.worst h4 { color: var(--text-secondary); }
+        .bv-card .bv-pct { font-size: 3em; font-weight: 800; margin-bottom: 10px; line-height: 1; }
+        .bv-card.best .bv-pct { color: var(--pos-color); }
+        .bv-card.worst .bv-pct { color: var(--neg-color); }
+        .bv-card .bv-detail { font-size: 0.9em; color: var(--text-secondary); line-height: 2; }
+        .bv-card .bv-detail span { color: #fff; font-weight: 600; width: 110px; display: inline-block; }
+        
+        .assump { background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 15px 20px; margin-bottom: 20px; font-size: 0.9em; color: var(--text-secondary); }
+        .assump span { color: var(--uwaterloo-gold); font-weight: 600; }
+        
         .dl-btn {
-            background: linear-gradient(135deg, #2d3561, #4a5568); border: 1px solid #7c9ef5;
-            color: #7c9ef5; padding: 11px 22px; border-radius: 8px; cursor: pointer;
-            font-size: 0.95em; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+            background: var(--uwaterloo-gold); border: none;
+            color: #000; padding: 15px 30px; border-radius: 8px; cursor: pointer;
+            font-size: 1em; font-weight: 700; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
+            font-family: 'Inter', sans-serif;
         }
-        .dl-btn:hover { background: linear-gradient(135deg, #3d4571, #5a6578); color: #fff; }
-        .footer { text-align: center; color: #4a5568; font-size: 0.83em; padding: 20px; border-top: 1px solid #2d3748; margin-top: 30px; }
-        .rank-badge { display: inline-block; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-size: 0.8em; font-weight: 700; margin-right: 6px; }
-        .rank-1 { background: #b7860b; color: #fff; }
-        .rank-2 { background: #6b7280; color: #fff; }
-        .rank-3 { background: #92400e; color: #fff; }
+        .dl-btn:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(253, 181, 21, 0.2); }
+        
+        .footer { text-align: center; color: var(--text-secondary); font-size: 0.9em; padding: 30px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px; }
+        
+        .rank-badge { display: inline-block; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 0.85em; font-weight: 700; margin-right: 10px; background: rgba(255,255,255,0.1); color: #fff; }
+        .rank-1 { background: var(--uwaterloo-gold); color: #000; }
+        .rank-2 { background: #e2e8f0; color: #000; }
+        .rank-3 { background: #cd7f32; color: #fff; }
+        
         @media (max-width: 768px) {
             .chart-grid, .bv-grid { grid-template-columns: 1fr; }
             .kpi-grid { grid-template-columns: 1fr 1fr; }
+            .section { padding: 20px; }
+        }
+
+        /* Scroll Animations */
+        .fade-in-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
-
-    <script>
-      
-      const files = {
-        
-      }
-    
-
-
-      window.fs = {}
-      window.fs.readFile = (fileName) => {
-        // return array buffer
-        return new Promise((resolve) => {
-          const content = files[fileName]
-          const decoded = atob(content)
-          const arr = new Uint8Array(decoded.length)
-          for (let i = 0; i < decoded.length; i++) {
-            arr[i] = decoded.charCodeAt(i)
-          }
-          resolve(arr)
-        })
-      }
-
-      // stub out window.user.get, window.db.get and window.db.set so that it works when you download the html doc
-      window.db = {}
-      window.db.get = (key) => {
-        // use localStorage to store the artifact
-        const value = localStorage.getItem(key)
-        if (value) {
-          return JSON.parse(value)
-        }
-
-        return null
-      }
-
-      window.db.set = (key, value) => {
-        // use localStorage to store the artifact
-        localStorage.setItem(key, JSON.stringify(value))
-      }
-
-      window.user = {}
-      window.user.get = () => {
-        return {
-          userId: "user-id-placeholder",
-          email: "placeholder@test.com"
-        }
-      }
-
-    </script>
-    </head>
+</head>
 <body>
-<div class="container">
+<div class="bg-animation"></div>
 
-    <!-- HEADER -->
-    <div class="header">
+<div class="container">
+    <a href="index.html" class="back-link">← Back to Portfolio</a>
+
+    <div class="header fade-in-scroll">
         <h1>🔧 Automotive DIY Repair Cost Analysis</h1>
         <p class="sub">A Data-Driven Study of DIY vs. Professional Mechanic Repair Costs</p>
         <p class="sub">March 2026 &nbsp;|&nbsp; Two-Vehicle Case Study &nbsp;|&nbsp; 23 Repairs Analyzed</p>
-        <p class="author">Prepared by: Toni &nbsp;|&nbsp; Entry-Level Data Analyst Portfolio Project</p>
+        <p class="author">Prepared by: Toni Ciobanu &nbsp;|&nbsp; Data Analyst Portfolio Project</p>
     </div>
 
-    <!-- EXECUTIVE SUMMARY -->
-    <div class="section">
+    <div class="section fade-in-scroll">
         <h2>📊 Executive Summary</h2>
         <div class="kpi-grid">
-            <div class="kpi blue"><div class="val">$1,651.59</div><div class="lbl">Total DIY Parts Cost</div></div>
-            <div class="kpi orange"><div class="val">$11,740.85</div><div class="lbl">Estimated Mechanic Cost</div></div>
+            <div class="kpi"><div class="val">$1,651.59</div><div class="lbl">Total DIY Parts Cost</div></div>
+            <div class="kpi"><div class="val">$11,740.85</div><div class="lbl">Estimated Mechanic Cost</div></div>
             <div class="kpi green"><div class="val">$10,089.26</div><div class="lbl">Total Savings</div></div>
             <div class="kpi green"><div class="val">85.93%</div><div class="lbl">Overall Savings Rate</div></div>
-            <div class="kpi blue"><div class="val">23</div><div class="lbl">Distinct Repairs</div></div>
-            <div class="kpi purple"><div class="val">$438.66</div><div class="lbl">Avg Savings Per Repair</div></div>
+            <div class="kpi gold"><div class="val">23</div><div class="lbl">Distinct Repairs</div></div>
+            <div class="kpi gold"><div class="val">$438.66</div><div class="lbl">Avg Savings Per Repair</div></div>
         </div>
         <div class="assump">
             <strong>Methodology:</strong> Mechanic estimates sourced from <span>actual dealership quotes, website pricing, and standard labour hours</span>. DIY parts costs are exact receipt figures. Currency: <span>CAD</span>.
         </div>
-        <div class="insight green">
+        <div class="insight">
             <p><strong>Key Finding:</strong> Across 23 repairs on two vehicles, DIY methods saved <strong>$10,089.26 (85.93%)</strong> compared to verified mechanic/dealership estimates. Both vehicles achieved nearly identical savings rates — Pontiac at <strong>85.50%</strong> and Elantra at <strong>86.36%</strong>.</p>
         </div>
     </div>
 
-    <!-- BEST & WORST VALUE -->
-    <div class="section">
+    <div class="section fade-in-scroll">
         <h2>🏆 Best & Worst Value DIY Repairs</h2>
         <div class="bv-grid">
             <div class="bv-card best">
@@ -200,7 +254,7 @@
                     <div><span>Savings:</span> $243.50</div>
                     <div><span>ROI:</span> 3,746%</div>
                     <div><span>Source:</span> RockAuto</div>
-                    <div style="margin-top:8px; color:#68d391; font-size:0.9em;">A $6.50 part that would cost $250 at a shop — the single highest-leverage repair in the dataset.</div>
+                    <div style="margin-top:12px; color:var(--pos-color); line-height:1.4;">A $6.50 part that would cost $250 at a shop — the single highest-leverage repair in the dataset.</div>
                 </div>
             </div>
             <div class="bv-card worst">
@@ -214,38 +268,27 @@
                     <div><span>Savings:</span> $79.66</div>
                     <div><span>ROI:</span> 36.2%</div>
                     <div><span>Source:</span> Local Shop</div>
-                    <div style="margin-top:8px; color:#fc8181; font-size:0.9em;">Battery was bought at retail price. Mechanic markup is low on batteries — least efficient DIY in this dataset.</div>
+                    <div style="margin-top:12px; color:var(--neg-color); line-height:1.4;">Battery was bought at retail price. Mechanic markup is low on batteries — least efficient DIY in this dataset.</div>
                 </div>
             </div>
         </div>
 
         <h3>Top 5 Best Value Repairs</h3>
-        <table>
-            <thead><tr><th>Rank</th><th>Vehicle</th><th>Repair</th><th>DIY Cost</th><th>Mechanic Est.</th><th>Savings</th><th>Savings %</th></tr></thead>
-            <tbody>
-                <tr><td><span class="rank-badge rank-1">1</span></td><td>Pontiac G6</td><td>Sway Bar Link</td><td>$6.50</td><td>$250.00</td><td class="pos">$243.50</td><td class="pos">97.40%</td></tr>
-                <tr><td><span class="rank-badge rank-2">2</span></td><td>Elantra 2016</td><td>Front Bumper Repair</td><td>$30.00</td><td>$1,075.76</td><td class="pos">$1,045.76</td><td class="pos">97.21%</td></tr>
-                <tr><td><span class="rank-badge rank-3">3</span></td><td>Pontiac G6</td><td>Tie Rod Ends</td><td>$24.68</td><td>$450.00</td><td class="pos">$425.32</td><td class="pos">94.52%</td></tr>
-                <tr><td>4</td><td>Elantra 2016</td><td>Hood Replacement (Junkyard)</td><td>$100.00</td><td>$1,342.68</td><td class="pos">$1,242.68</td><td class="pos">92.55%</td></tr>
-                <tr><td>5</td><td>Pontiac G6</td><td>CV Axle (Crash Repair)</td><td>$41.85</td><td>$550.00</td><td class="pos">$508.15</td><td class="pos">92.39%</td></tr>
-            </tbody>
-        </table>
-
-        <h3>Bottom 5 Worst Value Repairs</h3>
-        <table>
-            <thead><tr><th>Rank</th><th>Vehicle</th><th>Repair</th><th>DIY Cost</th><th>Mechanic Est.</th><th>Savings</th><th>Savings %</th></tr></thead>
-            <tbody>
-                <tr><td>1 (Worst)</td><td>Elantra 2016</td><td>Battery Replacement</td><td>$220.34</td><td>$300.00</td><td class="neg">$79.66</td><td class="neg">26.55%</td></tr>
-                <tr><td>2</td><td>Elantra 2016</td><td>Wiper Blades</td><td>$23.00</td><td>$41.98</td><td class="neg">$18.98</td><td class="neg">45.21%</td></tr>
-                <tr><td>3</td><td>Pontiac G6</td><td>Tire Replacements x2</td><td>$150.00</td><td>$450.00</td><td class="neg">$300.00</td><td class="neg">66.67%</td></tr>
-                <tr><td>4</td><td>Pontiac G6</td><td>BOSE Speakers (Front & Rear)</td><td>$224.58</td><td>$700.00</td><td class="neg">$475.42</td><td class="neg">67.92%</td></tr>
-                <tr><td>5</td><td>Elantra 2016</td><td>OEM Oil Filter (Stalling Fix)</td><td>$45.00</td><td>$150.00</td><td class="neg">$105.00</td><td class="neg">70.00%</td></tr>
-            </tbody>
-        </table>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead><tr><th>Rank</th><th>Vehicle</th><th>Repair</th><th>DIY Cost</th><th>Mechanic Est.</th><th>Savings</th><th>Savings %</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="rank-badge rank-1">1</span></td><td>Pontiac G6</td><td>Sway Bar Link</td><td>$6.50</td><td>$250.00</td><td class="pos">$243.50</td><td class="pos">97.40%</td></tr>
+                    <tr><td><span class="rank-badge rank-2">2</span></td><td>Elantra 2016</td><td>Front Bumper Repair</td><td>$30.00</td><td>$1,075.76</td><td class="pos">$1,045.76</td><td class="pos">97.21%</td></tr>
+                    <tr><td><span class="rank-badge rank-3">3</span></td><td>Pontiac G6</td><td>Tie Rod Ends</td><td>$24.68</td><td>$450.00</td><td class="pos">$425.32</td><td class="pos">94.52%</td></tr>
+                    <tr><td><span class="rank-badge">4</span></td><td>Elantra 2016</td><td>Hood Replacement</td><td>$100.00</td><td>$1,342.68</td><td class="pos">$1,242.68</td><td class="pos">92.55%</td></tr>
+                    <tr><td><span class="rank-badge">5</span></td><td>Pontiac G6</td><td>CV Axle</td><td>$41.85</td><td>$550.00</td><td class="pos">$508.15</td><td class="pos">92.39%</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- SQL SECTION -->
-    <div class="section">
+    <div class="section fade-in-scroll">
         <h2>🗄️ SQL Database Schema & Queries</h2>
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('schema', this)">Schema (DDL)</button>
@@ -254,11 +297,10 @@
             <button class="tab-btn" onclick="switchTab('results', this)">Query Results</button>
         </div>
 
-        <!-- SCHEMA -->
         <div id="tab-schema" class="tab-content active">
             <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm">-- ============================================================
 -- AUTOMOTIVE REPAIR COST ANALYSIS DATABASE
--- Author: Toni | Portfolio Project | March 2026
+-- Author: Toni Ciobanu | Portfolio Project
 -- ============================================================</span>
 
 <span class="kw">CREATE TABLE</span> <span class="tbl">vehicles</span> (
@@ -274,7 +316,6 @@
     category_id   <span class="kw">INT</span>          <span class="kw">PRIMARY KEY</span>,
     category_name <span class="kw">VARCHAR</span>(<span class="num">100</span>) <span class="kw">NOT NULL</span>,
     category_type <span class="kw">VARCHAR</span>(<span class="num">50</span>)
-    <span class="cm">-- Types: 'suspension', 'electrical', 'safety', 'maintenance', 'brakes'</span>
 );
 
 <span class="kw">CREATE TABLE</span> <span class="tbl">repair_line_items</span> (
@@ -283,7 +324,7 @@
     category_id        <span class="kw">INT</span>             <span class="kw">REFERENCES</span> <span class="tbl">repair_categories</span>(category_id),
     description        <span class="kw">VARCHAR</span>(<span class="num">200</span>)    <span class="kw">NOT NULL</span>,
     diy_parts_cost     <span class="kw">DECIMAL</span>(<span class="num">10,2</span>)  <span class="kw">NOT NULL</span>,
-    mechanic_est_total <span class="kw">DECIMAL</span>(<span class="num">10,2</span>),  <span class="cm">-- Verified dealership/mechanic quote</span>
+    mechanic_est_total <span class="kw">DECIMAL</span>(<span class="num">10,2</span>),  <span class="cm">-- Verified quote</span>
     savings            <span class="kw">DECIMAL</span>(<span class="num">10,2</span>),  <span class="cm">-- mechanic_est_total - diy_parts_cost</span>
     savings_pct        <span class="kw">DECIMAL</span>(<span class="num">5,2</span>),   <span class="cm">-- savings / mechanic_est_total * 100</span>
     parts_source       <span class="kw">VARCHAR</span>(<span class="num">50</span>),
@@ -291,54 +332,26 @@
 );</div>
         </div>
 
-        <!-- INSERTS -->
         <div id="tab-inserts" class="tab-content">
-            <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="kw">INSERT INTO</span> <span class="tbl">vehicles</span> <span class="kw">VALUES</span>
+            <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm">-- Data snippet. See full dataset via download button below.</span>
+<span class="kw">INSERT INTO</span> <span class="tbl">vehicles</span> <span class="kw">VALUES</span>
     (<span class="num">1</span>, <span class="str">'Pontiac'</span>, <span class="str">'G6'</span>,     <span class="num">2009</span>, <span class="num">130000</span>, <span class="str">'2025-01-01'</span>),
     (<span class="num">2</span>, <span class="str">'Hyundai'</span>, <span class="str">'Elantra'</span>, <span class="num">2016</span>, <span class="num">230000</span>, <span class="str">'2025-06-01'</span>);
 
 <span class="kw">INSERT INTO</span> <span class="tbl">repair_categories</span> <span class="kw">VALUES</span>
     (<span class="num">1</span>, <span class="str">'Suspension & Steering'</span>,   <span class="str">'suspension'</span>),
-    (<span class="num">2</span>, <span class="str">'Electrical & Audio'</span>,      <span class="str">'electrical'</span>),
-    (<span class="num">3</span>, <span class="str">'General Maintenance'</span>,     <span class="str">'maintenance'</span>),
-    (<span class="num">4</span>, <span class="str">'Brakes & Rotors'</span>,         <span class="str">'brakes'</span>),
-    (<span class="num">5</span>, <span class="str">'Safety Inspection Items'</span>, <span class="str">'safety'</span>);
+    (<span class="num">2</span>, <span class="str">'Electrical & Audio'</span>,      <span class="str">'electrical'</span>);
 
-<span class="cm">-- (item_id, vehicle_id, cat_id, description, diy_cost, mechanic_est, savings, savings_pct, source)</span>
 <span class="kw">INSERT INTO</span> <span class="tbl">repair_line_items</span>
     (item_id, vehicle_id, category_id, description, diy_parts_cost, mechanic_est_total, savings, savings_pct, parts_source)
 <span class="kw">VALUES</span>
-<span class="cm">-- Pontiac G6 2009</span>
     ( <span class="num">1</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="str">'CV Axle (Crash Repair)'</span>,       <span class="num">41.85</span>,  <span class="num">550.00</span>,   <span class="num">508.15</span>, <span class="num">92.39</span>, <span class="str">'RockAuto'</span>),
-    ( <span class="num">2</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="str">'Control Arm (Crash Repair)'</span>,   <span class="num">62.24</span>,  <span class="num">800.00</span>,   <span class="num">737.76</span>, <span class="num">92.22</span>, <span class="str">'RockAuto'</span>),
-    ( <span class="num">3</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="str">'Tie Rod Ends'</span>,                 <span class="num">24.68</span>,  <span class="num">450.00</span>,   <span class="num">425.32</span>, <span class="num">94.52</span>, <span class="str">'RockAuto'</span>),
-    ( <span class="num">4</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="str">'Sway Bar Link'</span>,                <span class="num">6.50</span>,   <span class="num">250.00</span>,   <span class="num">243.50</span>, <span class="num">97.40</span>, <span class="str">'RockAuto'</span>),
-    ( <span class="num">5</span>, <span class="num">1</span>, <span class="num">2</span>, <span class="str">'BOSE Speakers (Front & Rear)'</span>, <span class="num">224.58</span>, <span class="num">700.00</span>,   <span class="num">475.42</span>, <span class="num">67.92</span>, <span class="str">'Amazon'</span>),
-    ( <span class="num">6</span>, <span class="num">1</span>, <span class="num">3</span>, <span class="str">'Tire Replacements x2'</span>,         <span class="num">150.00</span>, <span class="num">450.00</span>,   <span class="num">300.00</span>, <span class="num">66.67</span>, <span class="str">'Local Shop'</span>),
-    ( <span class="num">7</span>, <span class="num">1</span>, <span class="num">3</span>, <span class="str">'Exhaust Clamp & Spot Welds'</span>,   <span class="num">56.50</span>,  <span class="num">500.00</span>,   <span class="num">443.50</span>, <span class="num">88.70</span>, <span class="str">'Amazon'</span>),
-    ( <span class="num">8</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="str">'VVT Solenoids'</span>,                <span class="num">63.06</span>,  <span class="num">350.00</span>,   <span class="num">286.94</span>, <span class="num">82.00</span>, <span class="str">'RockAuto'</span>),
-    ( <span class="num">9</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="str">'Brake Pads and Rotors x2'</span>,    <span class="num">135.28</span>, <span class="num">1000.00</span>, <span class="num">864.72</span>, <span class="num">86.47</span>, <span class="str">'RockAuto'</span>),
-    (<span class="num">10</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="str">'Control Arm'</span>,                  <span class="num">83.41</span>,  <span class="num">800.00</span>,   <span class="num">716.59</span>, <span class="num">89.57</span>, <span class="str">'RockAuto'</span>),
-<span class="cm">-- Hyundai Elantra 2016</span>
-    (<span class="num">11</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="str">'OEM Oil Filter (Stalling Fix)'</span>, <span class="num">45.00</span>,  <span class="num">150.00</span>,   <span class="num">105.00</span>, <span class="num">70.00</span>, <span class="str">'Dealership'</span>),
-    (<span class="num">12</span>, <span class="num">2</span>, <span class="num">1</span>, <span class="str">'Rear Shocks'</span>,                  <span class="num">64.98</span>,  <span class="num">475.00</span>,   <span class="num">410.02</span>, <span class="num">86.32</span>, <span class="str">'RockAuto'</span>),
-    (<span class="num">13</span>, <span class="num">2</span>, <span class="num">4</span>, <span class="str">'Front Rotors & Brake Pads'</span>,   <span class="num">58.44</span>,  <span class="num">500.00</span>,   <span class="num">441.56</span>, <span class="num">88.31</span>, <span class="str">'RockAuto'</span>),
-    (<span class="num">14</span>, <span class="num">2</span>, <span class="num">4</span>, <span class="str">'Rear Rotors & Brake Pads'</span>,    <span class="num">85.75</span>,  <span class="num">500.00</span>,   <span class="num">414.25</span>, <span class="num">82.85</span>, <span class="str">'RockAuto'</span>),
-    (<span class="num">15</span>, <span class="num">2</span>, <span class="num">2</span>, <span class="str">'Battery Replacement'</span>,         <span class="num">220.34</span>, <span class="num">300.00</span>,    <span class="num">79.66</span>, <span class="num">26.55</span>, <span class="str">'Local Shop'</span>),
-    (<span class="num">16</span>, <span class="num">2</span>, <span class="num">5</span>, <span class="str">'Front Bumper Repair'</span>,         <span class="num">30.00</span>,  <span class="num">1075.76</span>, <span class="num">1045.76</span>, <span class="num">97.21</span>, <span class="str">'Amazon'</span>),
-    (<span class="num">17</span>, <span class="num">2</span>, <span class="num">5</span>, <span class="str">'Hood Replacement (Junkyard)'</span>, <span class="num">100.00</span>, <span class="num">1342.68</span>, <span class="num">1242.68</span>, <span class="num">92.55</span>, <span class="str">'Junkyard'</span>),
-    (<span class="num">18</span>, <span class="num">2</span>, <span class="num">1</span>, <span class="str">'Left Front Control Arm'</span>,      <span class="num">58.49</span>,  <span class="num">442.21</span>,   <span class="num">383.72</span>, <span class="num">86.77</span>, <span class="str">'RockAuto'</span>),
-    (<span class="num">19</span>, <span class="num">2</span>, <span class="num">1</span>, <span class="str">'Right Front Control Arm'</span>,     <span class="num">58.49</span>,  <span class="num">442.21</span>,   <span class="num">383.72</span>, <span class="num">86.77</span>, <span class="str">'RockAuto'</span>),
-    (<span class="num">20</span>, <span class="num">2</span>, <span class="num">5</span>, <span class="str">'Neutral Safety Switch'</span>,       <span class="num">34.00</span>,  <span class="num">438.21</span>,   <span class="num">404.21</span>, <span class="num">92.24</span>, <span class="str">'Amazon'</span>),
-    (<span class="num">21</span>, <span class="num">2</span>, <span class="num">5</span>, <span class="str">'Brake Light Bulb Housing'</span>,    <span class="num">5.00</span>,   <span class="num">57.80</span>,     <span class="num">52.80</span>, <span class="num">91.35</span>, <span class="str">'Junkyard'</span>),
-    (<span class="num">22</span>, <span class="num">2</span>, <span class="num">5</span>, <span class="str">'Wiper Blades (28" & 14")'</span>,   <span class="num">23.00</span>,  <span class="num">41.98</span>,     <span class="num">18.98</span>, <span class="num">45.21</span>, <span class="str">'Amazon'</span>),
-    (<span class="num">23</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="str">'PCV Valve'</span>,                   <span class="num">20.00</span>,  <span class="num">125.00</span>,   <span class="num">105.00</span>, <span class="num">84.00</span>, <span class="str">'Amazon'</span>);</div>
+    ( <span class="num">4</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="str">'Sway Bar Link'</span>,                <span class="num">6.50</span>,   <span class="num">250.00</span>,   <span class="num">243.50</span>, <span class="num">97.40</span>, <span class="str">'RockAuto'</span>);</div>
         </div>
 
-        <!-- QUERIES -->
         <div id="tab-queries" class="tab-content">
             <h3>Query 1: Cost Summary by Vehicle</h3>
-            <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm">-- Q1: Total DIY vs Mechanic Cost by Vehicle</span>
+            <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm">-- Total DIY vs Mechanic Cost by Vehicle</span>
 <span class="kw">SELECT</span>
     v.make || <span class="str">' '</span> || v.model || <span class="str">' '</span> || v.year    <span class="kw">AS</span> vehicle,
     v.odometer_km,
@@ -352,125 +365,66 @@
 <span class="kw">GROUP BY</span> v.vehicle_id, v.make, v.model, v.year, v.odometer_km
 <span class="kw">ORDER BY</span> total_savings <span class="kw">DESC</span>;</div>
 
-            <h3>Query 2: Savings by Category</h3>
-            <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm">-- Q2: Cost breakdown and savings rate by repair category</span>
+            <h3>Query 2: Best & Worst Value Repairs (Window Function)</h3>
+            <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm">-- Rank all repairs by savings % using RANK() window function</span>
 <span class="kw">SELECT</span>
-    rc.category_name,
-    <span class="fn">COUNT</span>(r.item_id)                                        <span class="kw">AS</span> num_repairs,
-    <span class="fn">ROUND</span>(<span class="fn">SUM</span>(r.diy_parts_cost), <span class="num">2</span>)                        <span class="kw">AS</span> diy_cost,
-    <span class="fn">ROUND</span>(<span class="fn">SUM</span>(r.mechanic_est_total), <span class="num">2</span>)                    <span class="kw">AS</span> mechanic_cost,
-    <span class="fn">ROUND</span>(<span class="fn">SUM</span>(r.savings), <span class="num">2</span>)                               <span class="kw">AS</span> total_savings,
-    <span class="fn">ROUND</span>(<span class="fn">SUM</span>(r.savings) / <span class="fn">SUM</span>(r.mechanic_est_total) * <span class="num">100</span>, <span class="num">2</span>) <span class="kw">AS</span> savings_pct
-<span class="kw">FROM</span> <span class="tbl">repair_categories</span> rc
-<span class="kw">JOIN</span> <span class="tbl">repair_line_items</span> r <span class="kw">ON</span> rc.category_id = r.category_id
-<span class="kw">GROUP BY</span> rc.category_id, rc.category_name
-<span class="kw">ORDER BY</span> total_savings <span class="kw">DESC</span>;</div>
-
-            <h3>Query 3: Parts Source ROI</h3>
-            <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm">-- Q3: Which parts source provided the best ROI?</span>
-<span class="kw">SELECT</span>
-    r.parts_source,
-    <span class="fn">COUNT</span>(*)                                                <span class="kw">AS</span> items_purchased,
-    <span class="fn">ROUND</span>(<span class="fn">SUM</span>(r.diy_parts_cost), <span class="num">2</span>)                        <span class="kw">AS</span> total_spent,
-    <span class="fn">ROUND</span>(<span class="fn">SUM</span>(r.savings), <span class="num">2</span>)                               <span class="kw">AS</span> total_savings,
-    <span class="fn">ROUND</span>(<span class="fn">AVG</span>(r.savings), <span class="num">2</span>)                               <span class="kw">AS</span> avg_savings_per_item,
-    <span class="fn">ROUND</span>(<span class="fn">SUM</span>(r.savings) / <span class="fn">NULLIF</span>(<span class="fn">SUM</span>(r.diy_parts_cost), <span class="num">0</span>) * <span class="num">100</span>, <span class="num">1</span>) <span class="kw">AS</span> roi_pct
-<span class="kw">FROM</span> <span class="tbl">repair_line_items</span> r
-<span class="kw">GROUP BY</span> r.parts_source
-<span class="kw">ORDER BY</span> total_savings <span class="kw">DESC</span>;</div>
-
-            <h3>Query 4: Best & Worst Value Repairs (Window Function)</h3>
-            <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm">-- Q4: Rank all repairs by savings % using RANK() window function</span>
-<span class="kw">SELECT</span>
-    v.make || <span class="str">' '</span> || v.model                              <span class="kw">AS</span> vehicle,
+    v.make || <span class="str">' '</span> || v.model                      <span class="kw">AS</span> vehicle,
     r.description,
     rc.category_name,
     r.diy_parts_cost,
     r.mechanic_est_total,
     r.savings,
     r.savings_pct,
-    <span class="fn">RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> r.savings_pct <span class="kw">DESC</span>)           <span class="kw">AS</span> best_value_rank,
-    <span class="fn">RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> r.savings_pct <span class="kw">ASC</span>)            <span class="kw">AS</span> worst_value_rank
+    <span class="fn">RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> r.savings_pct <span class="kw">DESC</span>)     <span class="kw">AS</span> best_value_rank,
+    <span class="fn">RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> r.savings_pct <span class="kw">ASC</span>)      <span class="kw">AS</span> worst_value_rank
 <span class="kw">FROM</span> <span class="tbl">repair_line_items</span> r
 <span class="kw">JOIN</span> <span class="tbl">vehicles</span> v <span class="kw">ON</span> r.vehicle_id = v.vehicle_id
 <span class="kw">JOIN</span> <span class="tbl">repair_categories</span> rc <span class="kw">ON</span> r.category_id = rc.category_id
 <span class="kw">ORDER BY</span> best_value_rank;</div>
-
-            <h3>Query 5: Cumulative Spend Tracking (CTE + Window)</h3>
-            <div class="sql-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><span class="cm">-- Q5: Cumulative spend by category using CTE and running total</span>
-<span class="kw">WITH</span> category_spend <span class="kw">AS</span> (
-    <span class="kw">SELECT</span>
-        rc.category_name,
-        <span class="fn">SUM</span>(r.diy_parts_cost)      <span class="kw">AS</span> cat_diy,
-        <span class="fn">SUM</span>(r.mechanic_est_total)  <span class="kw">AS</span> cat_mechanic,
-        <span class="fn">SUM</span>(r.savings)             <span class="kw">AS</span> cat_savings
-    <span class="kw">FROM</span> <span class="tbl">repair_line_items</span> r
-    <span class="kw">JOIN</span> <span class="tbl">repair_categories</span> rc <span class="kw">ON</span> r.category_id = rc.category_id
-    <span class="kw">GROUP BY</span> rc.category_name
-)
-<span class="kw">SELECT</span>
-    category_name,
-    <span class="fn">ROUND</span>(cat_diy, <span class="num">2</span>)                                    <span class="kw">AS</span> diy_spend,
-    <span class="fn">ROUND</span>(cat_mechanic, <span class="num">2</span>)                                <span class="kw">AS</span> mechanic_est,
-    <span class="fn">ROUND</span>(cat_savings, <span class="num">2</span>)                                 <span class="kw">AS</span> savings,
-    <span class="fn">ROUND</span>(<span class="fn">SUM</span>(cat_diy) <span class="kw">OVER</span> (
-        <span class="kw">ORDER BY</span> cat_savings <span class="kw">DESC</span>
-        <span class="kw">ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>
-    ), <span class="num">2</span>)                                                 <span class="kw">AS</span> cumulative_diy,
-    <span class="fn">ROUND</span>(cat_savings / cat_mechanic * <span class="num">100</span>, <span class="num">2</span>)           <span class="kw">AS</span> savings_pct
-<span class="kw">FROM</span> category_spend
-<span class="kw">ORDER BY</span> savings <span class="kw">DESC</span>;</div>
         </div>
 
-        <!-- RESULTS -->
         <div id="tab-results" class="tab-content">
-            <h3>Q1 Results: By Vehicle</h3>
+            <div style="overflow-x:auto;">
+                <h3>Q1 Results: By Vehicle</h3>
+                <table>
+                    <thead><tr><th>Vehicle</th><th>Odometer</th><th>Repairs</th><th>DIY Cost</th><th>Mechanic Est.</th><th>Savings</th><th>Savings %</th></tr></thead>
+                    <tbody>
+                        <tr><td>Pontiac G6 2009</td><td>130,000 km</td><td>10</td><td>$848.10</td><td>$5,850.00</td><td class="pos">$5,001.90</td><td class="pos">85.50%</td></tr>
+                        <tr><td>Hyundai Elantra 2016</td><td>230,000 km</td><td>13</td><td>$803.49</td><td>$5,890.85</td><td class="pos">$5,087.36</td><td class="pos">86.36%</td></tr>
+                        <tr style="font-weight:700; border-top: 2px solid rgba(253, 181, 21, 0.5);"><td>TOTAL</td><td>—</td><td>23</td><td>$1,651.59</td><td>$11,740.85</td><td class="pos">$10,089.26</td><td class="pos">85.93%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="overflow-x:auto;">
+                <h3>Q2 Results: By Category</h3>
+                <table>
+                    <thead><tr><th>Category</th><th>Repairs</th><th>DIY Cost</th><th>Mechanic Est.</th><th>Savings</th><th>Savings %</th></tr></thead>
+                    <tbody>
+                        <tr><td>Suspension & Steering</td><td>10</td><td>$598.98</td><td>$5,559.42</td><td class="pos">$4,960.44</td><td class="pos">89.23%</td></tr>
+                        <tr><td>Safety Inspection Items</td><td>5</td><td>$192.00</td><td>$2,956.43</td><td class="pos">$2,764.43</td><td class="pos">93.51%</td></tr>
+                        <tr><td>General Maintenance</td><td>4</td><td>$271.50</td><td>$1,225.00</td><td class="pos">$953.50</td><td class="pos">77.84%</td></tr>
+                        <tr><td>Brakes & Rotors</td><td>2</td><td>$144.19</td><td>$1,000.00</td><td class="pos">$855.81</td><td class="pos">85.58%</td></tr>
+                        <tr><td>Electrical & Audio</td><td>2</td><td>$444.92</td><td>$1,000.00</td><td class="pos">$555.08</td><td class="pos">55.51%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>📋 Full Repair Line Item Breakdown</h2>
+        <div style="overflow-x:auto; max-height: 400px; overflow-y: auto;">
             <table>
-                <thead><tr><th>Vehicle</th><th>Odometer</th><th>Repairs</th><th>DIY Cost</th><th>Mechanic Est.</th><th>Savings</th><th>Savings %</th></tr></thead>
-                <tbody>
-                    <tr><td>Pontiac G6 2009</td><td>130,000 km</td><td>10</td><td>$848.10</td><td>$5,850.00</td><td class="pos">$5,001.90</td><td class="pos">85.50%</td></tr>
-                    <tr><td>Hyundai Elantra 2016</td><td>230,000 km</td><td>13</td><td>$803.49</td><td>$5,890.85</td><td class="pos">$5,087.36</td><td class="pos">86.36%</td></tr>
-                    <tr style="font-weight:700; background:#1e2535;"><td>TOTAL</td><td>—</td><td>23</td><td>$1,651.59</td><td>$11,740.85</td><td class="pos">$10,089.26</td><td class="pos">85.93%</td></tr>
-                </tbody>
-            </table>
-            <h3>Q2 Results: By Category</h3>
-            <table>
-                <thead><tr><th>Category</th><th>Repairs</th><th>DIY Cost</th><th>Mechanic Est.</th><th>Savings</th><th>Savings %</th></tr></thead>
-                <tbody>
-                    <tr><td>Suspension & Steering</td><td>10</td><td>$598.98</td><td>$5,559.42</td><td class="pos">$4,960.44</td><td class="pos">89.23%</td></tr>
-                    <tr><td>Safety Inspection Items</td><td>5</td><td>$192.00</td><td>$2,956.43</td><td class="pos">$2,764.43</td><td class="pos">93.51%</td></tr>
-                    <tr><td>General Maintenance</td><td>4</td><td>$271.50</td><td>$1,225.00</td><td class="pos">$953.50</td><td class="pos">77.84%</td></tr>
-                    <tr><td>Brakes & Rotors</td><td>2</td><td>$144.19</td><td>$1,000.00</td><td class="pos">$855.81</td><td class="pos">85.58%</td></tr>
-                    <tr><td>Electrical & Audio</td><td>2</td><td>$444.92</td><td>$1,000.00</td><td class="pos">$555.08</td><td class="pos">55.51%</td></tr>
-                </tbody>
-            </table>
-            <h3>Q3 Results: Parts Source ROI</h3>
-            <table>
-                <thead><tr><th>Source</th><th>Items</th><th>Total Spent</th><th>Total Savings</th><th>Avg/Item</th><th>ROI %</th></tr></thead>
-                <tbody>
-                    <tr><td>RockAuto</td><td>12</td><td>$638.66</td><td class="pos">$5,971.44</td><td class="pos">$497.62</td><td class="pos">935.0%</td></tr>
-                    <tr><td>Amazon</td><td>6</td><td>$390.58</td><td class="pos">$2,793.86</td><td class="pos">$465.64</td><td class="pos">715.3%</td></tr>
-                    <tr><td>Junkyard</td><td>2</td><td>$105.00</td><td class="pos">$1,295.48</td><td class="pos">$647.74</td><td class="pos">1,233.8%</td></tr>
-                    <tr><td>Local Shop</td><td>2</td><td>$370.34</td><td class="pos">$379.66</td><td class="pos">$189.83</td><td class="pos">102.5%</td></tr>
-                    <tr><td>Dealership</td><td>1</td><td>$45.00</td><td class="pos">$105.00</td><td class="pos">$105.00</td><td class="pos">233.3%</td></tr>
-                </tbody>
+                <thead>
+                    <tr><th>Vehicle</th><th>Category</th><th>Description</th><th>DIY Cost</th><th>Mechanic Est.</th><th>Savings</th><th>Savings %</th><th>Source</th></tr>
+                </thead>
+                <tbody id="lineItemBody"></tbody>
             </table>
         </div>
     </div>
 
-    <!-- FULL LINE ITEM TABLE -->
-    <div class="section">
-        <h2>📋 Full Repair Line Item Breakdown</h2>
-        <table>
-            <thead>
-                <tr><th>Vehicle</th><th>Category</th><th>Description</th><th>DIY Cost</th><th>Mechanic Est.</th><th>Savings</th><th>Savings %</th><th>Source</th></tr>
-            </thead>
-            <tbody id="lineItemBody"></tbody>
-        </table>
-    </div>
-
-    <!-- CHARTS -->
-    <div class="section">
+    <div class="section fade-in-scroll">
         <h2>📈 Data Visualizations</h2>
         <div class="chart-grid">
             <div class="chart-box"><h4>DIY vs. Mechanic Cost — By Vehicle</h4><canvas id="c1"></canvas></div>
@@ -482,67 +436,80 @@
         </div>
     </div>
 
-    <!-- INSIGHTS -->
-    <div class="section">
+    <div class="section fade-in-scroll">
         <h2>💡 Key Insights & Findings</h2>
         <h3>1. 85.93% Savings Rate Across Both Vehicles</h3>
         <div class="insight green">
             <p>Across 23 repairs, DIY methods saved <strong>$10,089.26 (85.93%)</strong> vs. verified mechanic/dealership quotes. Both vehicles achieved nearly identical rates — Pontiac <strong>85.50%</strong>, Elantra <strong>86.36%</strong> — suggesting the savings model is consistent regardless of vehicle age.</p>
         </div>
         <h3>2. Junkyard Sourcing = Highest ROI at 1,234%</h3>
-        <div class="insight green">
+        <div class="insight">
             <p>The two junkyard-sourced items (hood $100, brake light housing $5) generated <strong>$1,295.48 in savings</strong> — a <strong>1,234% ROI</strong>. The hood alone saved $1,242.68 vs. dealership pricing of $1,342.68. For structural non-wear parts, junkyard sourcing is unmatched.</p>
         </div>
         <h3>3. Safety Inspection Items: Highest Category Savings Rate (93.51%)</h3>
-        <div class="insight blue">
+        <div class="insight">
             <p>5 safety inspection failure items cost only <strong>$192 DIY</strong> vs. <strong>$2,956.43 at a mechanic</strong> — a <strong>93.51% savings rate</strong>. The front bumper repair ($30 DIY vs. $1,075.76 mechanic) is the single most striking example of DIY value in this dataset.</p>
         </div>
         <h3>4. Best Value: Sway Bar Link (97.4% savings)</h3>
-        <div class="insight purple">
+        <div class="insight">
             <p>A $6.50 sway bar link from RockAuto would cost $250 at a mechanic — a <strong>3,746% ROI</strong> and the highest savings percentage in the dataset. Small suspension components like this represent the highest-leverage DIY repairs.</p>
         </div>
         <h3>5. Worst Value: Battery Replacement (26.55% savings)</h3>
         <div class="insight orange">
             <p>The battery was purchased at retail ($220.34) while the mechanic quote was only $300 — a narrow $79.66 spread. Mechanic markup on batteries is low because they source them at wholesale. <strong>Batteries are the weakest case for DIY</strong> in this dataset.</p>
         </div>
-        <h3>6. Electrical & Audio: Lowest Category Savings Rate (55.51%)</h3>
-        <div class="insight red">
-            <p>Electrical work (speakers + battery) had the lowest savings rate at <strong>55.51%</strong>. The BOSE speakers were premium-priced ($224.58) while mechanic audio installs are relatively affordable. Electrical DIY still saves money, but is the least efficient category compared to suspension or safety work.</p>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>📐 Methodology & Assumptions</h2>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead><tr><th>Parameter</th><th>Detail</th></tr></thead>
+                <tbody>
+                    <tr><td>Mechanic Estimates</td><td>Sourced from actual dealership quotes, website pricing, and standard labour hour estimates</td></tr>
+                    <tr><td>DIY Parts Cost</td><td>Exact figures from receipts provided by the analyst</td></tr>
+                    <tr><td>Currency</td><td>Canadian Dollars (CAD)</td></tr>
+                    <tr><td>SQL Dialect</td><td>Standard SQL (PostgreSQL-compatible) — JOINs, GROUP BY, CTEs, RANK(), running totals</td></tr>
+                    <tr><td>Best Value Definition</td><td>Highest savings % = (savings / mechanic_est) × 100</td></tr>
+                    <tr><td>ROI Definition</td><td>(savings / diy_cost) × 100</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- METHODOLOGY -->
-    <div class="section">
-        <h2>📐 Methodology & Assumptions</h2>
-        <table>
-            <thead><tr><th>Parameter</th><th>Detail</th></tr></thead>
-            <tbody>
-                <tr><td>Mechanic Estimates</td><td>Sourced from actual dealership quotes, website pricing, and standard labour hour estimates</td></tr>
-                <tr><td>DIY Parts Cost</td><td>Exact figures from receipts provided by the analyst</td></tr>
-                <tr><td>Currency</td><td>Canadian Dollars (CAD)</td></tr>
-                <tr><td>Excluded Items</td><td>Vehicle purchase price, registration, insurance, windshield (never performed)</td></tr>
-                <tr><td>SQL Dialect</td><td>Standard SQL (PostgreSQL-compatible) — JOINs, GROUP BY, CTEs, RANK(), running totals</td></tr>
-                <tr><td>Best Value Definition</td><td>Highest savings % = (savings / mechanic_est) × 100</td></tr>
-                <tr><td>Worst Value Definition</td><td>Lowest savings % — still positive, but least efficient use of DIY effort</td></tr>
-                <tr><td>ROI Definition</td><td>(savings / diy_cost) × 100</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- DOWNLOAD -->
-    <div class="section" style="text-align:center;">
+    <div class="section fade-in-scroll" style="text-align:center; padding: 50px 20px;">
         <h2>📥 Export Dataset</h2>
-        <p style="color:#a0aec0; margin-bottom:18px;">Download the complete dataset as CSV for use in Excel, Python, or Tableau.</p>
-        <button class="dl-btn" onclick="downloadCSV()">⬇ Download Full Dataset (CSV)</button>
+        <p style="color:var(--text-secondary); margin-bottom:25px;">Download the complete dataset as CSV for use in Excel, Python, or Tableau.</p>
+        <button class="dl-btn" onclick="downloadCSV()">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            Download Full Dataset (CSV)
+        </button>
     </div>
 
     <div class="footer">
-        <p>Automotive DIY Repair Cost Analysis &nbsp;|&nbsp; Prepared by Toni &nbsp;|&nbsp; March 2026</p>
-        <p style="margin-top:5px;">Portfolio Project — Entry-Level Data Analyst &nbsp;|&nbsp; SQL · Chart.js · JavaScript</p>
+        <p>Automotive DIY Repair Cost Analysis &nbsp;|&nbsp; Prepared by Toni Ciobanu &nbsp;|&nbsp; March 2026</p>
+        <p style="margin-top:10px; color:var(--uwaterloo-gold);">Portfolio Project — Data Analyst &nbsp;|&nbsp; SQL · Chart.js · JavaScript</p>
     </div>
 </div>
 
 <script>
+// Scroll Animation Logic
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in-scroll').forEach(el => observer.observe(el));
+
+// Dataset
 const DATA = [
     { vid:1, v:'Pontiac G6 2009', cat:'Suspension & Steering', desc:'CV Axle (Crash Repair)', diy:41.85, mech:550.00, sav:508.15, pct:92.39, src:'RockAuto' },
     { vid:1, v:'Pontiac G6 2009', cat:'Suspension & Steering', desc:'Control Arm (Crash Repair)', diy:62.24, mech:800.00, sav:737.76, pct:92.22, src:'RockAuto' },
@@ -573,9 +540,9 @@ const DATA = [
 const tbody = document.getElementById('lineItemBody');
 DATA.forEach(r => {
     const tr = document.createElement('tr');
-    const pctColor = r.pct >= 85 ? '#68d391' : r.pct >= 65 ? '#f6ad55' : '#fc8181';
+    const pctColor = r.pct >= 85 ? 'var(--pos-color)' : r.pct >= 65 ? '#f6ad55' : 'var(--neg-color)';
     tr.innerHTML = `
-        <td>${r.vid === 1 ? 'Pontiac G6 2009' : 'Elantra 2016'}</td>
+        <td>${r.vid === 1 ? 'Pontiac G6' : 'Elantra 2016'}</td>
         <td>${r.cat}</td>
         <td>${r.desc}</td>
         <td>$${r.diy.toFixed(2)}</td>
@@ -601,9 +568,17 @@ function copyBlock(btn) {
     const text = block.innerText.replace(/^Copy\n/, '').replace(/^Copied!\n/, '');
     navigator.clipboard.writeText(text).then(() => {
         btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = 'Copy', 2000);
+        btn.style.background = 'var(--pos-color)';
+        setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.style.background = '';
+        }, 2000);
     });
 }
+
+// Chart Configurations
+Chart.defaults.color = '#b0b0b0';
+Chart.defaults.font.family = "'Inter', sans-serif";
 
 // Chart 1: Vehicle compare
 new Chart(document.getElementById('c1'), {
@@ -611,16 +586,16 @@ new Chart(document.getElementById('c1'), {
     data: {
         labels: ['Pontiac G6 2009', 'Hyundai Elantra 2016'],
         datasets: [
-            { label: 'DIY Cost', data: [848.10, 803.49], backgroundColor: 'rgba(124,158,245,0.85)', borderColor: '#7c9ef5', borderWidth: 2 },
-            { label: 'Mechanic Estimate', data: [5850, 5890.85], backgroundColor: 'rgba(252,129,129,0.85)', borderColor: '#fc8181', borderWidth: 2 }
+            { label: 'DIY Cost', data: [848.10, 803.49], backgroundColor: '#FDB515', borderRadius: 4 },
+            { label: 'Mechanic Estimate', data: [5850, 5890.85], backgroundColor: '#333333', borderRadius: 4 }
         ]
     },
     options: {
         responsive: true,
-        plugins: { legend: { labels: { color: '#a0aec0' } } },
+        plugins: { legend: { position: 'bottom' } },
         scales: {
-            x: { ticks: { color: '#a0aec0' }, grid: { color: '#2d3748' } },
-            y: { ticks: { color: '#a0aec0', callback: v => '$' + v.toLocaleString() }, grid: { color: '#2d3748' } }
+            x: { grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { callback: v => '$' + v.toLocaleString(), grid: { color: 'rgba(255,255,255,0.05)' } }
         }
     }
 });
@@ -638,14 +613,14 @@ new Chart(document.getElementById('c2'), {
     type: 'bar',
     data: {
         labels: catLabels,
-        datasets: [{ label: 'Savings %', data: catPcts, backgroundColor: 'rgba(104,211,145,0.85)', borderColor: '#68d391', borderWidth: 2 }]
+        datasets: [{ label: 'Savings %', data: catPcts, backgroundColor: '#FDB515', borderRadius: 4 }]
     },
     options: {
         responsive: true,
         plugins: { legend: { display: false } },
         scales: {
-            x: { ticks: { color: '#a0aec0', maxRotation: 25, font: { size: 10 } }, grid: { color: '#2d3748' } },
-            y: { ticks: { color: '#a0aec0', callback: v => v + '%' }, grid: { color: '#2d3748' }, min: 0, max: 100 }
+            x: { ticks: { maxRotation: 25, font: { size: 10 } }, grid: { display: false } },
+            y: { ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.05)' }, min: 0, max: 100 }
         }
     }
 });
@@ -658,34 +633,39 @@ new Chart(document.getElementById('c3'), {
     type: 'bar',
     data: {
         labels: srcLabels,
-        datasets: [{ label: 'Total Savings ($)', data: srcLabels.map(s => parseFloat(srcMap[s].toFixed(2))), backgroundColor: ['rgba(104,211,145,0.85)', 'rgba(124,158,245,0.85)', 'rgba(183,148,244,0.85)', 'rgba(246,173,85,0.85)', 'rgba(99,179,237,0.85)'], borderWidth: 0 }]
+        datasets: [{ 
+            label: 'Total Savings ($)', 
+            data: srcLabels.map(s => parseFloat(srcMap[s].toFixed(2))), 
+            backgroundColor: ['#FDB515', '#eab308', '#ca8a04', '#a16207', '#713f12'], 
+            borderRadius: 4 
+        }]
     },
     options: {
         indexAxis: 'y',
         responsive: true,
         plugins: { legend: { display: false } },
         scales: {
-            x: { ticks: { color: '#a0aec0', callback: v => '$' + v.toLocaleString() }, grid: { color: '#2d3748' } },
-            y: { ticks: { color: '#a0aec0' }, grid: { color: '#2d3748' } }
+            x: { ticks: { callback: v => '$' + v.toLocaleString() }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { grid: { display: false } }
         }
     }
 });
 
 // Chart 4: All repairs savings % ranked
 const sorted = [...DATA].sort((a, b) => b.pct - a.pct);
-const colors = sorted.map(r => r.pct >= 90 ? 'rgba(104,211,145,0.85)' : r.pct >= 70 ? 'rgba(124,158,245,0.85)' : 'rgba(252,129,129,0.85)');
+const colors = sorted.map(r => r.pct >= 90 ? '#FDB515' : r.pct >= 70 ? '#ca8a04' : '#525252');
 new Chart(document.getElementById('c4'), {
     type: 'bar',
     data: {
         labels: sorted.map(r => r.desc.length > 18 ? r.desc.substring(0, 18) + '…' : r.desc),
-        datasets: [{ label: 'Savings %', data: sorted.map(r => r.pct), backgroundColor: colors, borderWidth: 0 }]
+        datasets: [{ label: 'Savings %', data: sorted.map(r => r.pct), backgroundColor: colors, borderRadius: 2 }]
     },
     options: {
         responsive: true,
         plugins: { legend: { display: false } },
         scales: {
-            x: { ticks: { color: '#a0aec0', maxRotation: 45, font: { size: 9 } }, grid: { color: '#2d3748' } },
-            y: { ticks: { color: '#a0aec0', callback: v => v + '%' }, grid: { color: '#2d3748' }, min: 0, max: 100 }
+            x: { ticks: { maxRotation: 45, font: { size: 9 } }, grid: { display: false } },
+            y: { ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.05)' }, min: 0, max: 100 }
         }
     }
 });
@@ -695,23 +675,15 @@ function downloadCSV() {
     const rows = DATA.map(r => [r.vid, `"${r.v}"`, `"${r.cat}"`, `"${r.desc}"`, r.diy, r.mech, r.sav, r.pct, r.src, 'Yes']);
     const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
     
-    // 1. Create the Blob from your CSV string
     const blob = new Blob([csv], { type: 'text/csv' });
-    
-    // 2. Create a temporary URL for the Blob
     const url = URL.createObjectURL(blob);
-    
-    // 3. Create a temporary anchor element
     const a = document.createElement('a');
     a.href = url;
     a.download = 'automotive_repair_analysis_final.csv';
     
-    // 4. Append the anchor to the body, click it, and remove it
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    
-    // 5. Clean up the URL object to free memory
     URL.revokeObjectURL(url);
 }
 </script>
