@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Synchronization Pipeline | Toni Ciobanu</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --uwaterloo-gold: #FDB515;
+            --uwaterloo-black: #000000;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #FDB515;
+            --accent-hover: #ffcc4d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(253, 181, 21, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.05) 0%, transparent 50%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--uwaterloo-gold);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .project-header h1 {
+            font-size: clamp(2em, 5vw, 3.5em);
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--uwaterloo-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .project-meta {
+            color: var(--text-secondary);
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-section {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(253, 181, 21, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .content-section h2 {
+            color: var(--uwaterloo-gold);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .content-section p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .code-block {
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow-x: auto;
+            font-family: monospace;
+            color: #a3b8cc;
+            line-height: 1.5;
+            margin: 20px 0;
+        }
+
+        .highlight { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+        .keyword { color: #e5c07b; }
+
+        .formula-box {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 4px solid #38bdf8;
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+            font-family: monospace;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .content-section { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+        
+        <div class="project-header">
+            <h1>Automated Calendar Synchronization Pipeline</h1>
+            <div class="project-meta">
+                <strong>Role:</strong> Automation Architect | <strong>Tools:</strong> Google Apps Script, JS, Spreadsheet Logic
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>The Business Problem</h2>
+            <p>Meticulous schedule planning requires centralized visibility. My organization utilizes Synerion for workforce management, but the platform lacks a native integration to export scheduled shifts directly into external calendars like Google Calendar. This disconnect forced a tedious, manual data-entry process to ensure work schedules didn't conflict with personal and academic commitments.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>The Data Transformation</h2>
+            <p>To bridge the gap, I designed a multi-step data transformation pipeline. Synerion allows for a CSV export of monthly schedules, but the output formats dates and times as a single, unusable string (e.g., <code>3/31 - 13:00-21:15</code>).</p>
+            <p>I utilized Google Sheets as an intermediary translation layer, employing string-parsing formulas to isolate and mathematical functions to convert the raw text into valid <code>DateTime</code> objects:</p>
+            
+            <div class="formula-box">
+                // Extracting and calculating Start Time<br>
+                =C23+TIMEVALUE(LEFT(D23,FIND("-",D23)-1))
+            </div>
+            <div class="formula-box">
+                // Extracting and calculating End Time<br>
+                =C23+TIMEVALUE(MID(D23,FIND("-",D23)+1,LEN(D23)))
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>The Apps Script Automation</h2>
+            <p>With the data cleanly formatted, I developed a Google Apps Script bound to the spreadsheet. The script iterates through the parsed data, performs type-checking validation, interacts with the Google Calendar API to generate events, and features error-handling and duplicate-prevention logic.</p>
+            
+            <div class="code-block"><pre><code><span class="comment">/**
+ * Creates Google Calendar events from a spreadsheet schedule.
+ * Includes status checks to prevent duplicate event creation.
+ */</span>
+<span class="highlight">function</span> <span class="keyword">createWorkSchedule</span>() {
+  <span class="highlight">const</span> ss = SpreadsheetApp.getActiveSpreadsheet();
+  <span class="highlight">const</span> sheet = ss.getActiveSheet();
+  <span class="highlight">const</span> values = sheet.getDataRange().getValues();
+  <span class="highlight">const</span> calendar = CalendarApp.getDefaultCalendar();
+  
+  <span class="comment">// Loop through rows, skipping header</span>
+  <span class="highlight">for</span> (<span class="highlight">let</span> i = 1; i < values.length; i++) {
+    <span class="highlight">const</span> row = values[i];
+    <span class="highlight">const</span> startTime = row[0]; 
+    <span class="highlight">const</span> endTime = row[1];   
+    <span class="highlight">const</span> status = row[2];    
+    
+    <span class="comment">// Duplicate prevention</span>
+    <span class="highlight">if</span> (status === <span class="string">"Added"</span>) <span class="highlight">continue</span>; 
+    
+    <span class="comment">// Type checking and validation</span>
+    <span class="highlight">if</span> (!startTime || !endTime || !(startTime <span class="highlight">instanceof</span> Date)) <span class="highlight">continue</span>; 
+
+    <span class="highlight">try</span> {
+      <span class="highlight">const</span> event = calendar.createEvent(<span class="string">"Work"</span>, startTime, endTime);
+      event.addPopupReminder(60);
+      
+      <span class="comment">// Write success status back to spreadsheet</span>
+      sheet.getRange(i + 1, 3).setValue(<span class="string">"Added"</span>);
+      
+    } <span class="highlight">catch</span> (e) {
+      Logger.log(<span class="string">`Failed to create event for row ${i + 1}: ${e}`</span>);
+    }
+  }
+}</code></pre></div>
+        </div>
+
+        <div class="content-section">
+            <h2>Impact & Takeaways</h2>
+            <p>This pipeline completely eliminated manual scheduling processes. By transforming raw CSV data into a functional API payload, I engineered a zero-maintenance workflow that ensures 100% accuracy in calendar syncing, protecting my time and ensuring zero overlap with other obligations.</p>
+        </div>
+    </div>
+</body>
+</html>
