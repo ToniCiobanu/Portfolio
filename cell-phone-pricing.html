@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cell Phone Pricing & Inflation | Toni Ciobanu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --uwaterloo-gold: #FDB515;
+            --uwaterloo-black: #000000;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent-hover: #ffcc4d;
+            --pos-color: #4ade80;
+            --neg-color: #f87171;
+            --c-historic: #94a3b8;
+            --c-business: #a78bfa;
+            --c-iphone: #FDB515;
+            --c-android: #38bdf8;
+            --c-foldable: #f472b6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+        }
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(253, 181, 21, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.05) 0%, transparent 50%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        .back-link {
+            display: inline-flex; align-items: center;
+            color: var(--uwaterloo-gold); text-decoration: none; font-weight: 600;
+            margin-bottom: 30px; transition: transform 0.3s ease;
+        }
+        .back-link:hover { transform: translateX(-5px); }
+
+        .header {
+            background: var(--card-bg);
+            border: 1px solid rgba(253, 181, 21, 0.2);
+            border-radius: 15px;
+            padding: 50px 40px; margin-bottom: 40px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .header h1 {
+            font-size: clamp(2em, 4vw, 3em);
+            font-weight: 800; margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--uwaterloo-gold) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .header .sub { color: var(--text-secondary); font-size: 1.1em; margin-bottom: 8px; }
+        .header .author { color: var(--uwaterloo-gold); font-size: 1.05em; font-weight: 600; margin-top: 15px; }
+
+        .section {
+            background: var(--card-bg);
+            border: 1px solid rgba(253, 181, 21, 0.1);
+            border-radius: 15px;
+            padding: 35px; margin-bottom: 30px;
+        }
+        .section h2 { color: var(--uwaterloo-gold); font-size: 1.5em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .section h3 { color: #fff; font-size: 1.1em; font-weight: 600; margin: 25px 0 15px; }
+
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px; margin-bottom: 25px; }
+        .kpi {
+            background: var(--dark-bg);
+            border: 1px solid rgba(253, 181, 21, 0.1);
+            border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s;
+        }
+        .kpi:hover { transform: translateY(-5px); border-color: var(--uwaterloo-gold); box-shadow: 0 10px 20px rgba(253, 181, 21, 0.1); }
+        .kpi .val { font-size: 1.6em; font-weight: 800; margin-bottom: 5px; color: var(--text-primary); }
+        .kpi .lbl { color: var(--text-secondary); font-size: 0.85em; }
+        .kpi.gold .val { color: var(--uwaterloo-gold); }
+        .kpi.blue .val { color: var(--c-android); }
+        .kpi.pink .val { color: var(--c-foldable); }
+
+        .assump { background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 15px 20px; margin-bottom: 20px; font-size: 0.9em; color: var(--text-secondary); }
+        .assump span { color: var(--uwaterloo-gold); font-weight: 600; }
+
+        .insight { background: rgba(253, 181, 21, 0.05); border-left: 4px solid var(--uwaterloo-gold); padding: 20px; margin: 15px 0; border-radius: 0 8px 8px 0; }
+        .insight.blue { border-left-color: var(--c-android); background: rgba(56, 189, 248, 0.05); }
+        .insight.pink { border-left-color: var(--c-foldable); background: rgba(244, 114, 182, 0.05); }
+        .insight p { color: var(--text-secondary); font-size: 0.95em; }
+        .insight strong { color: #fff; font-weight: 600; }
+
+        /* Controls */
+        .controls { display: flex; flex-wrap: wrap; gap: 25px; align-items: flex-start; margin-bottom: 25px; }
+        .control-group { display: flex; flex-direction: column; gap: 8px; }
+        .control-group .cg-label { font-size: 0.8em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .chip {
+            background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.15); color: var(--text-secondary);
+            padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85em; font-weight: 600;
+            font-family: 'Inter', sans-serif; transition: all 0.2s;
+        }
+        .chip:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+        .chip.active { background: var(--uwaterloo-gold); color: #000; border-color: var(--uwaterloo-gold); }
+        .chip.active[data-cat="android"] { background: var(--c-android); border-color: var(--c-android); }
+        .chip.active[data-cat="business"] { background: var(--c-business); border-color: var(--c-business); }
+        .chip.active[data-cat="historic"] { background: var(--c-historic); border-color: var(--c-historic); }
+        .chip.active[data-cat="foldable"] { background: var(--c-foldable); border-color: var(--c-foldable); }
+
+        .chart-box { background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; margin-top: 10px; }
+        .chart-box h4 { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 15px; text-align: center; font-weight: 600; }
+        .chart-tall { height: 420px; position: relative; }
+        .chart-med { height: 320px; position: relative; }
+
+        .legend-row { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; margin-top: 12px; font-size: 0.8em; color: var(--text-secondary); }
+        .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+
+        /* Calculator */
+        .calc-box { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px; }
+        .calc-box select {
+            background: var(--card-bg); color: #fff; border: 1px solid rgba(253,181,21,0.3); border-radius: 8px;
+            padding: 12px 16px; font-size: 0.95em; font-family: 'Inter', sans-serif; flex: 1; min-width: 240px; cursor: pointer;
+        }
+        .calc-result { flex: 2; min-width: 280px; }
+        .calc-result .big { font-size: 1.6em; font-weight: 800; color: var(--uwaterloo-gold); }
+        .calc-result p { color: var(--text-secondary); font-size: 0.95em; margin-top: 6px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9em; }
+        th { background: rgba(253, 181, 21, 0.1); color: var(--uwaterloo-gold); padding: 12px 15px; text-align: left; font-weight: 600; border-bottom: 1px solid rgba(253, 181, 21, 0.2); cursor: pointer; user-select: none; white-space: nowrap; }
+        th:hover { background: rgba(253, 181, 21, 0.18); }
+        th .arrow { opacity: 0.5; font-size: 0.8em; }
+        td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-secondary); }
+        tr:hover td { background: rgba(255,255,255,0.02); color: #fff; }
+        .cat-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.78em; font-weight: 600; }
+
+        .dl-btn {
+            background: var(--uwaterloo-gold); border: none;
+            color: #000; padding: 15px 30px; border-radius: 8px; cursor: pointer;
+            font-size: 1em; font-weight: 700; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+        .dl-btn:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(253, 181, 21, 0.2); }
+
+        .footer { text-align: center; color: var(--text-secondary); font-size: 0.9em; padding: 30px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px; }
+
+        @media (max-width: 768px) {
+            .section { padding: 20px; }
+            .kpi-grid { grid-template-columns: 1fr 1fr; }
+            .chart-tall { height: 320px; }
+        }
+
+        .fade-in-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in-scroll.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+<div class="bg-animation"></div>
+
+<div class="container">
+    <a href="index.html" class="back-link">&larr; Back to Portfolio</a>
+
+    <div class="header fade-in-scroll">
+        <h1>&#128241; Cell Phone Pricing Through History, Adjusted for Inflation</h1>
+        <p class="sub">What Cell Phones Really Cost — Then vs. Now, in Today's Dollars</p>
+        <p class="sub">1983 &ndash; 2025 &nbsp;|&nbsp; 35 Landmark Phones &nbsp;|&nbsp; U.S. BLS CPI-U Adjusted</p>
+        <p class="author">Prepared by: Toni Ciobanu &nbsp;|&nbsp; Data Analyst Portfolio Project</p>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>&#128202; Executive Summary</h2>
+        <div class="kpi-grid">
+            <div class="kpi gold"><div class="val">$12,948</div><div class="lbl">1983 DynaTAC, in 2025 Dollars</div></div>
+            <div class="kpi"><div class="val">16.2&times;</div><div class="lbl">An iPhone 17, by Real Price</div></div>
+            <div class="kpi"><div class="val">$180</div><div class="lbl">Cheapest Phone Tracked (Nokia 3210)</div></div>
+            <div class="kpi blue"><div class="val">+2.8%</div><div class="lbl">iPhone Real Price, 2007 &rarr; 2025</div></div>
+            <div class="kpi pink"><div class="val">+226%</div><div class="lbl">iPhone 6S &rarr; 7 Sticker Jump (2015-16)</div></div>
+            <div class="kpi gold"><div class="val">35</div><div class="lbl">Phones Analyzed</div></div>
+        </div>
+        <div class="assump">
+            <strong>Methodology:</strong> Nominal launch prices are U.S. retail prices at the base/entry storage configuration, sourced from manufacturer announcements and reputable tech-press retrospectives. All figures are converted to <span>2025 dollars</span> using annual-average <span>CPI-U (U.S. city average, all items)</span> published by the U.S. Bureau of Labor Statistics. Currency: USD.
+        </div>
+        <div class="insight">
+            <p><strong>Key Finding:</strong> The most expensive cell phone ever tracked here isn't a modern flagship — it's the <strong>1983 Motorola DynaTAC 8000X</strong>. At $3,995 then, that's <strong>$12,948 in 2025 dollars</strong>, over 16&times; the price of a base iPhone 17. Meanwhile, the <strong>iPhone's real price has barely moved in 18 years</strong> ($777 real vs. $799 today) — nominal "price hikes" are mostly inflation, or a one-time change in how carriers billed for the hardware.</p>
+        </div>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>&#128200; Interactive Price Explorer</h2>
+        <div class="controls">
+            <div class="control-group">
+                <span class="cg-label">Price basis</span>
+                <div class="chip-row" id="basisChips">
+                    <button class="chip active" data-basis="both">Nominal + Real</button>
+                    <button class="chip" data-basis="nominal">Nominal $ only</button>
+                    <button class="chip" data-basis="real">Inflation-Adjusted (2025$) only</button>
+                </div>
+            </div>
+            <div class="control-group">
+                <span class="cg-label">Category filter</span>
+                <div class="chip-row" id="catChips">
+                    <button class="chip active" data-cat="all">All</button>
+                    <button class="chip active" data-cat="historic">Historic Icons</button>
+                    <button class="chip active" data-cat="business">Business / Smart</button>
+                    <button class="chip active" data-cat="iphone">iPhone</button>
+                    <button class="chip active" data-cat="android">Android</button>
+                    <button class="chip active" data-cat="foldable">Foldable</button>
+                </div>
+            </div>
+        </div>
+        <div class="chart-box">
+            <h4>Launch Price by Year — Hover Any Point</h4>
+            <div class="chart-tall"><canvas id="mainChart"></canvas></div>
+        </div>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>&#128241; The iPhone: A Single Consistent Series (2007&ndash;2025)</h2>
+        <p style="color:var(--text-secondary); margin-bottom: 10px;">Apple is the only maker with an unbroken, comparable annual product line since 2007 — making it the cleanest lens for real vs. nominal pricing. Watch the sticker-price jump in 2016, when U.S. carriers stopped subsidizing handsets inside two-year contracts.</p>
+        <div class="chart-box">
+            <div class="chart-tall"><canvas id="iphoneChart"></canvas></div>
+        </div>
+        <div class="insight blue">
+            <p><strong>The 2016 "subsidy cliff":</strong> the iPhone 6S (2015) listed at $199 with a contract; the iPhone 7 (2016) listed at $649 unsubsidized — a 226% nominal jump. In real terms it's still a 222% jump, meaning this wasn't inflation catching up — it was carriers no longer hiding ~$450 of hardware cost inside your monthly bill.</p>
+        </div>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>&#127942; Most Expensive Phones Ever (Inflation-Adjusted)</h2>
+        <div class="chart-box">
+            <div class="chart-med"><canvas id="topChart"></canvas></div>
+        </div>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>&#129518; Price Calculator</h2>
+        <p style="color:var(--text-secondary); margin-bottom:15px;">Pick any phone in the dataset to see what its launch price is worth today.</p>
+        <div class="calc-box">
+            <select id="calcSelect"></select>
+            <div class="calc-result" id="calcResult"></div>
+        </div>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>&#128203; Full Dataset</h2>
+        <div style="overflow-x:auto; max-height: 480px; overflow-y: auto;">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th data-key="name">Phone <span class="arrow">&#8645;</span></th>
+                        <th data-key="cat">Category <span class="arrow">&#8645;</span></th>
+                        <th data-key="year">Year <span class="arrow">&#8645;</span></th>
+                        <th data-key="price">Nominal Price <span class="arrow">&#8645;</span></th>
+                        <th data-key="real">Real Price (2025$) <span class="arrow">&#8645;</span></th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>&#128161; Key Insights</h2>
+        <h3>1. The First Cell Phone Is Still the Most Expensive</h3>
+        <div class="insight">
+            <p>The 1983 Motorola DynaTAC 8000X cost $3,995 — <strong>$12,948 in 2025 dollars</strong>. No phone since has come close in real terms; even the $1,980 Samsung Galaxy Fold (2019) only reaches about <strong>$2,500 real</strong>, roughly a fifth of the DynaTAC's inflation-adjusted price.</p>
+        </div>
+        <h3>2. iPhone's Real Price Has Been Remarkably Flat</h3>
+        <div class="insight blue">
+            <p>The original 2007 iPhone's $499 launch price equals <strong>$777 in 2025 dollars</strong>. Today's base iPhone 17 costs $799 — a real increase of just <strong>2.8% across 18 years</strong>, despite the device becoming vastly more capable.</p>
+        </div>
+        <h3>3. "Prices Went Up" in 2016 Wasn't Really Inflation</h3>
+        <div class="insight pink">
+            <p>The jump from $199 (iPhone 6S, 2015) to $649 (iPhone 7, 2016) looks like an inflation shock, but CPI only rose ~1.3% that year. The real driver was the end of two-year carrier contracts — the phone's true cost had always been ~$650; it was previously hidden in monthly service fees.</p>
+        </div>
+        <h3>4. Flagship Android Has Converged With — and Now Exceeds — iPhone Pricing</h3>
+        <div class="insight">
+            <p>Early Galaxy S phones matched subsidized iPhone pricing ($199). By 2024, the Galaxy S24 Ultra listed at $1,299.99 (~$1,338 real) — now the priciest "normal" flagship in the dataset outside of foldables and 1980s-era hardware.</p>
+        </div>
+    </div>
+
+    <div class="section fade-in-scroll">
+        <h2>&#128209; Methodology &amp; Data Sources</h2>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead><tr><th>Parameter</th><th>Detail</th></tr></thead>
+                <tbody>
+                    <tr><td>Nominal Price</td><td>U.S. retail launch price, base/entry storage configuration, in USD, as announced by the manufacturer or reported by contemporaneous tech press</td></tr>
+                    <tr><td>Subsidized-era phones (2008&ndash;2015)</td><td>Headline U.S. two-year-contract price is used, since that was the dominant, publicly advertised price point during that era</td></tr>
+                    <tr><td>Post-2016 phones</td><td>Full unsubsidized retail price, reflecting the end of standard U.S. carrier device subsidies</td></tr>
+                    <tr><td>Inflation Adjustment</td><td>CPI-U (U.S. city average, all items), annual average, Bureau of Labor Statistics, indexed to 2025 dollars. 2025 figure is a near-final estimate pending BLS's final annual publication.</td></tr>
+                    <tr><td>Formula</td><td>real_price = nominal_price &times; (CPI<sub>2025</sub> / CPI<sub>launch year</sub>)</td></tr>
+                    <tr><td>Sources</td><td>U.S. Bureau of Labor Statistics (CPI-U); Apple, Samsung &amp; Motorola press materials; GSMArena; Wikipedia; Android Authority; ecoatm price retrospectives</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section fade-in-scroll" style="text-align:center; padding: 50px 20px;">
+        <h2>&#128229; Export Dataset</h2>
+        <p style="color:var(--text-secondary); margin-bottom:25px;">Download the full dataset as CSV, including nominal price, CPI factor, and inflation-adjusted price.</p>
+        <button class="dl-btn" onclick="downloadCSV()">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            Download Full Dataset (CSV)
+        </button>
+    </div>
+
+    <div class="footer">
+        <p>Cell Phone Pricing &amp; Inflation Analysis &nbsp;|&nbsp; Prepared by Toni Ciobanu &nbsp;|&nbsp; 2026</p>
+        <p style="margin-top:10px; color:var(--uwaterloo-gold);">Portfolio Project — Public Data &nbsp;|&nbsp; Chart.js &middot; JavaScript &middot; BLS CPI-U</p>
+    </div>
+</div>
+
+<script>
+// ---------- Scroll animation ----------
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, observerOptions);
+document.querySelectorAll('.fade-in-scroll').forEach(el => observer.observe(el));
+
+// ---------- CPI-U annual averages (U.S. city average, all items), 1982-84=100 ----------
+const CPI = {
+    1983:99.6, 1984:103.9, 1985:107.6, 1986:109.6, 1987:113.6, 1988:118.3, 1989:124.0, 1990:130.7,
+    1991:136.2, 1992:140.3, 1993:144.5, 1994:148.2, 1995:152.4, 1996:156.9, 1997:160.5, 1998:163.0,
+    1999:166.6, 2000:172.2, 2001:177.1, 2002:179.9, 2003:184.0, 2004:188.9, 2005:195.3, 2006:201.6,
+    2007:207.3, 2008:215.3, 2009:214.5, 2010:218.1, 2011:224.9, 2012:229.6, 2013:233.0, 2014:236.7,
+    2015:237.0, 2016:240.0, 2017:245.1, 2018:251.1, 2019:255.7, 2020:258.8, 2021:271.0, 2022:292.7,
+    2023:304.7, 2024:313.7, 2025:322.8
+};
+const REF_YEAR = 2025;
+const REF_CPI = CPI[REF_YEAR];
+
+const CAT_META = {
+    historic: { label: 'Historic Icon', color: '#94a3b8' },
+    business: { label: 'Business / Smart', color: '#a78bfa' },
+    iphone:   { label: 'iPhone', color: '#FDB515' },
+    android:  { label: 'Android', color: '#38bdf8' },
+    foldable: { label: 'Foldable', color: '#f472b6' }
+};
+
+// ---------- Dataset ----------
+const RAW = [
+    ['Motorola DynaTAC 8000X', 1983, 3995, 'historic', 'First commercial cell phone'],
+    ['Motorola MicroTAC 9800X', 1989, 2995, 'historic', 'First flip phone'],
+    ['IBM Simon Personal Communicator', 1994, 899, 'business', 'First touchscreen "smartphone"'],
+    ['Motorola StarTAC', 1996, 1000, 'historic', 'First mainstream clamshell'],
+    ['Nokia 9000 Communicator', 1996, 800, 'business', 'Business smartphone pioneer'],
+    ['Nokia 3210', 1999, 180, 'historic', 'Best-selling feature phone (150M+ sold)'],
+    ['Motorola RAZR V3', 2004, 499, 'historic', 'Design icon, 130M+ sold'],
+    ['BlackBerry 8700c', 2006, 299, 'business', 'Peak BlackBerry business era'],
+    ['Apple iPhone (2G)', 2007, 499, 'iphone', 'Original iPhone, 4GB'],
+    ['Nokia N95', 2007, 749, 'business', 'Unsubsidized smartphone rival'],
+    ['Apple iPhone 3G', 2008, 199, 'iphone', 'First 3G iPhone, App Store debut'],
+    ['Apple iPhone 3GS', 2009, 199, 'iphone', ''],
+    ['Apple iPhone 4', 2010, 199, 'iphone', 'Retina display debut'],
+    ['Samsung Galaxy S (i9000)', 2010, 199, 'android', 'First Galaxy S'],
+    ['Apple iPhone 4S', 2011, 199, 'iphone', 'Siri debut'],
+    ['Apple iPhone 5', 2012, 199, 'iphone', ''],
+    ['Apple iPhone 5S', 2013, 199, 'iphone', 'Touch ID debut'],
+    ['Apple iPhone 6', 2014, 199, 'iphone', ''],
+    ['Apple iPhone 6S', 2015, 199, 'iphone', 'Last subsidized-price iPhone'],
+    ['Samsung Galaxy S6', 2015, 699, 'android', 'Unsubsidized pricing begins early'],
+    ['Apple iPhone 7', 2016, 649, 'iphone', 'Carrier subsidies end — sticker jumps 226%'],
+    ['Samsung Galaxy S7', 2016, 669, 'android', ''],
+    ['Apple iPhone 8', 2017, 699, 'iphone', ''],
+    ['Apple iPhone X', 2017, 999, 'iphone', 'First $1,000 iPhone'],
+    ['Apple iPhone XS', 2018, 999, 'iphone', ''],
+    ['Samsung Galaxy Fold', 2019, 1980, 'foldable', 'First mainstream foldable'],
+    ['Apple iPhone 11', 2019, 699, 'iphone', ''],
+    ['Apple iPhone 12', 2020, 799, 'iphone', '5G debut'],
+    ['Apple iPhone 13', 2021, 799, 'iphone', ''],
+    ['Apple iPhone 14', 2022, 799, 'iphone', ''],
+    ['Samsung Galaxy S22', 2022, 799, 'android', ''],
+    ['Apple iPhone 15', 2023, 799, 'iphone', ''],
+    ['Samsung Galaxy S24 Ultra', 2024, 1299.99, 'android', 'Premium flagship ceiling'],
+    ['Apple iPhone 16', 2024, 799, 'iphone', ''],
+    ['Apple iPhone 17', 2025, 799, 'iphone', 'Latest model']
+];
+
+const DATA = RAW.map(([name, year, price, cat, note]) => ({
+    name, year, price, cat, note,
+    real: price * REF_CPI / CPI[year]
+}));
+
+// ---------- State ----------
+let basis = 'both';
+let activeCats = new Set(Object.keys(CAT_META));
+let sortKey = 'year';
+let sortAsc = true;
+
+Chart.defaults.color = '#b0b0b0';
+Chart.defaults.font.family = "'Inter', sans-serif";
+
+function fmtUSD(n) {
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+// ---------- Main scatter chart ----------
+let mainChart;
+function buildMainChart() {
+    const ctx = document.getElementById('mainChart');
+    const datasets = [];
+    Object.entries(CAT_META).forEach(([key, meta]) => {
+        if (!activeCats.has(key)) return;
+        const pts = DATA.filter(d => d.cat === key);
+        if (basis === 'nominal' || basis === 'both') {
+            datasets.push({
+                label: meta.label + ' (nominal)',
+                data: pts.map(d => ({ x: d.year, y: d.price, name: d.name, price: d.price, real: d.real, note: d.note })),
+                backgroundColor: meta.color,
+                borderColor: meta.color,
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                showLine: false
+            });
+        }
+        if (basis === 'real' || basis === 'both') {
+            datasets.push({
+                label: meta.label + ' (real, 2025$)',
+                data: pts.map(d => ({ x: d.year, y: d.real, name: d.name, price: d.price, real: d.real, note: d.note })),
+                backgroundColor: meta.color,
+                borderColor: meta.color,
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                pointStyle: 'triangle',
+                showLine: false
+            });
+        }
+    });
+
+    if (mainChart) mainChart.destroy();
+    mainChart = new Chart(ctx, {
+        type: 'scatter',
+        data: { datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } }
+                // tooltip callbacks are attached separately via attachTooltip()
+            },
+            scales: {
+                x: { title: { display: true, text: 'Launch Year' }, ticks: { stepSize: 5 }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { title: { display: true, text: 'Price (USD)' }, ticks: { callback: v => '$' + v.toLocaleString() }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+}
+
+// Fix tooltip callback properly (simpler + correct)
+function attachTooltip(chart) {
+    chart.options.plugins.tooltip.callbacks = {
+        title: (items) => items[0].raw.name,
+        label: (item) => {
+            const d = item.raw;
+            const lines = [
+                `Launch year: ${d.x}`,
+                `Nominal price: ${fmtUSD(d.price)}`,
+                `Real price (2025$): ${fmtUSD(d.real)}`
+            ];
+            if (d.note) lines.push(d.note);
+            return lines;
+        }
+    };
+    chart.update();
+}
+
+// ---------- iPhone-only trend chart ----------
+let iphoneChart;
+function buildIphoneChart() {
+    const iphones = DATA.filter(d => d.cat === 'iphone').sort((a, b) => a.year - b.year);
+    const ctx = document.getElementById('iphoneChart');
+    if (iphoneChart) iphoneChart.destroy();
+    iphoneChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: iphones.map(d => `${d.name.replace('Apple ', '')} '${String(d.year).slice(2)}`),
+            datasets: [
+                { label: 'Nominal Price', data: iphones.map(d => d.price), borderColor: '#FDB515', backgroundColor: 'rgba(253,181,21,0.15)', tension: 0.25, fill: false, pointRadius: 4 },
+                { label: 'Inflation-Adjusted (2025$)', data: iphones.map(d => Math.round(d.real)), borderColor: '#38bdf8', backgroundColor: 'rgba(56,189,248,0.15)', tension: 0.25, fill: false, pointRadius: 4, borderDash: [6, 4] }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            scales: {
+                x: { ticks: { maxRotation: 45, font: { size: 10 } }, grid: { display: false } },
+                y: { ticks: { callback: v => '$' + v.toLocaleString() }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+}
+
+// ---------- Top 10 real price chart ----------
+let topChart;
+function buildTopChart() {
+    const top = [...DATA].sort((a, b) => b.real - a.real).slice(0, 10);
+    const ctx = document.getElementById('topChart');
+    if (topChart) topChart.destroy();
+    topChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: top.map(d => `${d.name} ('${String(d.year).slice(2)})`),
+            datasets: [{
+                label: 'Real Price (2025$)',
+                data: top.map(d => Math.round(d.real)),
+                backgroundColor: top.map(d => CAT_META[d.cat].color),
+                borderRadius: 4
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { callback: v => '$' + v.toLocaleString() }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+            }
+        }
+    });
+}
+
+// ---------- Controls ----------
+document.querySelectorAll('#basisChips .chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('#basisChips .chip').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        basis = btn.dataset.basis;
+        buildMainChart();
+        attachTooltip(mainChart);
+    });
+});
+
+document.querySelectorAll('#catChips .chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const cat = btn.dataset.cat;
+        if (cat === 'all') {
+            activeCats = new Set(Object.keys(CAT_META));
+            document.querySelectorAll('#catChips .chip').forEach(b => b.classList.add('active'));
+        } else {
+            btn.classList.toggle('active');
+            if (btn.classList.contains('active')) activeCats.add(cat);
+            else activeCats.delete(cat);
+            const allBtn = document.querySelector('#catChips .chip[data-cat="all"]');
+            allBtn.classList.toggle('active', activeCats.size === Object.keys(CAT_META).length);
+        }
+        buildMainChart();
+        attachTooltip(mainChart);
+        renderTable();
+    });
+});
+
+// ---------- Table ----------
+function renderTable() {
+    const tbody = document.getElementById('tableBody');
+    let rows = DATA.filter(d => activeCats.has(d.cat));
+    rows = rows.sort((a, b) => {
+        let av = a[sortKey], bv = b[sortKey];
+        if (typeof av === 'string') { av = av.toLowerCase(); bv = bv.toLowerCase(); }
+        if (av < bv) return sortAsc ? -1 : 1;
+        if (av > bv) return sortAsc ? 1 : -1;
+        return 0;
+    });
+    tbody.innerHTML = '';
+    rows.forEach(d => {
+        const meta = CAT_META[d.cat];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td style="color:#fff; font-weight:600;">${d.name}</td>
+            <td><span class="cat-badge" style="background:${meta.color}22; color:${meta.color};">${meta.label}</span></td>
+            <td>${d.year}</td>
+            <td>${fmtUSD(d.price)}</td>
+            <td style="color:var(--uwaterloo-gold); font-weight:600;">${fmtUSD(d.real)}</td>
+            <td>${d.note || '—'}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+document.querySelectorAll('#dataTable th[data-key]').forEach(th => {
+    th.addEventListener('click', () => {
+        const key = th.dataset.key;
+        if (sortKey === key) sortAsc = !sortAsc;
+        else { sortKey = key; sortAsc = true; }
+        renderTable();
+    });
+});
+
+// ---------- Calculator ----------
+const calcSelect = document.getElementById('calcSelect');
+DATA.slice().sort((a, b) => a.year - b.year).forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.name;
+    opt.textContent = `${d.name} (${d.year}) — ${fmtUSD(d.price)}`;
+    calcSelect.appendChild(opt);
+});
+function renderCalc() {
+    const d = DATA.find(x => x.name === calcSelect.value);
+    const mult = (d.real / d.price).toFixed(2);
+    const pctChange = (((d.real - d.price) / d.price) * 100).toFixed(1);
+    document.getElementById('calcResult').innerHTML = `
+        <div class="big">${fmtUSD(d.price)} in ${d.year} = ${fmtUSD(d.real)} in 2025</div>
+        <p>That's <strong>${mult}&times;</strong> the original sticker price — a <strong>${pctChange}%</strong> change once inflation (CPI-U) is factored in. ${d.note ? d.note + '.' : ''}</p>
+    `;
+}
+calcSelect.addEventListener('change', renderCalc);
+calcSelect.value = 'Motorola DynaTAC 8000X';
+renderCalc();
+
+// ---------- CSV export ----------
+function downloadCSV() {
+    const headers = ['phone', 'year', 'category', 'nominal_price_usd', 'cpi_launch_year', 'cpi_2025', 'real_price_2025_usd', 'note'];
+    const rows = DATA.map(d => [
+        `"${d.name}"`, d.year, d.cat, d.price.toFixed(2), CPI[d.year], REF_CPI, d.real.toFixed(2), `"${d.note || ''}"`
+    ]);
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'cell_phone_pricing_inflation_adjusted.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// ---------- Init ----------
+buildMainChart();
+attachTooltip(mainChart);
+buildIphoneChart();
+buildTopChart();
+renderTable();
+</script>
+</body>
+</html>
