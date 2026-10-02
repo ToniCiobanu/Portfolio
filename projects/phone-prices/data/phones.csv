@@ -1,0 +1,35 @@
+phone,maker,year,category,base_storage_gb,price_full,price_contract,confidence,note,source
+Motorola DynaTAC 8000X,Motorola,1983,historic,,3995,,high,First commercial handheld cell phone,Widely reported launch price (Motorola; contemporaneous press)
+Motorola MicroTAC 9800X,Motorola,1989,historic,,2995,,medium,First flip phone; reported range $2495-$3495,https://www.mobilephonemuseum.com/phone-detail/microtac-9800x
+IBM Simon Personal Communicator,IBM,1994,smartphone,,1099,899,medium,First touchscreen smartphone; $899 with BellSouth contract,Contemporaneous press; verify
+Motorola StarTAC,Motorola,1996,historic,,1000,,medium,First mainstream clamshell,Contemporaneous press; verify
+Motorola RAZR V3,Motorola,2004,historic,,,499,medium,Cingular two-year contract price at US launch,Contemporaneous press; verify
+BlackBerry 8700c,BlackBerry,2005,smartphone,,,299,medium,Cingular two-year contract price,Contemporaneous press; verify
+Apple iPhone,Apple,2007,iphone,4,499,499,high,Two-year AT&T contract required but phone was not subsidized,Apple press release (Jan 2007)
+Nokia N95,Nokia,2007,smartphone,,749,,medium,Sold unlocked in the US,Nokia US flagship stores; verify
+Apple iPhone 3G,Apple,2008,iphone,8,599,199,high,No-contract price only offered from March 2009,https://www.engadget.com/2009-03-19-atandt-confirms-contract-free-599-699-iphone-3gs-for-next-week.html
+Apple iPhone 3GS,Apple,2009,iphone,16,599,199,high,AT&T no-commitment price,https://www.macworld.com/article/203335/iphone_nocontract-2.html
+Apple iPhone 4,Apple,2010,iphone,16,599,199,high,AT&T no-commitment price,https://www.att.com/Common/about_us/files/iphone/pricing_fact_sheet_ip4.pdf
+Samsung Galaxy S (US variants),Samsung,2010,android,,,199,medium,Captivate / Vibrant / Fascinate contract price,Carrier announcements; verify
+Apple iPhone 4S,Apple,2011,iphone,16,649,199,high,,Apple press release
+Apple iPhone 5,Apple,2012,iphone,16,649,199,high,,Apple press release
+Apple iPhone 5S,Apple,2013,iphone,16,649,199,high,,Apple press release
+Apple iPhone 6,Apple,2014,iphone,16,649,199,high,,Apple press release
+Apple iPhone 6S,Apple,2015,iphone,16,649,199,high,Last iPhone widely sold at a $199 contract price,https://www.idownloadblog.com/2015/09/09/iphone-6s-and-iphone-6s-plus-price-and-availability/
+Samsung Galaxy S6,Samsung,2015,android,32,685,199.99,medium,Full price varied by carrier ($650-$685),https://siliconangle.com/2015/03/26/galaxy-s6-and-s6-edge-price-and-availability/
+Apple iPhone 7,Apple,2016,iphone,32,649,,high,,Apple press release
+Samsung Galaxy S7,Samsung,2016,android,32,669.99,,medium,Full price varied by carrier,Carrier announcements; verify
+Apple iPhone 8,Apple,2017,iphone,64,699,,high,,Apple press release
+Apple iPhone X,Apple,2017,iphone,64,999,,high,First $999 iPhone,Apple press release
+Apple iPhone XS,Apple,2018,iphone,64,999,,high,,Apple press release
+Samsung Galaxy Fold,Samsung,2019,foldable,512,1980,,high,First mainstream foldable,Samsung press release
+Apple iPhone 11,Apple,2019,iphone,64,699,,high,,Apple press release
+Apple iPhone 12,Apple,2020,iphone,64,799,,high,Carrier-activated price ($829 SIM-free at launch),Apple press release
+Apple iPhone 13,Apple,2021,iphone,128,799,,high,,Apple press release
+Apple iPhone 14,Apple,2022,iphone,128,799,,high,,Apple press release
+Samsung Galaxy S22,Samsung,2022,android,128,799.99,,high,,Samsung press release
+Apple iPhone 15,Apple,2023,iphone,128,799,,high,,Apple press release
+Samsung Galaxy S24,Samsung,2024,android,128,799.99,,high,Base model; compare like-for-like with base iPhone,Samsung press release
+Samsung Galaxy S24 Ultra,Samsung,2024,android,256,1299.99,,high,Top-tier model; not comparable to a base iPhone,Samsung press release
+Apple iPhone 16,Apple,2024,iphone,128,799,,high,,Apple press release
+Apple iPhone 17,Apple,2025,iphone,256,799,,high,,https://www.apple.com/newsroom/2025/09/apple-debuts-iphone-17/

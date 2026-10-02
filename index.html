@@ -1,1227 +1,155 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toni Ciobanu | Business Analyst Portfolio</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --uwaterloo-gold: #FDB515;
-            --uwaterloo-black: #000000;
-            --dark-bg: #0a0a0a;
-            --card-bg: #1a1a1a;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --accent: #FDB515;
-            --accent-hover: #ffcc4d;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-        }
-
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(253, 181, 21, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(253, 181, 21, 0.05) 0%, transparent 50%);
-            animation: pulse 15s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 20px;
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 1;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(253, 181, 21, 0.1);
-            border: 1px solid var(--uwaterloo-gold);
-            padding: 8px 20px;
-            border-radius: 50px;
-            margin-bottom: 30px;
-            font-size: 0.9em;
-            font-weight: 600;
-            color: var(--uwaterloo-gold);
-            animation: fadeInDown 1s ease;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5em, 8vw, 5em);
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff 0%, var(--uwaterloo-gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero .subtitle {
-            font-size: clamp(1.2em, 3vw, 1.8em);
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            font-weight: 300;
-            animation: fadeInUp 1.2s ease;
-        }
-
-        .hero .description {
-            max-width: 700px;
-            margin: 0 auto 40px;
-            font-size: 1.1em;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            animation: fadeInUp 1.4s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1.6s ease;
-        }
-
-        .btn {
-            padding: 15px 35px;
-            font-size: 1em;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--uwaterloo-gold);
-            color: var(--uwaterloo-black);
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(253, 181, 21, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 2px solid var(--text-primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--text-primary);
-            color: var(--uwaterloo-black);
-            transform: translateY(-2px);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(253, 181, 21, 0.1);
-        }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav .logo {
-            font-size: 1.5em;
-            font-weight: 800;
-            color: var(--uwaterloo-gold);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        nav ul li a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--uwaterloo-gold);
-            transition: width 0.3s;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        nav ul li a:hover {
-            color: var(--uwaterloo-gold);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Section Styles */
-        section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-header h2 {
-            font-size: clamp(2em, 5vw, 3.5em);
-            font-weight: 800;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #ffffff 0%, var(--uwaterloo-gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-header p {
-            color: var(--text-secondary);
-            font-size: 1.2em;
-        }
-
-        /* Stats Section */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(253, 181, 21, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--uwaterloo-gold);
-            box-shadow: 0 10px 40px rgba(253, 181, 21, 0.2);
-        }
-
-        .stat-number {
-            font-size: 3em;
-            font-weight: 800;
-            color: var(--uwaterloo-gold);
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 1em;
-        }
-
-        /* Experience Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 50px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--uwaterloo-gold) 0%, transparent 100%);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 50px;
-            padding-left: 30px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -36px;
-            top: 5px;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--uwaterloo-gold);
-            border: 3px solid var(--dark-bg);
-            box-shadow: 0 0 0 3px rgba(253, 181, 21, 0.2);
-        }
-
-        .timeline-content {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid rgba(253, 181, 21, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .timeline-content:hover {
-            border-color: var(--uwaterloo-gold);
-            transform: translateX(5px);
-        }
-
-        .timeline-content h3 {
-            color: var(--uwaterloo-gold);
-            font-size: 1.4em;
-            margin-bottom: 5px;
-        }
-
-        .timeline-content .company {
-            color: var(--text-primary);
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .timeline-content .date {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-
-        .timeline-content .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .skill-tag {
-            background: rgba(253, 181, 21, 0.1);
-            color: var(--uwaterloo-gold);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            border: 1px solid rgba(253, 181, 21, 0.2);
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(253, 181, 21, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--uwaterloo-gold);
-            box-shadow: 0 20px 60px rgba(253, 181, 21, 0.2);
-        }
-
-        .project-header {
-            background: linear-gradient(135deg, rgba(253, 181, 21, 0.2) 0%, rgba(253, 181, 21, 0.05) 100%);
-            padding: 25px;
-            border-bottom: 1px solid rgba(253, 181, 21, 0.1);
-        }
-
-        .project-header h3 {
-            color: var(--uwaterloo-gold);
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-
-        .project-type {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-        }
-
-        .project-body {
-            padding: 25px;
-        }
-
-        .project-body p {
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            line-height: 1.8;
-        }
-
-        /* Clickable Project Cards */
-        .project-card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-        
-        .project-card-link:hover .project-card {
-            transform: translateY(-10px);
-            border-color: var(--uwaterloo-gold);
-            box-shadow: 0 20px 60px rgba(253, 181, 21, 0.3);
-        }
-        
-        .project-card-link:hover .project-header h3 {
-            color: var(--accent-hover);
-        }
-        
-        /* Add a subtle indicator that it's clickable */
-        .project-card-link .project-card {
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .project-card-link .project-card::after {
-            content: '→';
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            font-size: 1.5em;
-            color: var(--uwaterloo-gold);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .project-card-link:hover .project-card::after {
-            opacity: 1;
-        }
-
-
-        .project-metrics {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .metric {
-            flex: 1;
-            min-width: 120px;
-        }
-
-        .metric-value {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: var(--uwaterloo-gold);
-        }
-
-        .metric-label {
-            font-size: 0.85em;
-            color: var(--text-secondary);
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .skill-category {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(253, 181, 21, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            border-color: var(--uwaterloo-gold);
-            transform: translateY(-5px);
-        }
-
-        .skill-category h3 {
-            color: var(--uwaterloo-gold);
-            font-size: 1.3em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .skill-category ul {
-            list-style: none;
-        }
-
-        .skill-category ul li {
-            padding: 10px 0;
-            color: var(--text-secondary);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s;
-        }
-
-        .skill-category ul li:hover {
-            color: var(--uwaterloo-gold);
-            padding-left: 10px;
-        }
-
-        .skill-category ul li:last-child {
-            border-bottom: none;
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .contact-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(253, 181, 21, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .contact-card:hover {
-            border-color: var(--uwaterloo-gold);
-            transform: translateY(-5px);
-        }
-
-        .contact-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-
-        .contact-card h3 {
-            color: var(--uwaterloo-gold);
-            margin-bottom: 10px;
-        }
-
-        .contact-card p {
-            color: var(--text-secondary);
-        }
-
-        .contact-card a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .contact-card a:hover {
-            color: var(--uwaterloo-gold);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--uwaterloo-black);
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid rgba(253, 181, 21, 0.1);
-        }
-
-        footer p {
-            color: var(--text-secondary);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5em;
-            cursor: pointer;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(10, 10, 10, 0.98);
-                flex-direction: column;
-                padding: 20px;
-                gap: 15px;
-            }
-
-            nav ul.active {
-                display: flex;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2.5em;
-            }
-
-            .timeline {
-                padding-left: 30px;
-            }
-
-            .projects-grid,
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <title>Toni Ciobanu | Data Analyst</title>
+    <meta name="description" content="Data analyst and University of Waterloo mathematics graduate. Projects with the data and code behind every number.">
+    <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
-    <div class="bg-animation"></div>
+<header class="site-header">
+    <div class="wrap">
+        <a class="brand" href="#top">Toni <span>Ciobanu</span></a>
+        <nav>
+            <a href="#projects">Projects</a>
+            <a href="#experience">Experience</a>
+            <a href="#skills" class="hide-sm">Skills</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
+</header>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <div class="logo">TC</div>
-            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
-            <ul id="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
+<main id="top">
+<section class="hero">
+    <div class="wrap">
+        <div class="eyebrow">Data analyst · University of Waterloo, Mathematics</div>
+        <h1>I answer business questions with data, and show my work.</h1>
+        <p class="lead">At work I've used spreadsheets, BI tools and Python to track sales performance, segment customers and automate reporting. Every project below links to the data and code behind it, and says what the analysis can't tell you.</p>
+        <div class="actions">
+            <a class="btn primary" href="#projects">See projects</a>
+            <a class="btn" href="https://github.com/ToniCiobanu/Portfolio">GitHub</a>
+            <a class="btn" href="https://linkedin.com/in/toniciobanu">LinkedIn</a>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="wrap">
+        <h2>Projects</h2>
+        <p class="muted" style="margin-bottom:20px">Each one has a write-up, the raw data, runnable code, and a "limits" section.</p>
+        <div class="grid grid-3">
+            <a class="card" href="repair-analysis.html">
+                <div class="meta">SQL · SQLite · Chart.js</div>
+                <h3>What did fixing my own cars save?</h3>
+                <p>23 repairs on two cars, receipts vs. shop estimates. Savings of <strong data-value="repair.savings" data-format="usd0"></strong>, and a sensitivity test showing the result holds even if every estimate is 50% too high.</p>
+                <div class="tags"><span class="tag">Window functions</span><span class="tag">CTEs</span><span class="tag">Sensitivity analysis</span></div>
+                <span class="more">Read the case study →</span>
+            </a>
+            <a class="card" href="cell-phone-pricing.html">
+                <div class="meta">Python · BLS CPI-U · Chart.js</div>
+                <h3>Are phones actually getting more expensive?</h3>
+                <p>Launch prices from 1983 to 2025 in constant dollars. The base iPhone is <strong data-value="phone.iphone_real_change_pct" data-format="signed-pct"></strong> in real terms since 2007. The famous 2016 "price jump" turns out to be an artifact of mixing contract and full prices.</p>
+                <div class="tags"><span class="tag">Inflation adjustment</span><span class="tag">Data quality</span><span class="tag">Public data</span></div>
+                <span class="more">Read the case study →</span>
+            </a>
+            <a class="card" href="calendar-automation.html">
+                <div class="meta">Google Apps Script · Sheets · Node tests</div>
+                <h3>Shift schedule → Google Calendar</h3>
+                <p>A spreadsheet parses a scheduling-system export and a script turns each shift into a calendar event. It's safe to re-run, skips bad rows, and has 10 tests built on fake Google services.</p>
+                <div class="tags"><span class="tag">Automation</span><span class="tag">Data parsing</span><span class="tag">Testing</span></div>
+                <span class="more">Read the case study →</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="experience">
+    <div class="wrap">
+        <h2>Experience</h2>
+        <div class="job">
+            <div class="job-head"><h3>Sales Representative</h3><span class="when">Mar 2025 – Present · Cambridge, ON</span></div>
+            <div class="org">TELUS</div>
+            <ul class="clean">
+                <li>Built an Excel model forecasting store returns from 6-month average sales across 275 retail locations ($36.6M in sales).</li>
+                <li>Built a Google Sheets KPI tracker fed by Tableau exports to monitor performance, maintaining a 130% SVPH average.</li>
+                <li>Kept a customer-insights tracker of qualitative sales notes to spot cross-selling opportunities.</li>
+                <li>Used Domo sales data to find underperforming products and target promotions at them.</li>
             </ul>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-badge">🎓 University of Waterloo Graduate</div>
-            <h1>Toni Ciobanu</h1>
-            <p class="subtitle">Data Analyst | Business Intelligence Specialist</p>
-            <p class="description">
-                Transforming complex data into actionable business strategies. 
-                Mathematics graduate with 2+ years of experience driving performance through Python, R, SQL, and advanced analytics.
-            </p>
-            <div class="cta-buttons">
-                <a href="#projects" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-            </div>
+        <div class="job">
+            <div class="job-head"><h3>Sales Manager</h3><span class="when">Jan 2024 – Aug 2024 · Saskatoon, SK (remote)</span></div>
+            <div class="org">Red Wireless</div>
+            <ul class="clean">
+                <li>Segmented customers to identify high-value targets; the resulting sales strategy increased departmental sales by 23%.</li>
+                <li>Designed performance incentives from team sales data; sales points per hour rose 292%.</li>
+                <li>Ran monthly KPI reviews and one-on-one coaching; individual KPIs improved 73% on average.</li>
+                <li>Achieved a 94.87% customer satisfaction (CSAT) score.</li>
+            </ul>
         </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Impact By Numbers</h2>
-                <p>Data-driven results across sales, analytics, and process optimization</p>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card fade-in">
-                    <div class="stat-number">292%</div>
-                    <div class="stat-label">Sales Increase Engineered</div>
-                </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-number">23%</div>
-                    <div class="stat-label">Revenue Growth via Segmentation</div>
-                </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-number">130%</div>
-                    <div class="stat-label">Consistent SVPH Average</div>
-                </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-number">94.87%</div>
-                    <div class="stat-label">Customer Satisfaction Score</div>
-                </div>
-            </div>
+        <div class="job">
+            <div class="job-head"><h3>Telephone Sales Consultant</h3><span class="when">Sep 2023 – Jan 2024 · Saskatoon, SK (remote)</span></div>
+            <div class="org">Red Wireless</div>
+            <ul class="clean">
+                <li>Managed a sales pipeline in Pipedrive CRM and coordinated with the team in Slack.</li>
+            </ul>
         </div>
-    </section>
+        <div class="job">
+            <div class="job-head"><h3>Instructional Support Assistant</h3><span class="when">Sep 2022 – Dec 2023 · Waterloo, ON</span></div>
+            <div class="org">University of Waterloo</div>
+            <ul class="clean">
+                <li>Maintained performance records for 700+ students, with automated validation checks.</li>
+                <li>Automated routine reporting with Python scripts and Excel macros, cutting that workload by about 15%.</li>
+                <li>Provided technical instruction in Python, DrRacket and Linux.</li>
+            </ul>
+        </div>
+    </div>
+</section>
 
-    <!-- Experience Section -->
-    <section id="experience">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Professional Journey</h2>
-                <p>Building data-driven solutions across telecommunications and education</p>
+<section id="skills">
+    <div class="wrap">
+        <h2>Skills</h2>
+        <div class="grid grid-2">
+            <div class="card">
+                <h3>Shown in the projects above</h3>
+                <div class="tags">
+                    <span class="tag">SQL (joins, CTEs, window functions, views)</span><span class="tag">Python</span>
+                    <span class="tag">JavaScript / Apps Script</span><span class="tag">Chart.js</span>
+                    <span class="tag">Git</span><span class="tag">Sensitivity analysis</span>
+                </div>
             </div>
-            <div class="timeline">
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Sales Representative</h3>
-                        <div class="company">TELUS</div>
-                        <div class="date">March 2025 - Present | Cambridge, ON</div>
-                        <p>• Built custom Google Sheets KPI tracker with Tableau data integration, maintaining 130% SVPH average</p>
-                        <p>• Developed customer insights tracker analyzing qualitative sales data to identify cross-selling opportunities</p>
-                        <p>• Increased underperforming product sales through Domo data analysis and AI-powered promotional strategy</p>
-                        <div class="skills">
-                            <span class="skill-tag">Data Analysis</span>
-                            <span class="skill-tag">Tableau</span>
-                            <span class="skill-tag">Google Sheets</span>
-                            <span class="skill-tag">Domo</span>
-                            <span class="skill-tag">KPI Tracking</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Sales Manager</h3>
-                        <div class="company">Red Wireless</div>
-                        <div class="date">January 2024 - August 2024 | Saskatoon, SK (Remote)</div>
-                        <p>• Engineered 292% increase in sales points per hour through data-backed performance incentives</p>
-                        <p>• Drove 73% average improvement in individual KPIs via personalized coaching and monthly reviews</p>
-                        <p>• Performed customer segmentation analysis identifying high-value targets, increasing departmental sales by 23%</p>
-                        <p>• Achieved 94.87% CSAT score through tailored communication strategies</p>
-                        <div class="skills">
-                            <span class="skill-tag">Customer Segmentation</span>
-                            <span class="skill-tag">Performance Analytics</span>
-                            <span class="skill-tag">CRM</span>
-                            <span class="skill-tag">Team Leadership</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Telephone Sales Consultant</h3>
-                        <div class="company">Red Wireless</div>
-                        <div class="date">September 2023 - January 2024 | Saskatoon, SK (Remote)</div>
-                        <p>• Utilized Pipedrive CRM and Slack for sales pipeline management and team coordination</p>
-                        <p>• Developed data-driven sales strategies to optimize conversion rates</p>
-                        <div class="skills">
-                            <span class="skill-tag">Pipedrive</span>
-                            <span class="skill-tag">Sales Analytics</span>
-                            <span class="skill-tag">Communication</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item fade-in">
-                    <div class="timeline-content">
-                        <h3>Instructional Support Assistant</h3>
-                        <div class="company">University of Waterloo</div>
-                        <div class="date">September 2022 - December 2023 | Waterloo, ON</div>
-                        <p>• Managed databases containing 700+ students' performance data with automated validation processes</p>
-                        <p>• Automated routine reporting tasks using Python scripts and Excel macros, reducing workload by 15%</p>
-                        <p>• Provided technical instruction in Python, DrRacket, and Linux environments</p>
-                        <div class="skills">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Excel Automation</span>
-                            <span class="skill-tag">Database Management</span>
-                            <span class="skill-tag">Linux</span>
-                        </div>
-                    </div>
+            <div class="card">
+                <h3>Used at work</h3>
+                <div class="tags">
+                    <span class="tag">Excel (macros)</span><span class="tag">Google Sheets</span><span class="tag">Tableau</span>
+                    <span class="tag">Domo</span><span class="tag">Pipedrive CRM</span><span class="tag">KPI tracking</span>
+                    <span class="tag">Customer segmentation</span><span class="tag">Linux</span>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-        <!-- Projects Section -->
-        <section id="projects">
-            <div class="container">
-                <div class="section-header fade-in">
-                    <h2>Featured Projects</h2>
-                    <p>Academic and professional analytics initiatives</p>
-                </div>
-                
-                <!-- Professional Ethics Disclaimer -->
-                <div style="max-width: 800px; margin: 0 auto 40px; padding: 20px; background: rgba(253, 181, 21, 0.05); border: 1px solid rgba(253, 181, 21, 0.2); border-radius: 10px; text-align: center;">
-                    <p style="font-size: 0.9em; color: var(--text-secondary); margin: 0;">
-                        <strong style="color: var(--uwaterloo-gold);">Professional Ethics Notice:</strong> 
-                        Professional projects respect confidentiality agreements. Specific methodologies and proprietary information have been anonymized. Results and business impact metrics are accurate and verifiable.
-                    </p>
-                </div>
-                
-                <div class="projects-grid">
-
-                    <!-- Cell Phone Pricing & Inflation -->
-                    <a href="cell-phone-pricing.html"
-                       target="_blank"
-                       class="project-card-link">
-
-                        <div class="project-card fade-in">
-                            <div class="project-header">
-                                <div style="display: inline-block; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #38bdf8; font-weight: 600;">
-                                    📱 Public Dataset Analysis
-                                </div>
-
-                                <h3>Cell Phone Pricing & Inflation</h3>
-                                <div class="project-type">Data Visualization | Chart.js & Economic Analysis</div>
-                            </div>
-                            <div class="project-body">
-                                <p>Built an interactive chart tracking 35 landmark phones from 1983 to 2025, converting launch prices to today's dollars using BLS CPI-U inflation data. Includes filterable scatter plots, a price calculator, and a sortable dataset.</p>
-
-                                <div class="project-metrics">
-                                    <div class="metric">
-                                        <div class="metric-value">$12,948</div>
-                                        <div class="metric-label">1983 DynaTAC in 2025 $</div>
-                                    </div>
-                                    <div class="metric">
-                                        <div class="metric-value">35</div>
-                                        <div class="metric-label">Phones Analyzed</div>
-                                    </div>
-                                </div>
-
-                                <div class="skills">
-                                    <span class="skill-tag">JavaScript</span>
-                                    <span class="skill-tag">Chart.js</span>
-                                    <span class="skill-tag">Data Visualization</span>
-                                    <span class="skill-tag">Public Data / CPI</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </a>
-
-                    <!-- Car Repair -->
-                    <a href="repair-analysis.html" 
-                       target="_blank" 
-                       class="project-card-link">
-                        
-                        <div class="project-card fade-in">
-                            <div class="project-header">
-                                <div style="display: inline-block; background: rgba(104, 211, 145, 0.1); border: 1px solid rgba(104, 211, 145, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #68d391; font-weight: 600;">
-                                    🚗 Personal Case Study
-                                </div>
-                                
-                                <h3>Automotive Repair Cost Analysis</h3>
-                                <div class="project-type">Data Analysis | SQL & Data Visualization</div>
-                            </div>
-                            <div class="project-body">
-                                <p>Designed and built an interactive web report analyzing 23 automotive repairs across two vehicles. Utilized SQL window functions, CTEs, and Chart.js to verify cost efficiencies against dealership estimates.</p>
-                                
-                                <div class="project-metrics">
-                                    <div class="metric">
-                                        <div class="metric-value">$10k+</div>
-                                        <div class="metric-label">Savings Verified</div>
-                                    </div>
-                                    <div class="metric">
-                                        <div class="metric-value">85.9%</div>
-                                        <div class="metric-label">Cost Savings Rate</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="skills">
-                                    <span class="skill-tag">SQL</span>
-                                    <span class="skill-tag">Chart.js</span>
-                                    <span class="skill-tag">Data Visualization</span>
-                                    <span class="skill-tag">JavaScript</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </a>
-
-                    <!-- Calendar Automation -->
-<a href="calendar-automation.html" 
-                       target="_blank" 
-                       class="project-card-link">
-                        
-                        <div class="project-card fade-in">
-                            <div class="project-header">
-                                <div style="display: inline-block; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #38bdf8; font-weight: 600;">
-                                    ⚙️ Workflow Automation
-                                </div>
-                                
-                                <h3>Calendar Synchronization Pipeline</h3>
-                                <div class="project-type">Process Optimization | JavaScript & Apps Script</div>
-                            </div>
-                            <div class="project-body">
-                                <p>Engineered an automated data pipeline to bypass proprietary scheduling software limitations. Developed string-parsing spreadsheet logic and a custom Google Apps Script to seamlessly sync shift data to Google Calendar.</p>
-                                
-                                <div class="project-metrics">
-                                    <div class="metric">
-                                        <div class="metric-value">100%</div>
-                                        <div class="metric-label">Manual Entry Eliminated</div>
-                                    </div>
-                                    <div class="metric">
-                                        <div class="metric-value">Zero</div>
-                                        <div class="metric-label">Scheduling Conflicts</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="skills">
-                                    <span class="skill-tag">Google Apps Script</span>
-                                    <span class="skill-tag">JavaScript</span>
-                                    <span class="skill-tag">Spreadsheet Logic</span>
-                                    <span class="skill-tag">API Integration</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    
-                    <!-- Store Returns -->
-                    <div class="project-card fade-in">
-                        <div class="project-header">
-                            <!-- Company Badge -->
-                            <div style="display: inline-block; background: rgba(75, 0, 130, 0.1); border: 1px solid rgba(75, 0, 130, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #9370DB; font-weight: 600;">
-                                🏢 TELUS
-                            </div>
-                            
-                            <h3>Store Returns Prediction Model</h3>
-                            <div class="project-type">Predictive Analytics | Excel & Statistical Modeling</div>
-                            
-                        </div>
-                        <div class="project-body">
-                            <p>Developed predictive model forecasting store returns based on 6-month sales value averages across 275 retail locations. Analyzed $36.6M in total sales to identify patterns and optimize inventory management.</p>
-                            
-                            <div class="project-metrics">
-                                <div class="metric">
-                                    <div class="metric-value">275</div>
-                                    <div class="metric-label">Stores Analyzed</div>
-                                </div>
-                            </div>
-                            
-                            <div class="skills">
-                                <span class="skill-tag">Excel</span>
-                                <span class="skill-tag">Predictive Modeling</span>
-                                <span class="skill-tag">Statistical Analysis</span>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- Customer Segmentation - Red Wireless -->
-                    <div class="project-card fade-in">
-                        <div class="project-header">
-                            <!-- Company Badge -->
-                            <div style="display: inline-block; background: rgba(220, 20, 60, 0.1); border: 1px solid rgba(220, 20, 60, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #DC143C; font-weight: 600;">
-                                🏢 Red Wireless
-                            </div>
-                            
-                            <h3>Customer Segmentation Analysis</h3>
-                            <div class="project-type">Sales Operations | Data-Driven Strategy</div>
-                            
-                        </div>
-                        <div class="project-body">
-                            <p>Performed comprehensive customer segmentation to identify high-value targets. Developed and implemented data-driven sales strategy that increased departmental revenue by 23%.</p>
-                            <div class="project-metrics">
-                                <div class="metric">
-                                    <div class="metric-value">23%</div>
-                                    <div class="metric-label">Revenue Increase</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">94.87%</div>
-                                    <div class="metric-label">CSAT Score</div>
-                                </div>
-                            </div>
-                            <div class="skills">
-                                <span class="skill-tag">Customer Analytics</span>
-                                <span class="skill-tag">Segmentation</span>
-                                <span class="skill-tag">Strategy Development</span>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- KPI Dashboard - TELUS -->
-                    <div class="project-card fade-in">
-                        <div class="project-header">
-                            <!-- Company Badge -->
-                            <div style="display: inline-block; background: rgba(75, 0, 130, 0.1); border: 1px solid rgba(75, 0, 130, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #9370DB; font-weight: 600;">
-                                🏢 TELUS
-                            </div>
-                            
-                            <h3>KPI Dashboard Development</h3>
-                            <div class="project-type">Business Intelligence | Internal Analytics Tool</div>
-                            
-                        </div>
-                        <div class="project-body">
-                            <p>Built custom Google Sheets KPI tracker integrating Tableau data exports. Automated performance monitoring and visualization to maintain consistent 130% sales per hour average.</p>
-                            
-                            <div class="project-metrics">
-                                <div class="metric">
-                                    <div class="metric-value">130%</div>
-                                    <div class="metric-label">Target Achievement</div>
-                                </div>
-                            </div>
-                            <div class="skills">
-                                <span class="skill-tag">Google Sheets</span>
-                                <span class="skill-tag">Tableau</span>
-                                <span class="skill-tag">Dashboard Design</span>
-                                <span class="skill-tag">KPI Development</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    <!-- Skills Section -->
-    <section id="skills">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Technical Arsenal</h2>
-                <p>Comprehensive toolkit for data analysis and business intelligence</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category fade-in">
-                    <h3>💻 Programming & Databases</h3>
-                    <ul>
-                        <li>Python (Data Analysis, Automation)</li>
-                        <li>R (Statistical Computing)</li>
-                        <li>SQL (Database Queries)</li>
-                        <li>Git (Version Control)</li>
-                        <li>Linux/Unix</li>
-                        <li>HTML & LaTeX</li>
-                    </ul>
-                </div>
-
-                <div class="skill-category fade-in">
-                    <h3>📊 Data Analysis & Visualization</h3>
-                    <ul>
-                        <li>Excel (Advanced, Macros, VBA)</li>
-                        <li>Tableau</li>
-                        <li>Google Sheets</li>
-                        <li>Domo</li>
-                        <li>Statistical Analysis</li>
-                        <li>A/B Testing</li>
-                        <li>Performance Metrics & KPIs</li>
-                    </ul>
-                </div>
-
-                <div class="skill-category fade-in">
-                    <h3>🛠️ Business & Sales Tools</h3>
-                    <ul>
-                        <li>Pipedrive (CRM)</li>
-                        <li>Asana (Project Management)</li>
-                        <li>Slack (Team Collaboration)</li>
-                        <li>Vonage (Communications)</li>
-                        <li>Google Suite</li>
-                        <li>Customer Relationship Management</li>
-                    </ul>
-                </div>
-
-                <div class="skill-category fade-in">
-                    <h3>📈 Analytics Methodologies</h3>
-                    <ul>
-                        <li>Predictive Modeling</li>
-                        <li>Customer Segmentation</li>
-                        <li>Regression Analysis</li>
-                        <li>Optimization Algorithms</li>
-                        <li>Data Visualization</li>
-                        <li>Statistical Computing</li>
-                        <li>Process Automation</li>
-                    </ul>
-                </div>
-
-                <div class="skill-category fade-in">
-                    <h3>🎓 Academic Foundation</h3>
-                    <ul>
-                        <li>Computational Statistics</li>
-                        <li>Probability Theory</li>
-                        <li>Management Information Systems</li>
-                        <li>Financial Markets</li>
-                        <li>Financial Accounting</li>
-                        <li>Human Resources Management</li>
-                    </ul>
-                </div>
-
-                <div class="skill-category fade-in">
-                    <h3>💼 Business Competencies</h3>
-                    <ul>
-                        <li>Data-Driven Strategy</li>
-                        <li>Performance Optimization</li>
-                        <li>Team Leadership</li>
-                        <li>Stakeholder Communication</li>
-                        <li>Process Improvement</li>
-                        <li>Change Management</li>
-                    </ul>
-                </div>
-            </div>
+<section id="contact">
+    <div class="wrap">
+        <h2>Contact</h2>
+        <p class="lead">Open to opportunities in data analysis, business intelligence and analytics.</p>
+        <div class="grid grid-3" style="margin-top:20px">
+            <a class="card" href="mailto:simion.ciobanu1@gmail.com"><div class="meta">Email</div>simion.ciobanu1@gmail.com</a>
+            <a class="card" href="https://linkedin.com/in/toniciobanu"><div class="meta">LinkedIn</div>linkedin.com/in/toniciobanu</a>
+            <a class="card" href="tel:+15195016578"><div class="meta">Phone</div>(519) 501-6578</a>
         </div>
-    </section>
+    </div>
+</section>
+</main>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Let's Connect</h2>
-                <p>Open to opportunities in data analysis, business intelligence, and analytics</p>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-card fade-in">
-                    <div class="contact-icon">📧</div>
-                    <h3>Email</h3>
-                    <p><a href="mailto:simion.ciobanu1@gmail.com">simion.ciobanu1@gmail.com</a></p>
-                </div>
-                <div class="contact-card fade-in">
-                    <div class="contact-icon">💼</div>
-                    <h3>LinkedIn</h3>
-                    <p><a href="https://linkedin.com/in/toniciobanu" target="_blank">linkedin.com/in/toniciobanu</a></p>
-                </div>
-                <div class="contact-card fade-in">
-                    <div class="contact-icon">📱</div>
-                    <h3>Phone</h3>
-                    <p><a href="tel:+15195016578">(519) 501-6578</a></p>
-                </div>
-                <div class="contact-card fade-in">
-                    <div class="contact-icon">📍</div>
-                    <h3>Location</h3>
-                    <p>Kitchener, ON, Canada</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<footer><div class="wrap">© 2026 Toni Ciobanu · Kitchener, ON · <a href="https://github.com/ToniCiobanu/Portfolio">Source for this site</a></div></footer>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Toni Ciobanu | University of Waterloo Graduate | Data Analyst & Business Intelligence Specialist</p>
-            <p style="margin-top: 10px; color: var(--uwaterloo-gold);">Built with passion for data-driven insights</p>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu if open
-                    document.getElementById('nav-menu').classList.remove('active');
-                }
-            });
-        });
-
-        // Mobile menu toggle
-        function toggleMenu() {
-            document.getElementById('nav-menu').classList.toggle('active');
-        }
-
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        // Add active state to nav on scroll
-        window.addEventListener('scroll', () => {
-            let current = '';
-            const sections = document.querySelectorAll('section');
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            document.querySelectorAll('nav ul li a').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').slice(1) === current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+<script src="assets/js/site.js"></script>
+<script src="projects/repair-costs/results.js"></script>
+<script src="projects/phone-prices/results.js"></script>
+<script>
+bindValues(document, { repair: REPAIRS.results.overall[0], phone: PHONES.summary });
+</script>
 </body>
 </html>

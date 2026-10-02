@@ -1,0 +1,24 @@
+item_id,vehicle_id,description,system,reason,diy_parts_cost,mechanic_estimate,parts_source
+1,1,CV Axle,Drivetrain,crash,41.85,550.00,RockAuto
+2,1,Control Arm,Suspension & Steering,crash,62.24,800.00,RockAuto
+3,1,Tie Rod Ends,Suspension & Steering,wear,24.68,450.00,RockAuto
+4,1,Sway Bar Link,Suspension & Steering,wear,6.50,250.00,RockAuto
+5,1,BOSE Speakers (Front & Rear),Electrical & Audio,upgrade,224.58,700.00,Amazon
+6,1,Tire Replacements x2,Tires & Wipers,wear,150.00,450.00,Local Shop
+7,1,Exhaust Clamp & Spot Welds,Exhaust,wear,56.50,500.00,Amazon
+8,1,VVT Solenoids,Engine,wear,63.06,350.00,RockAuto
+9,1,Brake Pads and Rotors x2,Brakes,wear,135.28,1000.00,RockAuto
+10,1,Control Arm,Suspension & Steering,wear,83.41,800.00,RockAuto
+11,2,OEM Oil Filter (Stalling Fix),Engine,wear,45.00,150.00,Dealership
+12,2,Rear Shocks,Suspension & Steering,wear,64.98,475.00,RockAuto
+13,2,Front Rotors & Brake Pads,Brakes,wear,58.44,500.00,RockAuto
+14,2,Rear Rotors & Brake Pads,Brakes,wear,85.75,500.00,RockAuto
+15,2,Battery Replacement,Electrical & Audio,wear,220.34,300.00,Local Shop
+16,2,Front Bumper Repair,Body,safety_inspection,30.00,1075.76,Amazon
+17,2,Hood Replacement (Used),Body,safety_inspection,100.00,1342.68,Junkyard
+18,2,Left Front Control Arm,Suspension & Steering,wear,58.49,442.21,RockAuto
+19,2,Right Front Control Arm,Suspension & Steering,wear,58.49,442.21,RockAuto
+20,2,Neutral Safety Switch,Electrical & Audio,safety_inspection,34.00,438.21,Amazon
+21,2,Brake Light Bulb Housing,Electrical & Audio,safety_inspection,5.00,57.80,Junkyard
+22,2,Wiper Blades (28in & 14in),Tires & Wipers,safety_inspection,23.00,41.98,Amazon
+23,2,PCV Valve,Engine,wear,20.00,125.00,Amazon
