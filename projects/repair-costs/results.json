@@ -1,0 +1,838 @@
+{
+  "overall": [
+    {
+      "repairs": 23,
+      "diy_cost": 1651.59,
+      "mechanic_estimate": 11740.85,
+      "savings": 10089.26,
+      "savings_pct": 85.93,
+      "avg_savings_per_repair": 438.66,
+      "mean_of_repair_pcts": 82.09
+    }
+  ],
+  "by_vehicle": [
+    {
+      "vehicle": "Pontiac G6 2009",
+      "odometer_km": 130000,
+      "repairs": 10,
+      "diy_cost": 848.1,
+      "mechanic_estimate": 5850.0,
+      "savings": 5001.9,
+      "savings_pct": 85.5
+    },
+    {
+      "vehicle": "Hyundai Elantra 2016",
+      "odometer_km": 230000,
+      "repairs": 13,
+      "diy_cost": 803.49,
+      "mechanic_estimate": 5890.85,
+      "savings": 5087.36,
+      "savings_pct": 86.36
+    }
+  ],
+  "by_system": [
+    {
+      "system": "Suspension & Steering",
+      "repairs": 7,
+      "diy_cost": 358.79,
+      "mechanic_estimate": 3659.42,
+      "savings": 3300.63,
+      "savings_pct": 90.2
+    },
+    {
+      "system": "Body",
+      "repairs": 2,
+      "diy_cost": 130.0,
+      "mechanic_estimate": 2418.44,
+      "savings": 2288.44,
+      "savings_pct": 94.62
+    },
+    {
+      "system": "Brakes",
+      "repairs": 3,
+      "diy_cost": 279.47,
+      "mechanic_estimate": 2000.0,
+      "savings": 1720.53,
+      "savings_pct": 86.03
+    },
+    {
+      "system": "Electrical & Audio",
+      "repairs": 4,
+      "diy_cost": 483.92,
+      "mechanic_estimate": 1496.01,
+      "savings": 1012.09,
+      "savings_pct": 67.65
+    },
+    {
+      "system": "Drivetrain",
+      "repairs": 1,
+      "diy_cost": 41.85,
+      "mechanic_estimate": 550.0,
+      "savings": 508.15,
+      "savings_pct": 92.39
+    },
+    {
+      "system": "Engine",
+      "repairs": 3,
+      "diy_cost": 128.06,
+      "mechanic_estimate": 625.0,
+      "savings": 496.94,
+      "savings_pct": 79.51
+    },
+    {
+      "system": "Exhaust",
+      "repairs": 1,
+      "diy_cost": 56.5,
+      "mechanic_estimate": 500.0,
+      "savings": 443.5,
+      "savings_pct": 88.7
+    },
+    {
+      "system": "Tires & Wipers",
+      "repairs": 2,
+      "diy_cost": 173.0,
+      "mechanic_estimate": 491.98,
+      "savings": 318.98,
+      "savings_pct": 64.84
+    }
+  ],
+  "by_reason": [
+    {
+      "reason": "wear",
+      "repairs": 15,
+      "savings": 5603.5,
+      "savings_pct": 83.21
+    },
+    {
+      "reason": "safety_inspection",
+      "repairs": 5,
+      "savings": 2764.43,
+      "savings_pct": 93.51
+    },
+    {
+      "reason": "crash",
+      "repairs": 2,
+      "savings": 1245.91,
+      "savings_pct": 92.29
+    },
+    {
+      "reason": "upgrade",
+      "repairs": 1,
+      "savings": 475.42,
+      "savings_pct": 67.92
+    }
+  ],
+  "by_source": [
+    {
+      "parts_source": "RockAuto",
+      "repairs": 12,
+      "diy_cost": 743.17,
+      "savings": 5816.25,
+      "savings_per_parts_dollar": 7.83
+    },
+    {
+      "parts_source": "Amazon",
+      "repairs": 6,
+      "diy_cost": 388.08,
+      "savings": 2492.87,
+      "savings_per_parts_dollar": 6.42
+    },
+    {
+      "parts_source": "Junkyard",
+      "repairs": 2,
+      "diy_cost": 105.0,
+      "savings": 1295.48,
+      "savings_per_parts_dollar": 12.34
+    },
+    {
+      "parts_source": "Local Shop",
+      "repairs": 2,
+      "diy_cost": 370.34,
+      "savings": 379.66,
+      "savings_per_parts_dollar": 1.03
+    },
+    {
+      "parts_source": "Dealership",
+      "repairs": 1,
+      "diy_cost": 45.0,
+      "savings": 105.0,
+      "savings_per_parts_dollar": 2.0
+    }
+  ],
+  "ranked": [
+    {
+      "item_id": 4,
+      "vehicle": "Pontiac G6 2009",
+      "description": "Sway Bar Link",
+      "system": "Suspension & Steering",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 6.5,
+      "mechanic_estimate": 250,
+      "savings": 243.5,
+      "savings_pct": 97.4,
+      "rank_by_pct": 1,
+      "rank_by_dollars": 18
+    },
+    {
+      "item_id": 16,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Front Bumper Repair",
+      "system": "Body",
+      "reason": "safety_inspection",
+      "parts_source": "Amazon",
+      "diy_parts_cost": 30,
+      "mechanic_estimate": 1075.76,
+      "savings": 1045.76,
+      "savings_pct": 97.21,
+      "rank_by_pct": 2,
+      "rank_by_dollars": 2
+    },
+    {
+      "item_id": 3,
+      "vehicle": "Pontiac G6 2009",
+      "description": "Tie Rod Ends",
+      "system": "Suspension & Steering",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 24.68,
+      "mechanic_estimate": 450,
+      "savings": 425.32,
+      "savings_pct": 94.52,
+      "rank_by_pct": 3,
+      "rank_by_dollars": 10
+    },
+    {
+      "item_id": 17,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Hood Replacement (Used)",
+      "system": "Body",
+      "reason": "safety_inspection",
+      "parts_source": "Junkyard",
+      "diy_parts_cost": 100,
+      "mechanic_estimate": 1342.68,
+      "savings": 1242.68,
+      "savings_pct": 92.55,
+      "rank_by_pct": 4,
+      "rank_by_dollars": 1
+    },
+    {
+      "item_id": 1,
+      "vehicle": "Pontiac G6 2009",
+      "description": "CV Axle",
+      "system": "Drivetrain",
+      "reason": "crash",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 41.85,
+      "mechanic_estimate": 550,
+      "savings": 508.15,
+      "savings_pct": 92.39,
+      "rank_by_pct": 5,
+      "rank_by_dollars": 6
+    },
+    {
+      "item_id": 20,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Neutral Safety Switch",
+      "system": "Electrical & Audio",
+      "reason": "safety_inspection",
+      "parts_source": "Amazon",
+      "diy_parts_cost": 34,
+      "mechanic_estimate": 438.21,
+      "savings": 404.21,
+      "savings_pct": 92.24,
+      "rank_by_pct": 6,
+      "rank_by_dollars": 13
+    },
+    {
+      "item_id": 2,
+      "vehicle": "Pontiac G6 2009",
+      "description": "Control Arm",
+      "system": "Suspension & Steering",
+      "reason": "crash",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 62.24,
+      "mechanic_estimate": 800,
+      "savings": 737.76,
+      "savings_pct": 92.22,
+      "rank_by_pct": 7,
+      "rank_by_dollars": 4
+    },
+    {
+      "item_id": 21,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Brake Light Bulb Housing",
+      "system": "Electrical & Audio",
+      "reason": "safety_inspection",
+      "parts_source": "Junkyard",
+      "diy_parts_cost": 5,
+      "mechanic_estimate": 57.8,
+      "savings": 52.8,
+      "savings_pct": 91.35,
+      "rank_by_pct": 8,
+      "rank_by_dollars": 22
+    },
+    {
+      "item_id": 10,
+      "vehicle": "Pontiac G6 2009",
+      "description": "Control Arm",
+      "system": "Suspension & Steering",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 83.41,
+      "mechanic_estimate": 800,
+      "savings": 716.59,
+      "savings_pct": 89.57,
+      "rank_by_pct": 9,
+      "rank_by_dollars": 5
+    },
+    {
+      "item_id": 7,
+      "vehicle": "Pontiac G6 2009",
+      "description": "Exhaust Clamp & Spot Welds",
+      "system": "Exhaust",
+      "reason": "wear",
+      "parts_source": "Amazon",
+      "diy_parts_cost": 56.5,
+      "mechanic_estimate": 500,
+      "savings": 443.5,
+      "savings_pct": 88.7,
+      "rank_by_pct": 10,
+      "rank_by_dollars": 8
+    },
+    {
+      "item_id": 13,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Front Rotors & Brake Pads",
+      "system": "Brakes",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 58.44,
+      "mechanic_estimate": 500,
+      "savings": 441.56,
+      "savings_pct": 88.31,
+      "rank_by_pct": 11,
+      "rank_by_dollars": 9
+    },
+    {
+      "item_id": 18,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Left Front Control Arm",
+      "system": "Suspension & Steering",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 58.49,
+      "mechanic_estimate": 442.21,
+      "savings": 383.72,
+      "savings_pct": 86.77,
+      "rank_by_pct": 12,
+      "rank_by_dollars": 14
+    },
+    {
+      "item_id": 19,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Right Front Control Arm",
+      "system": "Suspension & Steering",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 58.49,
+      "mechanic_estimate": 442.21,
+      "savings": 383.72,
+      "savings_pct": 86.77,
+      "rank_by_pct": 12,
+      "rank_by_dollars": 14
+    },
+    {
+      "item_id": 9,
+      "vehicle": "Pontiac G6 2009",
+      "description": "Brake Pads and Rotors x2",
+      "system": "Brakes",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 135.28,
+      "mechanic_estimate": 1000,
+      "savings": 864.72,
+      "savings_pct": 86.47,
+      "rank_by_pct": 14,
+      "rank_by_dollars": 3
+    },
+    {
+      "item_id": 12,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Rear Shocks",
+      "system": "Suspension & Steering",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 64.98,
+      "mechanic_estimate": 475,
+      "savings": 410.02,
+      "savings_pct": 86.32,
+      "rank_by_pct": 15,
+      "rank_by_dollars": 12
+    },
+    {
+      "item_id": 23,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "PCV Valve",
+      "system": "Engine",
+      "reason": "wear",
+      "parts_source": "Amazon",
+      "diy_parts_cost": 20,
+      "mechanic_estimate": 125,
+      "savings": 105.0,
+      "savings_pct": 84.0,
+      "rank_by_pct": 16,
+      "rank_by_dollars": 19
+    },
+    {
+      "item_id": 14,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Rear Rotors & Brake Pads",
+      "system": "Brakes",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 85.75,
+      "mechanic_estimate": 500,
+      "savings": 414.25,
+      "savings_pct": 82.85,
+      "rank_by_pct": 17,
+      "rank_by_dollars": 11
+    },
+    {
+      "item_id": 8,
+      "vehicle": "Pontiac G6 2009",
+      "description": "VVT Solenoids",
+      "system": "Engine",
+      "reason": "wear",
+      "parts_source": "RockAuto",
+      "diy_parts_cost": 63.06,
+      "mechanic_estimate": 350,
+      "savings": 286.94,
+      "savings_pct": 81.98,
+      "rank_by_pct": 18,
+      "rank_by_dollars": 17
+    },
+    {
+      "item_id": 11,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "OEM Oil Filter (Stalling Fix)",
+      "system": "Engine",
+      "reason": "wear",
+      "parts_source": "Dealership",
+      "diy_parts_cost": 45,
+      "mechanic_estimate": 150,
+      "savings": 105.0,
+      "savings_pct": 70.0,
+      "rank_by_pct": 19,
+      "rank_by_dollars": 19
+    },
+    {
+      "item_id": 5,
+      "vehicle": "Pontiac G6 2009",
+      "description": "BOSE Speakers (Front & Rear)",
+      "system": "Electrical & Audio",
+      "reason": "upgrade",
+      "parts_source": "Amazon",
+      "diy_parts_cost": 224.58,
+      "mechanic_estimate": 700,
+      "savings": 475.42,
+      "savings_pct": 67.92,
+      "rank_by_pct": 20,
+      "rank_by_dollars": 7
+    },
+    {
+      "item_id": 6,
+      "vehicle": "Pontiac G6 2009",
+      "description": "Tire Replacements x2",
+      "system": "Tires & Wipers",
+      "reason": "wear",
+      "parts_source": "Local Shop",
+      "diy_parts_cost": 150,
+      "mechanic_estimate": 450,
+      "savings": 300.0,
+      "savings_pct": 66.67,
+      "rank_by_pct": 21,
+      "rank_by_dollars": 16
+    },
+    {
+      "item_id": 22,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Wiper Blades (28in & 14in)",
+      "system": "Tires & Wipers",
+      "reason": "safety_inspection",
+      "parts_source": "Amazon",
+      "diy_parts_cost": 23,
+      "mechanic_estimate": 41.98,
+      "savings": 18.98,
+      "savings_pct": 45.21,
+      "rank_by_pct": 22,
+      "rank_by_dollars": 23
+    },
+    {
+      "item_id": 15,
+      "vehicle": "Hyundai Elantra 2016",
+      "description": "Battery Replacement",
+      "system": "Electrical & Audio",
+      "reason": "wear",
+      "parts_source": "Local Shop",
+      "diy_parts_cost": 220.34,
+      "mechanic_estimate": 300,
+      "savings": 79.66,
+      "savings_pct": 26.55,
+      "rank_by_pct": 23,
+      "rank_by_dollars": 21
+    }
+  ],
+  "concentration": [
+    {
+      "n": 1,
+      "description": "Hood Replacement (Used)",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 1242.68,
+      "cumulative_share_pct": 12.3
+    },
+    {
+      "n": 2,
+      "description": "Front Bumper Repair",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 1045.76,
+      "cumulative_share_pct": 22.7
+    },
+    {
+      "n": 3,
+      "description": "Brake Pads and Rotors x2",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 864.72,
+      "cumulative_share_pct": 31.3
+    },
+    {
+      "n": 4,
+      "description": "Control Arm",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 737.76,
+      "cumulative_share_pct": 38.6
+    },
+    {
+      "n": 5,
+      "description": "Control Arm",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 716.59,
+      "cumulative_share_pct": 45.7
+    },
+    {
+      "n": 6,
+      "description": "CV Axle",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 508.15,
+      "cumulative_share_pct": 50.7
+    },
+    {
+      "n": 7,
+      "description": "BOSE Speakers (Front & Rear)",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 475.42,
+      "cumulative_share_pct": 55.4
+    },
+    {
+      "n": 8,
+      "description": "Exhaust Clamp & Spot Welds",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 443.5,
+      "cumulative_share_pct": 59.8
+    },
+    {
+      "n": 9,
+      "description": "Front Rotors & Brake Pads",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 441.56,
+      "cumulative_share_pct": 64.2
+    },
+    {
+      "n": 10,
+      "description": "Tie Rod Ends",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 425.32,
+      "cumulative_share_pct": 68.4
+    },
+    {
+      "n": 11,
+      "description": "Rear Rotors & Brake Pads",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 414.25,
+      "cumulative_share_pct": 72.5
+    },
+    {
+      "n": 12,
+      "description": "Rear Shocks",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 410.02,
+      "cumulative_share_pct": 76.6
+    },
+    {
+      "n": 13,
+      "description": "Neutral Safety Switch",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 404.21,
+      "cumulative_share_pct": 80.6
+    },
+    {
+      "n": 14,
+      "description": "Left Front Control Arm",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 383.72,
+      "cumulative_share_pct": 84.4
+    },
+    {
+      "n": 15,
+      "description": "Right Front Control Arm",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 383.72,
+      "cumulative_share_pct": 88.2
+    },
+    {
+      "n": 16,
+      "description": "Tire Replacements x2",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 300.0,
+      "cumulative_share_pct": 91.2
+    },
+    {
+      "n": 17,
+      "description": "VVT Solenoids",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 286.94,
+      "cumulative_share_pct": 94.0
+    },
+    {
+      "n": 18,
+      "description": "Sway Bar Link",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 243.5,
+      "cumulative_share_pct": 96.4
+    },
+    {
+      "n": 19,
+      "description": "OEM Oil Filter (Stalling Fix)",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 105.0,
+      "cumulative_share_pct": 97.5
+    },
+    {
+      "n": 20,
+      "description": "PCV Valve",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 105.0,
+      "cumulative_share_pct": 98.5
+    },
+    {
+      "n": 21,
+      "description": "Battery Replacement",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 79.66,
+      "cumulative_share_pct": 99.3
+    },
+    {
+      "n": 22,
+      "description": "Brake Light Bulb Housing",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 52.8,
+      "cumulative_share_pct": 99.8
+    },
+    {
+      "n": 23,
+      "description": "Wiper Blades (28in & 14in)",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 18.98,
+      "cumulative_share_pct": 100.0
+    }
+  ],
+  "sensitivity": [
+    {
+      "pct_overstated": 0,
+      "adjusted_mechanic_total": 11740.85,
+      "savings": 10089.26,
+      "savings_pct": 85.93
+    },
+    {
+      "pct_overstated": 10,
+      "adjusted_mechanic_total": 10673.5,
+      "savings": 9021.91,
+      "savings_pct": 84.53
+    },
+    {
+      "pct_overstated": 25,
+      "adjusted_mechanic_total": 9392.68,
+      "savings": 7741.09,
+      "savings_pct": 82.42
+    },
+    {
+      "pct_overstated": 50,
+      "adjusted_mechanic_total": 7827.23,
+      "savings": 6175.64,
+      "savings_pct": 78.9
+    }
+  ],
+  "break_even_hours": [
+    {
+      "description": "Wiper Blades (28in & 14in)",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 18.98,
+      "hourly_wage": 25.0,
+      "break_even_hours": 0.8
+    },
+    {
+      "description": "Brake Light Bulb Housing",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 52.8,
+      "hourly_wage": 25.0,
+      "break_even_hours": 2.1
+    },
+    {
+      "description": "Battery Replacement",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 79.66,
+      "hourly_wage": 25.0,
+      "break_even_hours": 3.2
+    },
+    {
+      "description": "OEM Oil Filter (Stalling Fix)",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 105.0,
+      "hourly_wage": 25.0,
+      "break_even_hours": 4.2
+    },
+    {
+      "description": "PCV Valve",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 105.0,
+      "hourly_wage": 25.0,
+      "break_even_hours": 4.2
+    },
+    {
+      "description": "Sway Bar Link",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 243.5,
+      "hourly_wage": 25.0,
+      "break_even_hours": 9.7
+    },
+    {
+      "description": "VVT Solenoids",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 286.94,
+      "hourly_wage": 25.0,
+      "break_even_hours": 11.5
+    },
+    {
+      "description": "Tire Replacements x2",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 300.0,
+      "hourly_wage": 25.0,
+      "break_even_hours": 12.0
+    },
+    {
+      "description": "Left Front Control Arm",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 383.72,
+      "hourly_wage": 25.0,
+      "break_even_hours": 15.3
+    },
+    {
+      "description": "Right Front Control Arm",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 383.72,
+      "hourly_wage": 25.0,
+      "break_even_hours": 15.3
+    },
+    {
+      "description": "Neutral Safety Switch",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 404.21,
+      "hourly_wage": 25.0,
+      "break_even_hours": 16.2
+    },
+    {
+      "description": "Rear Shocks",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 410.02,
+      "hourly_wage": 25.0,
+      "break_even_hours": 16.4
+    },
+    {
+      "description": "Rear Rotors & Brake Pads",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 414.25,
+      "hourly_wage": 25.0,
+      "break_even_hours": 16.6
+    },
+    {
+      "description": "Tie Rod Ends",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 425.32,
+      "hourly_wage": 25.0,
+      "break_even_hours": 17.0
+    },
+    {
+      "description": "Exhaust Clamp & Spot Welds",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 443.5,
+      "hourly_wage": 25.0,
+      "break_even_hours": 17.7
+    },
+    {
+      "description": "Front Rotors & Brake Pads",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 441.56,
+      "hourly_wage": 25.0,
+      "break_even_hours": 17.7
+    },
+    {
+      "description": "BOSE Speakers (Front & Rear)",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 475.42,
+      "hourly_wage": 25.0,
+      "break_even_hours": 19.0
+    },
+    {
+      "description": "CV Axle",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 508.15,
+      "hourly_wage": 25.0,
+      "break_even_hours": 20.3
+    },
+    {
+      "description": "Control Arm",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 716.59,
+      "hourly_wage": 25.0,
+      "break_even_hours": 28.7
+    },
+    {
+      "description": "Control Arm",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 737.76,
+      "hourly_wage": 25.0,
+      "break_even_hours": 29.5
+    },
+    {
+      "description": "Brake Pads and Rotors x2",
+      "vehicle": "Pontiac G6 2009",
+      "savings": 864.72,
+      "hourly_wage": 25.0,
+      "break_even_hours": 34.6
+    },
+    {
+      "description": "Front Bumper Repair",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 1045.76,
+      "hourly_wage": 25.0,
+      "break_even_hours": 41.8
+    },
+    {
+      "description": "Hood Replacement (Used)",
+      "vehicle": "Hyundai Elantra 2016",
+      "savings": 1242.68,
+      "hourly_wage": 25.0,
+      "break_even_hours": 49.7
+    }
+  ]
+}
