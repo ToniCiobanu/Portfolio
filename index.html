@@ -688,7 +688,7 @@
         .hero-inner .hero-content { text-align: left; max-width: 640px; }
         .hero-inner .hero .description, .hero-inner .description { margin-left: 0; }
         .hero-inner .cta-buttons { justify-content: flex-start; }
-        .project-card.featured { grid-column: 1 / -1; }
+        .project-card.featured, .project-card-link.featured { grid-column: 1 / -1; }
         .status-pill {
             display: inline-block; margin-top: 8px; font-size: 0.8em; color: var(--text-secondary);
             border: 1px dashed rgba(255,255,255,0.25); padding: 3px 10px; border-radius: 12px;
@@ -760,25 +760,26 @@
             <div class="projects-grid">
 
                 <!-- Homelab -->
-                <div class="project-card featured fade-in">
+                <a href="homelab.html" class="project-card-link featured">
+                <div class="project-card fade-in">
                     <div class="project-header">
                         <div style="display: inline-block; background: rgba(104, 211, 145, 0.1); border: 1px solid rgba(104, 211, 145, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #68d391; font-weight: 600;">
-                            🖥️ Self-Directed · Ongoing
+                            🖥️ Self-Directed · Since April 2026
                         </div>
                         <h3>Home Server / Homelab</h3>
                         <div class="project-type">Linux · Docker · Networking · Troubleshooting</div>
                     </div>
                     <div class="project-body">
-                        <p>Turned an old desktop (Ryzen 5 2600, GTX 1660 Ti) into a 24/7 Ubuntu server that replaces several paid services. It runs a CasaOS-managed Docker stack: Immich for photos, Jellyfin with GPU transcoding, Pi-hole, a Tailscale exit node, Samba, PostgreSQL, a local LLM through Ollama and Open WebUI, Uptime Kuma, Code Server, Audiobookshelf, Kiwix, and Wolf for game streaming.</p>
-                        <p>The interesting part has been fixing what broke: tracing a server crash to thermals from concurrent ML jobs, fighting immich-go through an API version mismatch and NTFS permission walls to migrate family photo archives, moving ML work onto the GPU, and running ethernet to the basement with WiFi kept as failover.</p>
+                        <p>Turned a PC that was collecting dust into a 24/7 Ubuntu server that every device I own reaches through Tailscale. It runs 10 self-hosted apps through CasaOS and Docker: Immich for photos, Jellyfin, Pi-hole, a local LLM through Ollama and Open WebUI, Kiwix, PostgreSQL, Code Server, Audiobookshelf, and Wolf for game streaming.</p>
+                        <p>The write-up covers what broke and how I fixed it: a server that kept shutting itself off (Immich's ML was running on the CPU instead of the GPU), a photo migration fighting version mismatches, and moving the server off WiFi.</p>
                         <div class="project-metrics">
                             <div class="metric">
-                                <div class="metric-value">10+</div>
-                                <div class="metric-label">Self-hosted services</div>
+                                <div class="metric-value">72,930</div>
+                                <div class="metric-label">Photos &amp; videos migrated</div>
                             </div>
                             <div class="metric">
-                                <div class="metric-value">200GB+</div>
-                                <div class="metric-label">Photo library migrated</div>
+                                <div class="metric-value">10</div>
+                                <div class="metric-label">Self-hosted apps</div>
                             </div>
                         </div>
                         <div class="skills">
@@ -786,11 +787,12 @@
                             <span class="skill-tag">Docker</span>
                             <span class="skill-tag">Tailscale / SSH</span>
                             <span class="skill-tag">PostgreSQL</span>
-                            <span class="skill-tag">GPU Passthrough</span>
+                            <span class="skill-tag">NVIDIA GPU</span>
                         </div>
-                        <span class="status-pill">Full write-up in progress</span>
+                        <span class="status-pill">Read the full write-up →</span>
                     </div>
                 </div>
+                </a>
 
                 <!-- Calendar Automation -->
                 <a href="calendar-automation.html" target="_blank" class="project-card-link">

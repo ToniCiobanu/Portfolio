@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homelab | Toni Ciobanu</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --uwaterloo-gold: #FDB515;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --green: #68d391;
+            --red: #f87171;
+            --blue: #38bdf8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 100px 20px 60px; }
+
+        .back-link {
+            display: inline-flex; color: var(--uwaterloo-gold); text-decoration: none;
+            font-weight: 600; margin-bottom: 30px; transition: transform 0.3s ease;
+        }
+        .back-link:hover { transform: translateX(-5px); }
+
+        h1 {
+            font-size: clamp(2em, 5vw, 3.2em); font-weight: 800; margin-bottom: 15px; line-height: 1.15;
+            background: linear-gradient(135deg, #ffffff 0%, var(--uwaterloo-gold) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .project-meta {
+            color: var(--text-secondary); font-size: 1.05em; margin-bottom: 40px;
+            padding-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-section {
+            background: var(--card-bg); padding: 36px; border-radius: 15px;
+            border: 1px solid rgba(253, 181, 21, 0.1); margin-bottom: 30px;
+        }
+        .content-section h2 { color: var(--uwaterloo-gold); margin-bottom: 18px; font-size: 1.7em; }
+        .content-section h3 { color: #fff; margin: 22px 0 8px; font-size: 1.1em; }
+        .content-section p { color: var(--text-secondary); margin-bottom: 16px; font-size: 1.05em; }
+        .content-section ul { color: var(--text-secondary); margin: 0 0 16px 20px; }
+        .content-section li { margin-bottom: 8px; }
+        .content-section strong { color: #fff; }
+
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin: 10px 0 24px; }
+        .stat { background: var(--dark-bg); border: 1px solid rgba(253, 181, 21, 0.15); border-radius: 12px; padding: 18px; text-align: center; }
+        .stat .v { font-size: 1.7em; font-weight: 800; color: var(--uwaterloo-gold); }
+        .stat .l { font-size: 0.85em; color: var(--text-secondary); }
+
+        .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+        .app { background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 16px; }
+        .app b { color: #fff; display: block; margin-bottom: 2px; }
+        .app span { color: var(--text-secondary); font-size: 0.92em; }
+
+        /* Architecture diagram */
+        .arch { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 10px auto 6px; max-width: 560px; }
+        .arch .col { width: 100%; }
+        .arch .col.row { flex-direction: row; } .arch .col.row .node { flex: 1; }
+        .arch .arrow { transform: rotate(90deg); }
+        .arch .col { display: flex; flex-direction: column; gap: 10px; justify-content: center; }
+        .node { background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 10px 14px; text-align: center; font-size: 0.92em; color: var(--text-secondary); }
+        .node b { color: #fff; display: block; }
+        .node.ts { border-color: var(--blue); }
+        .node.ts b { color: var(--blue); }
+        .node.server { border-color: var(--uwaterloo-gold); min-width: 260px; text-align: left; }
+        .node.server b { color: var(--uwaterloo-gold); }
+        .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .chip { font-size: 0.78em; padding: 3px 8px; border-radius: 10px; background: rgba(253,181,21,0.1); color: var(--uwaterloo-gold); border: 1px solid rgba(253,181,21,0.25); }
+        .arrow { align-self: center; color: var(--text-secondary); font-size: 1.4em; }
+        .caption { text-align: center; color: var(--text-secondary); font-size: 0.85em; margin-top: 10px; }
+
+        /* Story steps */
+        .step { border-left: 3px solid rgba(255,255,255,0.15); padding: 4px 0 4px 16px; margin-bottom: 14px; }
+        .step .tag { font-size: 0.75em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+        .step p { margin-bottom: 0; }
+        .step.problem { border-color: var(--red); } .step.problem .tag { color: var(--red); }
+        .step.check { border-color: var(--blue); } .step.check .tag { color: var(--blue); }
+        .step.miss { border-color: #f6ad55; } .step.miss .tag { color: #f6ad55; }
+        .step.fix { border-color: var(--green); } .step.fix .tag { color: var(--green); }
+
+        .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+        .gallery figure { background: var(--dark-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+        .gallery figure.wide { grid-column: 1 / -1; }
+        .gallery img { width: 100%; display: block; }
+        .gallery figcaption { padding: 10px 14px; color: var(--text-secondary); font-size: 0.9em; }
+
+        .note { background: rgba(253,181,21,0.06); border: 1px solid rgba(253,181,21,0.2); border-radius: 10px; padding: 16px 18px; color: var(--text-secondary); }
+
+        footer { text-align: center; color: var(--text-secondary); font-size: 0.9em; padding: 30px 20px 50px; }
+
+        @media (max-width: 768px) {
+            .content-section { padding: 22px; }
+            .gallery { grid-template-columns: 1fr; }
+            .arch .col.row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+
+        <h1>Homelab: Turning a Dusty PC Into My Own Private Cloud</h1>
+        <div class="project-meta">
+            <strong>Type:</strong> Self-directed, ongoing since April 2026 &nbsp;|&nbsp;
+            <strong>Stack:</strong> Ubuntu Server, CasaOS, Docker, Tailscale, NVIDIA GPU
+        </div>
+
+        <div class="content-section">
+            <h2>Why I Built It</h2>
+            <p>I built a PC for about $2,000 and then barely used it. I was always at work, at my girlfriend's place, or out doing something else, and between an iPhone, two Samsungs, a MacBook, a Mac mini, and a Lenovo IdeaPad, the desktop just collected dust. I wanted the power of that computer in the palm of my hand, wherever I was. That's when I found out homelabbing was a thing.</p>
+            <p>In April 2026 I dug through the old drives, moved everything I needed into Google Drive, formatted the machine, and installed Ubuntu Server. Linux wasn't new to me: almost every CS course I took at Waterloo had us SSH into the school's machines. Seeing PewDiePie go all-in on self-hosting is what convinced me it was worth sticking with after the first install.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>What's Running</h2>
+            <div class="stats">
+                <div class="stat"><div class="v">10</div><div class="l">self-hosted apps</div></div>
+                <div class="stat"><div class="v">72,930</div><div class="l">photos &amp; videos in Immich</div></div>
+                <div class="stat"><div class="v">758 GB</div><div class="l">used of 2.68 TB</div></div>
+                <div class="stat"><div class="v">9.7%</div><div class="l">of DNS queries blocked by Pi-hole</div></div>
+            </div>
+            <div class="apps">
+                <div class="app"><b>Immich</b><span>My Google Photos replacement. Every photo from when I was born to now.</span></div>
+                <div class="app"><b>Jellyfin (NVIDIA GPU)</b><span>Movie and show streaming, with the GPU handling transcoding.</span></div>
+                <div class="app"><b>Pi-hole</b><span>Blocks ads and trackers for every device on my network.</span></div>
+                <div class="app"><b>Ollama + Open WebUI</b><span>Llama 3.1 8B running locally. Good for anything sensitive I don't want leaving the house.</span></div>
+                <div class="app"><b>Kiwix</b><span>A full offline copy of Wikipedia.</span></div>
+                <div class="app"><b>PostgreSQL</b><span>A database for my own SQL projects.</span></div>
+                <div class="app"><b>Code Server</b><span>VS Code in the browser, so I can code from any device.</span></div>
+                <div class="app"><b>Audiobookshelf</b><span>Self-hosted audiobook library.</span></div>
+                <div class="app"><b>Wolf</b><span>Streams games from the server's GPU to my other devices through Moonlight.</span></div>
+                <div class="app"><b>Tailscale + Samba</b><span>Tailscale connects everything I own to the server from anywhere; Samba makes its storage show up as a network drive.</span></div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>How It Fits Together</h2>
+            <div class="arch">
+                <div class="col row">
+                    <div class="node"><b>Phones</b>iPhone, 2× Samsung</div>
+                    <div class="node"><b>Computers</b>MacBook, Mac mini, IdeaPad</div>
+                </div>
+                <div class="arrow">→</div>
+                <div class="col">
+                    <div class="node ts"><b>Tailscale</b>private encrypted network,<br>works from anywhere</div>
+                </div>
+                <div class="arrow">→</div>
+                <div class="col">
+                    <div class="node server">
+                        <b>Home server</b>
+                        Ryzen 5 2600 · GTX 1660 Ti · 16 GB RAM<br>
+                        Ubuntu Server → CasaOS → Docker
+                        <div class="chips">
+                            <span class="chip">Immich</span><span class="chip">Jellyfin</span><span class="chip">Pi-hole</span>
+                            <span class="chip">Ollama</span><span class="chip">Open WebUI</span><span class="chip">Kiwix</span>
+                            <span class="chip">PostgreSQL</span><span class="chip">Code Server</span><span class="chip">Audiobookshelf</span><span class="chip">Wolf</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="arrow">→</div>
+                <div class="col">
+                    <div class="node"><b>Modem</b>5 ft Cat6 cable,<br>WiFi as backup</div>
+                </div>
+            </div>
+            <p class="caption">Every device reaches the server through Tailscale, at home or away. The server sits next to the modem on ethernet.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Problem 1: The Server Kept Shutting Itself Off</h2>
+            <div class="step problem"><span class="tag">What happened</span>
+                <p>Immich was bulk-uploading my photo library when every device on my Tailscale network suddenly lost the server. Pi-hole runs through Tailscale too, so at first I couldn't tell what had actually broken. When I got home I powered it back on and resumed the upload. It crashed again at about the 3-minute mark.</p>
+            </div>
+            <div class="step check"><span class="tag">What I checked</span>
+                <p>CPU temperature in CasaOS, then GPU and hard drive temperatures from the terminal. The CPU was pinned at 100% while the GPU sat at 0%. I also checked the power supply and power delivery, and even tried running it in a colder room.</p>
+            </div>
+            <div class="step miss"><span class="tag">What didn't work</span>
+                <p>New thermal paste on the CPU. Then an extra case fan. Neither stopped the crashes.</p>
+            </div>
+            <div class="step fix"><span class="tag">Root cause &amp; fix</span>
+                <p>Immich's machine-learning jobs were running entirely on the CPU because NVIDIA GPU support wasn't set up for its containers. The CPU hit 100%, overheated, and the motherboard did an emergency shutdown. Once I enabled GPU acceleration so the 1660 Ti handled the ML work, it ran perfectly. The paste and the fan were treating the symptom; the 0% GPU reading was the real clue.</p>
+            </div>
+            <p>For a while I also had Uptime Kuma text me if the server went down. I removed it once I realized it was redundant: Tailscale is on everything I own, so I notice right away.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Problem 2: Moving a Lifetime of Photos</h2>
+            <div class="step problem"><span class="tag">What happened</span>
+                <p>I used immich-go to import my photos in bulk, and it kept throwing errors. Dry runs weren't behaving as intended either: when I told it to import images only, videos still showed up in the results.</p>
+            </div>
+            <div class="step check"><span class="tag">What I checked</span>
+                <p>I always ran a dry run first, which is how I caught the videos slipping through before anything was imported. Then I went to the immich-go GitHub repo and checked which Immich versions each release was compatible with. My immich-go version didn't match my Immich version, and the newer build had a fix for exactly the bug I was hitting.</p>
+            </div>
+            <div class="step fix"><span class="tag">Fix &amp; result</span>
+                <p>Updated immich-go to the matching build, and used sudo to get past the permission errors on an old NTFS backup drive. The migration is done: 72,930 photos and videos, from when I was born to now. It was a heavy job for both the CPU and GPU, but everything made it.</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Problem 3: Getting Off WiFi</h2>
+            <div class="step problem"><span class="tag">What happened</span>
+                <p>The server started out in the basement on WiFi, because running a cable down there wasn't an option.</p>
+            </div>
+            <div class="step fix"><span class="tag">Fix</span>
+                <p>I realized the server is headless. It has no screen and doesn't need to live anywhere in particular, so I moved it upstairs next to the modem and connected it with a 5 ft Cat6 cable. Ethernet is now the main connection, with WiFi kept as a backup. I tested it by unplugging the cable, and it stayed reachable.</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Screenshots</h2>
+            <div class="gallery">
+                <figure class="wide"><img src="assets/images/homelab-casaos.jpg" alt="CasaOS dashboard showing system status, storage, and installed apps"><figcaption>CasaOS dashboard: every app, CPU at 41°C, 758 GB of 2.68 TB used, running on ethernet.</figcaption></figure>
+                <figure class="wide"><img src="assets/images/homelab-pihole.jpg" alt="Pi-hole dashboard showing 43,245 queries and 9.7% blocked"><figcaption>Pi-hole: 43,245 DNS queries in 24 hours across 6 devices, 9.7% blocked.</figcaption></figure>
+                <figure><img src="assets/images/homelab-immich-stats.jpg" alt="Immich account statistics: 71,339 photos and 1,591 videos"><figcaption>Immich: 71,339 photos and 1,591 videos.</figcaption></figure>
+                <figure><img src="assets/images/homelab-openwebui.jpg" alt="Open WebUI chatting with Llama 3.1 8B"><figcaption>Open WebUI running Llama 3.1 8B locally.</figcaption></figure>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>What's Next</h2>
+            <ul>
+                <li><strong>More storage with redundancy:</strong> a mirrored (RAID 1) array of 8 TB hard drives, with an NVMe SSD just for the OS.</li>
+                <li><strong>Better cooling:</strong> Noctua fans.</li>
+                <li><strong>More RAM</strong> so more containers can run at the same time.</li>
+                <li><strong>A stronger GPU and CPU</strong> for bigger local language models.</li>
+            </ul>
+            <div class="note"><strong>How I built it:</strong> I leaned on Claude heavily for commands and config syntax, especially the network setup. The hardware, the choice of what to run, and the debugging (checking temps, ruling out power, noticing the GPU sitting at 0%) were mine.</div>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 Toni Ciobanu · <a href="index.html" style="color: var(--uwaterloo-gold);">Back to portfolio</a>
+    </footer>
+</body>
+</html>
