@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toni Ciobanu | Business Analyst Portfolio</title>
+    <title>Toni Ciobanu | Portfolio</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
@@ -665,6 +665,46 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* ---- Oct 2026 additions ---- */
+        .hero-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .hero-photo {
+            flex: 0 0 auto;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--uwaterloo-gold);
+            box-shadow: 0 0 0 10px rgba(253, 181, 21, 0.12), 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease;
+        }
+        .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .hero-inner .hero-content { text-align: left; max-width: 640px; }
+        .hero-inner .hero .description, .hero-inner .description { margin-left: 0; }
+        .hero-inner .cta-buttons { justify-content: flex-start; }
+        .project-card.featured { grid-column: 1 / -1; }
+        .status-pill {
+            display: inline-block; margin-top: 8px; font-size: 0.8em; color: var(--text-secondary);
+            border: 1px dashed rgba(255,255,255,0.25); padding: 3px 10px; border-radius: 12px;
+        }
+        .offclock { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .offclock .skill-tag { font-size: 0.95em; padding: 8px 16px; }
+        .lang-line { text-align: center; color: var(--text-secondary); margin-top: 30px; }
+        .footer-note { margin-top: 10px; font-size: 0.9em; color: var(--text-secondary); }
+        @media (max-width: 768px) {
+            .hero-inner { flex-direction: column; gap: 30px; text-align: center; }
+            .hero-inner .hero-content { text-align: center; }
+            .hero-inner .cta-buttons { justify-content: center; }
+            .hero-photo { width: 180px; height: 180px; }
+            .hero { min-height: auto; padding: 110px 20px 60px; }
+        }
+        .skill-tag { white-space: nowrap; }
     </style>
 </head>
 <body>
@@ -677,9 +717,8 @@
             <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
             <ul id="nav-menu">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -688,45 +727,92 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-badge">🎓 University of Waterloo Graduate</div>
-            <h1>Toni Ciobanu</h1>
-            <p class="subtitle">Data Analyst | Business Intelligence Specialist</p>
-            <p class="description">
-                Transforming complex data into actionable business strategies. 
-                Mathematics graduate with 2+ years of experience driving performance through Python, R, SQL, and advanced analytics.
-            </p>
-            <div class="cta-buttons">
-                <a href="#projects" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+        <div class="hero-inner">
+            <div class="hero-photo">
+                <img src="assets/images/profile.png" alt="Portrait of Toni Ciobanu">
+            </div>
+            <div class="hero-content">
+                <div class="hero-badge">🎓 University of Waterloo Math Graduate</div>
+                <h1>Toni Ciobanu</h1>
+                <p class="subtitle">I build, break, and fix systems, then explain them.</p>
+                <p class="description">
+                    Math grad from the University of Waterloo, currently in telecom sales at TELUS.
+                    I run a self-hosted Linux/Docker homelab, do my own car and electronics repair,
+                    and I've trained and led sales teams. Looking for implementation, IT/cloud,
+                    and analytics roles in Kitchener-Waterloo.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section id="about">
+    <!-- Projects Section -->
+    <section id="projects">
         <div class="container">
             <div class="section-header fade-in">
-                <h2>Impact By Numbers</h2>
-                <p>Data-driven results across sales, analytics, and process optimization</p>
+                <h2>Projects</h2>
+                <p>Things I built and can walk you through line by line</p>
             </div>
-            <div class="stats-grid">
-                <div class="stat-card fade-in">
-                    <div class="stat-number">292%</div>
-                    <div class="stat-label">Sales Increase Engineered</div>
+
+            <div class="projects-grid">
+
+                <!-- Homelab -->
+                <div class="project-card featured fade-in">
+                    <div class="project-header">
+                        <div style="display: inline-block; background: rgba(104, 211, 145, 0.1); border: 1px solid rgba(104, 211, 145, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #68d391; font-weight: 600;">
+                            🖥️ Self-Directed · Ongoing
+                        </div>
+                        <h3>Home Server / Homelab</h3>
+                        <div class="project-type">Linux · Docker · Networking · Troubleshooting</div>
+                    </div>
+                    <div class="project-body">
+                        <p>Turned an old desktop (Ryzen 5 2600, GTX 1660 Ti) into a 24/7 Ubuntu server that replaces several paid services. It runs a CasaOS-managed Docker stack: Immich for photos, Jellyfin with GPU transcoding, Pi-hole, a Tailscale exit node, Samba, PostgreSQL, a local LLM through Ollama and Open WebUI, Uptime Kuma, Code Server, Audiobookshelf, Kiwix, and Wolf for game streaming.</p>
+                        <p>The interesting part has been fixing what broke: tracing a server crash to thermals from concurrent ML jobs, fighting immich-go through an API version mismatch and NTFS permission walls to migrate family photo archives, moving ML work onto the GPU, and running ethernet to the basement with WiFi kept as failover.</p>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <div class="metric-value">10+</div>
+                                <div class="metric-label">Self-hosted services</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">200GB+</div>
+                                <div class="metric-label">Photo library migrated</div>
+                            </div>
+                        </div>
+                        <div class="skills">
+                            <span class="skill-tag">Ubuntu Server</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Tailscale / SSH</span>
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">GPU Passthrough</span>
+                        </div>
+                        <span class="status-pill">Full write-up in progress</span>
+                    </div>
                 </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-number">23%</div>
-                    <div class="stat-label">Revenue Growth via Segmentation</div>
-                </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-number">130%</div>
-                    <div class="stat-label">Consistent SVPH Average</div>
-                </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-number">94.87%</div>
-                    <div class="stat-label">Customer Satisfaction Score</div>
-                </div>
+
+                <!-- Calendar Automation -->
+                <a href="calendar-automation.html" target="_blank" class="project-card-link">
+                    <div class="project-card fade-in">
+                        <div class="project-header">
+                            <div style="display: inline-block; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #38bdf8; font-weight: 600;">
+                                ⚙️ Small Automation
+                            </div>
+                            <h3>Shift Schedule → Google Calendar</h3>
+                            <div class="project-type">Google Sheets · Apps Script</div>
+                        </div>
+                        <div class="project-body">
+                            <p>My work scheduler exports shifts as a CSV with dates and times jammed into one string. Spreadsheet formulas parse them into real date/time values, and an Apps Script creates the calendar events, skipping rows it already added.</p>
+                            <div class="skills">
+                                <span class="skill-tag">Apps Script</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">Spreadsheet Formulas</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
             </div>
         </div>
     </section>
@@ -735,42 +821,44 @@
     <section id="experience">
         <div class="container">
             <div class="section-header fade-in">
-                <h2>Professional Journey</h2>
-                <p>Building data-driven solutions across telecommunications and education</p>
+                <h2>Experience</h2>
+                <p>Telecom sales, remote team leadership, and university instructional support</p>
             </div>
             <div class="timeline">
                 <div class="timeline-item fade-in">
                     <div class="timeline-content">
                         <h3>Sales Representative</h3>
                         <div class="company">TELUS</div>
-                        <div class="date">March 2025 - Present | Cambridge, ON</div>
-                        <p>• Built custom Google Sheets KPI tracker with Tableau data integration, maintaining 130% SVPH average</p>
-                        <p>• Developed customer insights tracker analyzing qualitative sales data to identify cross-selling opportunities</p>
-                        <p>• Increased underperforming product sales through Domo data analysis and AI-powered promotional strategy</p>
+                        <div class="date">February 2025 - Present | Cambridge, ON</div>
+                        <p>• Consistently meet 100% of sales volume per hour (SVPH) target year-over-year</p>
+                        <p>• Built a Google Sheets KPI tracker from exported Domo data to monitor performance against targets</p>
+                        <p>• Developed a customer insights tracker to log and analyze qualitative data from sales conversations, surfacing cross-selling opportunities</p>
+                        <p>• Analyzed store-wide performance data in Domo to identify underperforming product lines and design a targeted bundling strategy</p>
+                        <p>• Estimated the company-wide impact of a recurring frontline issue by scaling our store's measured losses across the 275-store network; the issue was resolved a few months later</p>
                         <div class="skills">
-                            <span class="skill-tag">Data Analysis</span>
-                            <span class="skill-tag">Tableau</span>
                             <span class="skill-tag">Google Sheets</span>
                             <span class="skill-tag">Domo</span>
                             <span class="skill-tag">KPI Tracking</span>
+                            <span class="skill-tag">Customer Service</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="timeline-item fade-in">
                     <div class="timeline-content">
-                        <h3>Sales Manager</h3>
-                        <div class="company">Red Wireless</div>
+                        <h3>Team Lead</h3>
+                        <div class="company">Red Wireless (Rogers dealer)</div>
                         <div class="date">January 2024 - August 2024 | Saskatoon, SK (Remote)</div>
-                        <p>• Engineered 292% increase in sales points per hour through data-backed performance incentives</p>
-                        <p>• Drove 73% average improvement in individual KPIs via personalized coaching and monthly reviews</p>
-                        <p>• Performed customer segmentation analysis identifying high-value targets, increasing departmental sales by 23%</p>
-                        <p>• Achieved 94.87% CSAT score through tailored communication strategies</p>
+                        <p>• Promoted from Telephone Sales Consultant to management within 3 months of hire</p>
+                        <p>• Led a 12-person sales team in the Remote division: morning meetings, one-on-ones, scheduling, call monitoring, KPI reviews, and escalation action plans</p>
+                        <p>• Trained incoming team leads, conducted candidate interviews, and helped onboard a 50-person new-hire cohort while managing an existing team</p>
+                        <p>• Took over an underperforming team and drove a 73% average improvement in individual KPIs through coaching and monthly performance reviews</p>
+                        <p>• Helped the Sales Manager debug and troubleshoot Pipedrive CRM workflow automations</p>
                         <div class="skills">
-                            <span class="skill-tag">Customer Segmentation</span>
-                            <span class="skill-tag">Performance Analytics</span>
-                            <span class="skill-tag">CRM</span>
                             <span class="skill-tag">Team Leadership</span>
+                            <span class="skill-tag">Training</span>
+                            <span class="skill-tag">Pipedrive CRM</span>
+                            <span class="skill-tag">Coaching</span>
                         </div>
                     </div>
                 </div>
@@ -778,348 +866,137 @@
                 <div class="timeline-item fade-in">
                     <div class="timeline-content">
                         <h3>Telephone Sales Consultant</h3>
-                        <div class="company">Red Wireless</div>
-                        <div class="date">September 2023 - January 2024 | Saskatoon, SK (Remote)</div>
-                        <p>• Utilized Pipedrive CRM and Slack for sales pipeline management and team coordination</p>
-                        <p>• Developed data-driven sales strategies to optimize conversion rates</p>
+                        <div class="company">Red Wireless (Rogers dealer)</div>
+                        <div class="date">October 2023 - January 2024 | Saskatoon, SK (Remote)</div>
+                        <p>• Handled an inbound queue of roughly 75% customer support (order and fulfillment issues) and 25% plan sales inquiries</p>
+                        <p>• Achieved a 94.87% Customer Satisfaction (CSAT) score</p>
                         <div class="skills">
                             <span class="skill-tag">Pipedrive</span>
-                            <span class="skill-tag">Sales Analytics</span>
-                            <span class="skill-tag">Communication</span>
+                            <span class="skill-tag">Vonage</span>
+                            <span class="skill-tag">Slack</span>
+                            <span class="skill-tag">Asana</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="timeline-item fade-in">
                     <div class="timeline-content">
-                        <h3>Instructional Support Assistant</h3>
+                        <h3>Instructional Support Assistant (Co-op) · CS 115</h3>
                         <div class="company">University of Waterloo</div>
-                        <div class="date">September 2022 - December 2023 | Waterloo, ON</div>
-                        <p>• Managed databases containing 700+ students' performance data with automated validation processes</p>
-                        <p>• Automated routine reporting tasks using Python scripts and Excel macros, reducing workload by 15%</p>
-                        <p>• Provided technical instruction in Python, DrRacket, and Linux environments</p>
+                        <div class="date">September 2022 - August 2023 | Waterloo, ON</div>
+                        <p>• Fall 2022: one of 6 ISAs supporting ~660 students in Introduction to Computer Science; distributed marking schemes to and supported 13 TAs</p>
+                        <p>• Spring 2023: sole ISA for a ~150-student offering, absorbing additional instructor responsibilities</p>
+                        <p>• Wrote assignment test cases, drafted marking schemes, held office hours, and attended lectures to answer student questions</p>
+                        <p>• Adapted an existing Python autotesting script to replace manual assignment checks</p>
                         <div class="skills">
+                            <span class="skill-tag">Racket</span>
                             <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Excel Automation</span>
-                            <span class="skill-tag">Database Management</span>
                             <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">Teaching</span>
                         </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3>Guest Services Associate &amp; Groundskeeper (Co-op)</h3>
+                        <div class="company">Blue Mountain Resort</div>
+                        <div class="date">January 2022 - April 2022 | The Blue Mountains, ON</div>
+                        <p>• Handled guest information, rentals, reservations, and cash transactions, then moved to grounds and snow clearing for the end of season</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3>Swimming Instructor &amp; Lifeguard</h3>
+                        <div class="company">City of Kitchener · City of Waterloo · Bingemans · Cameron Heights CI</div>
+                        <div class="date">June 2018 - August 2020 | Kitchener-Waterloo, ON</div>
+                        <p>• Planned and taught swim lessons for mixed ages and skill levels; pool surveillance and emergency response</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-        <!-- Projects Section -->
-        <section id="projects">
-            <div class="container">
-                <div class="section-header fade-in">
-                    <h2>Featured Projects</h2>
-                    <p>Academic and professional analytics initiatives</p>
-                </div>
-                
-                <!-- Professional Ethics Disclaimer -->
-                <div style="max-width: 800px; margin: 0 auto 40px; padding: 20px; background: rgba(253, 181, 21, 0.05); border: 1px solid rgba(253, 181, 21, 0.2); border-radius: 10px; text-align: center;">
-                    <p style="font-size: 0.9em; color: var(--text-secondary); margin: 0;">
-                        <strong style="color: var(--uwaterloo-gold);">Professional Ethics Notice:</strong> 
-                        Professional projects respect confidentiality agreements. Specific methodologies and proprietary information have been anonymized. Results and business impact metrics are accurate and verifiable.
-                    </p>
-                </div>
-                
-                <div class="projects-grid">
-
-                    <!-- Cell Phone Pricing & Inflation -->
-                    <a href="cell-phone-pricing.html"
-                       target="_blank"
-                       class="project-card-link">
-
-                        <div class="project-card fade-in">
-                            <div class="project-header">
-                                <div style="display: inline-block; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #38bdf8; font-weight: 600;">
-                                    📱 Public Dataset Analysis
-                                </div>
-
-                                <h3>Cell Phone Pricing & Inflation</h3>
-                                <div class="project-type">Data Visualization | Chart.js & Economic Analysis</div>
-                            </div>
-                            <div class="project-body">
-                                <p>Built an interactive chart tracking 35 landmark phones from 1983 to 2025, converting launch prices to today's dollars using BLS CPI-U inflation data. Includes filterable scatter plots, a price calculator, and a sortable dataset.</p>
-
-                                <div class="project-metrics">
-                                    <div class="metric">
-                                        <div class="metric-value">$12,948</div>
-                                        <div class="metric-label">1983 DynaTAC in 2025 $</div>
-                                    </div>
-                                    <div class="metric">
-                                        <div class="metric-value">35</div>
-                                        <div class="metric-label">Phones Analyzed</div>
-                                    </div>
-                                </div>
-
-                                <div class="skills">
-                                    <span class="skill-tag">JavaScript</span>
-                                    <span class="skill-tag">Chart.js</span>
-                                    <span class="skill-tag">Data Visualization</span>
-                                    <span class="skill-tag">Public Data / CPI</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </a>
-
-                    <!-- Car Repair -->
-                    <a href="repair-analysis.html" 
-                       target="_blank" 
-                       class="project-card-link">
-                        
-                        <div class="project-card fade-in">
-                            <div class="project-header">
-                                <div style="display: inline-block; background: rgba(104, 211, 145, 0.1); border: 1px solid rgba(104, 211, 145, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #68d391; font-weight: 600;">
-                                    🚗 Personal Case Study
-                                </div>
-                                
-                                <h3>Automotive Repair Cost Analysis</h3>
-                                <div class="project-type">Data Analysis | SQL & Data Visualization</div>
-                            </div>
-                            <div class="project-body">
-                                <p>Designed and built an interactive web report analyzing 23 automotive repairs across two vehicles. Utilized SQL window functions, CTEs, and Chart.js to verify cost efficiencies against dealership estimates.</p>
-                                
-                                <div class="project-metrics">
-                                    <div class="metric">
-                                        <div class="metric-value">$10k+</div>
-                                        <div class="metric-label">Savings Verified</div>
-                                    </div>
-                                    <div class="metric">
-                                        <div class="metric-value">85.9%</div>
-                                        <div class="metric-label">Cost Savings Rate</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="skills">
-                                    <span class="skill-tag">SQL</span>
-                                    <span class="skill-tag">Chart.js</span>
-                                    <span class="skill-tag">Data Visualization</span>
-                                    <span class="skill-tag">JavaScript</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </a>
-
-                    <!-- Calendar Automation -->
-<a href="calendar-automation.html" 
-                       target="_blank" 
-                       class="project-card-link">
-                        
-                        <div class="project-card fade-in">
-                            <div class="project-header">
-                                <div style="display: inline-block; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #38bdf8; font-weight: 600;">
-                                    ⚙️ Workflow Automation
-                                </div>
-                                
-                                <h3>Calendar Synchronization Pipeline</h3>
-                                <div class="project-type">Process Optimization | JavaScript & Apps Script</div>
-                            </div>
-                            <div class="project-body">
-                                <p>Engineered an automated data pipeline to bypass proprietary scheduling software limitations. Developed string-parsing spreadsheet logic and a custom Google Apps Script to seamlessly sync shift data to Google Calendar.</p>
-                                
-                                <div class="project-metrics">
-                                    <div class="metric">
-                                        <div class="metric-value">100%</div>
-                                        <div class="metric-label">Manual Entry Eliminated</div>
-                                    </div>
-                                    <div class="metric">
-                                        <div class="metric-value">Zero</div>
-                                        <div class="metric-label">Scheduling Conflicts</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="skills">
-                                    <span class="skill-tag">Google Apps Script</span>
-                                    <span class="skill-tag">JavaScript</span>
-                                    <span class="skill-tag">Spreadsheet Logic</span>
-                                    <span class="skill-tag">API Integration</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    
-                    <!-- Store Returns -->
-                    <div class="project-card fade-in">
-                        <div class="project-header">
-                            <!-- Company Badge -->
-                            <div style="display: inline-block; background: rgba(75, 0, 130, 0.1); border: 1px solid rgba(75, 0, 130, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #9370DB; font-weight: 600;">
-                                🏢 TELUS
-                            </div>
-                            
-                            <h3>Store Returns Prediction Model</h3>
-                            <div class="project-type">Predictive Analytics | Excel & Statistical Modeling</div>
-                            
-                        </div>
-                        <div class="project-body">
-                            <p>Developed predictive model forecasting store returns based on 6-month sales value averages across 275 retail locations. Analyzed $36.6M in total sales to identify patterns and optimize inventory management.</p>
-                            
-                            <div class="project-metrics">
-                                <div class="metric">
-                                    <div class="metric-value">275</div>
-                                    <div class="metric-label">Stores Analyzed</div>
-                                </div>
-                            </div>
-                            
-                            <div class="skills">
-                                <span class="skill-tag">Excel</span>
-                                <span class="skill-tag">Predictive Modeling</span>
-                                <span class="skill-tag">Statistical Analysis</span>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- Customer Segmentation - Red Wireless -->
-                    <div class="project-card fade-in">
-                        <div class="project-header">
-                            <!-- Company Badge -->
-                            <div style="display: inline-block; background: rgba(220, 20, 60, 0.1); border: 1px solid rgba(220, 20, 60, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #DC143C; font-weight: 600;">
-                                🏢 Red Wireless
-                            </div>
-                            
-                            <h3>Customer Segmentation Analysis</h3>
-                            <div class="project-type">Sales Operations | Data-Driven Strategy</div>
-                            
-                        </div>
-                        <div class="project-body">
-                            <p>Performed comprehensive customer segmentation to identify high-value targets. Developed and implemented data-driven sales strategy that increased departmental revenue by 23%.</p>
-                            <div class="project-metrics">
-                                <div class="metric">
-                                    <div class="metric-value">23%</div>
-                                    <div class="metric-label">Revenue Increase</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">94.87%</div>
-                                    <div class="metric-label">CSAT Score</div>
-                                </div>
-                            </div>
-                            <div class="skills">
-                                <span class="skill-tag">Customer Analytics</span>
-                                <span class="skill-tag">Segmentation</span>
-                                <span class="skill-tag">Strategy Development</span>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <!-- KPI Dashboard - TELUS -->
-                    <div class="project-card fade-in">
-                        <div class="project-header">
-                            <!-- Company Badge -->
-                            <div style="display: inline-block; background: rgba(75, 0, 130, 0.1); border: 1px solid rgba(75, 0, 130, 0.3); padding: 4px 12px; border-radius: 15px; margin-bottom: 12px; font-size: 0.8em; color: #9370DB; font-weight: 600;">
-                                🏢 TELUS
-                            </div>
-                            
-                            <h3>KPI Dashboard Development</h3>
-                            <div class="project-type">Business Intelligence | Internal Analytics Tool</div>
-                            
-                        </div>
-                        <div class="project-body">
-                            <p>Built custom Google Sheets KPI tracker integrating Tableau data exports. Automated performance monitoring and visualization to maintain consistent 130% sales per hour average.</p>
-                            
-                            <div class="project-metrics">
-                                <div class="metric">
-                                    <div class="metric-value">130%</div>
-                                    <div class="metric-label">Target Achievement</div>
-                                </div>
-                            </div>
-                            <div class="skills">
-                                <span class="skill-tag">Google Sheets</span>
-                                <span class="skill-tag">Tableau</span>
-                                <span class="skill-tag">Dashboard Design</span>
-                                <span class="skill-tag">KPI Development</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     <!-- Skills Section -->
     <section id="skills">
         <div class="container">
             <div class="section-header fade-in">
-                <h2>Technical Arsenal</h2>
-                <p>Comprehensive toolkit for data analysis and business intelligence</p>
+                <h2>Skills</h2>
+                <p>Rated honestly: what I use daily vs. what I'm still sharpening</p>
             </div>
             <div class="skills-grid">
                 <div class="skill-category fade-in">
-                    <h3>💻 Programming & Databases</h3>
+                    <h3>💪 Strong</h3>
                     <ul>
-                        <li>Python (Data Analysis, Automation)</li>
-                        <li>R (Statistical Computing)</li>
-                        <li>SQL (Database Queries)</li>
-                        <li>Git (Version Control)</li>
-                        <li>Linux/Unix</li>
-                        <li>HTML & LaTeX</li>
+                        <li>Google Sheets &amp; Excel</li>
+                        <li>Linux command line</li>
+                        <li>Docker &amp; self-hosting</li>
+                        <li>SSH, Tailscale, home networking</li>
+                        <li>PC hardware &amp; electronics diagnostics</li>
+                        <li>Pipedrive CRM, Slack, Asana</li>
                     </ul>
                 </div>
-
                 <div class="skill-category fade-in">
-                    <h3>📊 Data Analysis & Visualization</h3>
+                    <h3>🛠️ Working Knowledge</h3>
                     <ul>
-                        <li>Excel (Advanced, Macros, VBA)</li>
-                        <li>Tableau</li>
-                        <li>Google Sheets</li>
-                        <li>Domo</li>
-                        <li>Statistical Analysis</li>
-                        <li>A/B Testing</li>
-                        <li>Performance Metrics & KPIs</li>
+                        <li>Google Apps Script</li>
+                        <li>Excel macros</li>
+                        <li>Tableau &amp; Domo</li>
+                        <li>PostgreSQL</li>
+                        <li>Git, HTML, LaTeX</li>
+                        <li>Basic statistics</li>
                     </ul>
                 </div>
-
                 <div class="skill-category fade-in">
-                    <h3>🛠️ Business & Sales Tools</h3>
+                    <h3>📚 Sharpening Now</h3>
                     <ul>
-                        <li>Pipedrive (CRM)</li>
-                        <li>Asana (Project Management)</li>
-                        <li>Slack (Team Collaboration)</li>
-                        <li>Vonage (Communications)</li>
-                        <li>Google Suite</li>
-                        <li>Customer Relationship Management</li>
+                        <li>SQL</li>
+                        <li>Python (Pandas, Matplotlib)</li>
+                        <li>R</li>
+                        <li>Google Cloud (Associate Cloud Engineer, in progress)</li>
                     </ul>
                 </div>
-
                 <div class="skill-category fade-in">
-                    <h3>📈 Analytics Methodologies</h3>
+                    <h3>🤝 People</h3>
                     <ul>
-                        <li>Predictive Modeling</li>
-                        <li>Customer Segmentation</li>
-                        <li>Regression Analysis</li>
-                        <li>Optimization Algorithms</li>
-                        <li>Data Visualization</li>
-                        <li>Statistical Computing</li>
-                        <li>Process Automation</li>
+                        <li>Training &amp; onboarding</li>
+                        <li>Coaching &amp; one-on-ones</li>
+                        <li>Interviewing candidates</li>
+                        <li>Explaining technical ideas simply</li>
+                        <li>Customer support &amp; de-escalation</li>
                     </ul>
                 </div>
-
                 <div class="skill-category fade-in">
-                    <h3>🎓 Academic Foundation</h3>
+                    <h3>🎓 Education &amp; Certs</h3>
                     <ul>
-                        <li>Computational Statistics</li>
-                        <li>Probability Theory</li>
-                        <li>Management Information Systems</li>
-                        <li>Financial Markets</li>
-                        <li>Financial Accounting</li>
-                        <li>Human Resources Management</li>
+                        <li>B.Math, University of Waterloo (2025)</li>
+                        <li>Google Data Analytics Certificate (2025)</li>
+                        <li>Probability, Statistics, Optimization, Combinatorics</li>
+                        <li>Data Structures, Management Information Systems</li>
+                        <li>Financial Accounting, Financial Markets</li>
                     </ul>
                 </div>
+            </div>
+            <p class="lang-line fade-in">Languages: English (native) · Romanian (native) · French (conversational)</p>
+        </div>
+    </section>
 
-                <div class="skill-category fade-in">
-                    <h3>💼 Business Competencies</h3>
-                    <ul>
-                        <li>Data-Driven Strategy</li>
-                        <li>Performance Optimization</li>
-                        <li>Team Leadership</li>
-                        <li>Stakeholder Communication</li>
-                        <li>Process Improvement</li>
-                        <li>Change Management</li>
-                    </ul>
-                </div>
+    <!-- Off the clock -->
+    <section id="offclock" style="padding-top: 20px;">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Off the Clock</h2>
+                <p>Where most of my hands-on skills actually came from</p>
+            </div>
+            <div class="offclock fade-in">
+                <span class="skill-tag">🔧 Car repair &amp; restoration</span>
+                <span class="skill-tag">🔌 Electronics &amp; PC builds</span>
+                <span class="skill-tag">🖨️ 3D printing</span>
+                <span class="skill-tag">♟️ Chess puzzles</span>
+                <span class="skill-tag">🏂 Snowboarding</span>
+                <span class="skill-tag">🏊 Swimming (former OFSAA relay)</span>
+                <span class="skill-tag">🏋️ Strength training</span>
             </div>
         </div>
     </section>
@@ -1129,7 +1006,7 @@
         <div class="container">
             <div class="section-header fade-in">
                 <h2>Let's Connect</h2>
-                <p>Open to opportunities in data analysis, business intelligence, and analytics</p>
+                <p>Open to implementation, IT/cloud, and analytics roles in Kitchener-Waterloo</p>
             </div>
             <div class="contact-grid">
                 <div class="contact-card fade-in">
@@ -1159,8 +1036,8 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2025 Toni Ciobanu | University of Waterloo Graduate | Data Analyst & Business Intelligence Specialist</p>
-            <p style="margin-top: 10px; color: var(--uwaterloo-gold);">Built with passion for data-driven insights</p>
+            <p>&copy; 2026 Toni Ciobanu | University of Waterloo Math Graduate</p>
+            <p class="footer-note">Site design built with help from Claude. Projects and write-ups are my own work.</p>
         </div>
     </footer>
 

@@ -147,21 +147,21 @@
         <a href="index.html" class="back-link">← Back to Portfolio</a>
         
         <div class="project-header">
-            <h1>Automated Calendar Synchronization Pipeline</h1>
+            <h1>Shift Schedule → Google Calendar</h1>
             <div class="project-meta">
-                <strong>Role:</strong> Automation Architect | <strong>Tools:</strong> Google Apps Script, JS, Spreadsheet Logic
+                <strong>Type:</strong> Personal project | <strong>Tools:</strong> Google Apps Script, JavaScript, spreadsheet formulas
             </div>
         </div>
 
         <div class="content-section">
-            <h2>The Business Problem</h2>
-            <p>Meticulous schedule planning requires centralized visibility. My organization utilizes Synerion for workforce management, but the platform lacks a native integration to export scheduled shifts directly into external calendars like Google Calendar. This disconnect forced a tedious, manual data-entry process to ensure work schedules didn't conflict with personal and academic commitments.</p>
+            <h2>The Problem</h2>
+            <p>My work schedule lives in Synerion, which can't send shifts to Google Calendar. Every month I was retyping each shift by hand so work wouldn't clash with everything else in my calendar.</p>
         </div>
 
         <div class="content-section">
             <h2>The Data Transformation</h2>
-            <p>To bridge the gap, I designed a multi-step data transformation pipeline. Synerion allows for a CSV export of monthly schedules, but the output formats dates and times as a single, unusable string (e.g., <code>3/31 - 13:00-21:15</code>).</p>
-            <p>I utilized Google Sheets as an intermediary translation layer, employing string-parsing formulas to isolate and mathematical functions to convert the raw text into valid <code>DateTime</code> objects:</p>
+            <p>Synerion can export a month of shifts as a CSV, but it crams the date and time range into one string (e.g., <code>3/31 - 13:00-21:15</code>).</p>
+            <p>I paste that into Google Sheets and use string-parsing formulas to split it into real start and end date/time values:</p>
             
             <div class="formula-box">
                 // Extracting and calculating Start Time<br>
@@ -175,7 +175,7 @@
 
         <div class="content-section">
             <h2>The Apps Script Automation</h2>
-            <p>With the data cleanly formatted, I developed a Google Apps Script bound to the spreadsheet. The script iterates through the parsed data, performs type-checking validation, interacts with the Google Calendar API to generate events, and features error-handling and duplicate-prevention logic.</p>
+            <p>A short Apps Script bound to the sheet then walks the rows, skips anything that is not a valid date or was already added, creates a "Work" event with a one-hour reminder, and marks the row as Added so re-running it never creates duplicates.</p>
             
             <div class="code-block"><pre><code><span class="comment">/**
  * Creates Google Calendar events from a spreadsheet schedule.
@@ -215,9 +215,9 @@
         </div>
 
         <div class="content-section">
-            <h2>Impact & Takeaways</h2>
-            <p>This pipeline completely eliminated manual scheduling processes. By transforming raw CSV data into a functional API payload, I engineered a zero-maintenance workflow that ensures 100% accuracy in calendar syncing, protecting my time and ensuring zero overlap with other obligations.</p>
+            <h2>Result</h2>
+            <p>Retyping a month of shifts by hand is now an export, a paste, and one click. It is a small tool, but it is the kind of thing I like doing: find the annoying manual step and remove it with whatever is already on hand.</p>
         </div>
     </div>
 </body>
-</html>
+</html>
