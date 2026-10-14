@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LiftQuest Case Study</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="LiftQuest: a self-hosted, gamified gym tracker with escalating push reminders. Case study by Toni Ciobanu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a training-log notebook. One reading column, wide figures that break out of it,
+   section tabs coded like Olympic plate colours (red 25, blue 20, yellow 15, green 10). */
+:root {
+  --bg: #eef0f2;          /* chalk */
+  --paper: #f8f9fa;
+  --ink: #15191f;
+  --ink-2: #4a525d;
+  --rule: #d3d8de;
+  --accent: #2f5bd3;      /* blue plate */
+  --volt: #c8f135;        /* the app's own accent, used only where the app is shown */
+  --volt-ink: #3d4a00;
+  --plate-red: #c8352b;
+  --plate-blue: #2f5bd3;
+  --plate-yellow: #d9a21b;
+  --plate-green: #2e8a4e;
+  --code-bg: #e3e7eb;
+  --phone: #0d0f12;
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111418; --paper: #171b20; --ink: #e8ebee; --ink-2: #a3acb7; --rule: #2b323a;
+    --accent: #7d9cff; --volt: #c8f135; --volt-ink: #c8f135;
+    --plate-red: #ef6a5f; --plate-blue: #7d9cff; --plate-yellow: #f0c04a; --plate-green: #5cc983;
+    --code-bg: #1e242b; --phone: #000; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111418; --paper: #171b20; --ink: #e8ebee; --ink-2: #a3acb7; --rule: #2b323a;
+  --accent: #7d9cff; --volt: #c8f135; --volt-ink: #c8f135;
+  --plate-red: #ef6a5f; --plate-blue: #7d9cff; --plate-yellow: #f0c04a; --plate-green: #5cc983;
+  --code-bg: #1e242b; --phone: #000; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+.wrap { max-width: 1080px; margin: 0 auto; }
+.col { max-width: 680px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.02; text-wrap: balance; margin: 0; letter-spacing: 0.005em; }
+h1 { font-size: clamp(56px, 11vw, 112px); font-weight: 800; text-transform: uppercase; }
+h2 { font-size: clamp(34px, 5vw, 48px); font-weight: 700; text-transform: uppercase; }
+h3 { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
+p { margin: 0; }
+a { color: var(--accent); }
+code, .mono { font-family: var(--mono); font-size: 0.86em; }
+:not(pre) > code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+.muted { color: var(--ink-2); }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ---------- hero ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 48px; align-items: end; padding-block: 56px 48px; border-bottom: 2px solid var(--ink); }
+.hero-copy { display: grid; gap: 22px; min-width: 0; }
+.hero .icon { width: 72px; height: 72px; border-radius: 17px; display: block; }
+.lede { font-size: 21px; line-height: 1.5; max-width: 34ch; }
+.meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; border-top: 1px solid var(--rule); padding-top: 18px; }
+.meta div { display: grid; gap: 4px; min-width: 0; }
+.meta b { font-weight: 500; font-size: 15px; line-height: 1.4; }
+.phone { background: var(--phone); border-radius: 34px; padding: 10px; box-shadow: 0 1px 0 var(--rule), 0 24px 48px -24px rgba(0,0,0,.45); }
+.phone img { display: block; border-radius: 25px; width: 100%; height: auto; }
+
+/* ---------- sections ---------- */
+section.part { display: grid; gap: 28px; padding-block: 64px 8px; }
+.part-head { display: grid; gap: 10px; }
+.tab { display: inline-flex; align-items: center; gap: 10px; }
+.tab i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+.prose { display: grid; gap: 18px; }
+.prose ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+
+/* figure: weekly sessions */
+.chart-card { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 24px; display: grid; gap: 18px; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.stat { display: grid; gap: 2px; }
+.stat b { font-family: var(--display); font-size: 44px; line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 14px; color: var(--ink-2); line-height: 1.35; }
+.chart-scroll { overflow-x: auto; }
+#weeks { display: block; width: 100%; min-width: 560px; height: auto; }
+.cap { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+
+/* screenshots */
+.shots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.shot { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.shot .phone { border-radius: 26px; padding: 7px; }
+.shot .phone img { border-radius: 20px; }
+.shot h3 { font-size: 20px; }
+.shot p { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+
+/* architecture diagram */
+.diagram { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 20px; overflow-x: auto; }
+#arch { display: block; width: 100%; min-width: 720px; height: auto; }
+#arch text { font-family: var(--body); fill: var(--ink); }
+#arch .small { font-size: 12px; fill: var(--ink-2); }
+#arch .mono { font-family: var(--mono); font-size: 11.5px; fill: var(--ink-2); }
+#arch .box { fill: var(--bg); stroke: var(--ink); stroke-width: 1.5; }
+#arch .box-hi { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+#arch .line { stroke: var(--ink-2); stroke-width: 1.5; fill: none; }
+#arch .push { stroke: var(--plate-red); stroke-width: 2; fill: none; stroke-dasharray: 6 4; }
+#arch .arrow { fill: var(--ink-2); }
+#arch .arrow-red { fill: var(--plate-red); }
+#arch .zone { fill: none; stroke: var(--rule); stroke-width: 1.5; stroke-dasharray: 3 4; }
+#arch .t-red { fill: var(--plate-red); }
+
+/* two-up explainer rows */
+.rows { display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.row { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; padding-block: 22px; border-bottom: 1px solid var(--rule); }
+.row h3 { font-size: 21px; }
+.row .prose { font-size: 16px; }
+
+/* tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; background: var(--paper); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--mono); font-size: 13.5px; }
+td q { font-style: italic; color: var(--ink-2); quotes: "\201C" "\201D"; }
+.pill { display: inline-block; font-family: var(--mono); font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+
+/* code */
+pre { margin: 0; background: var(--code-bg); border-radius: 10px; padding: 18px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+pre .c { color: var(--ink-2); }
+pre .k { color: var(--accent); font-weight: 500; }
+.formula { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.formula div { border-top: 3px solid var(--ink); padding-top: 12px; display: grid; gap: 6px; }
+.formula b { font-family: var(--mono); font-size: 15px; font-weight: 500; }
+.formula span { font-size: 15px; color: var(--ink-2); line-height: 1.5; }
+
+/* role split */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.split > div { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 22px; display: grid; gap: 12px; align-content: start; }
+.split ul { margin: 0; padding-left: 20px; display: grid; gap: 7px; font-size: 16px; }
+.incident { display: grid; gap: 6px; }
+.incident + .incident { border-top: 1px solid var(--rule); padding-top: 14px; }
+
+footer { margin-top: 72px; padding-top: 20px; border-top: 2px solid var(--ink); display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; font-size: 14px; color: var(--ink-2); }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .hero .phone { max-width: 280px; }
+  .shots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .row { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .meta, .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .formula, .split { grid-template-columns: minmax(0, 1fr); }
+  .shots { gap: 14px; }
+  .stat b { font-size: 36px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bar { transition: opacity .2s; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="hero-copy">
+    <img class="icon" src="img/icon.png" alt="LiftQuest app icon: a lightning bolt through a weight plate">
+    <span class="label">Case study · Self-hosted web app · October 2026</span>
+    <h1>LiftQuest</h1>
+    <p class="lede">A gym tracker that runs on my home server and sends me escalating push reminders when I skip the gym. I built it because my own workout data showed I was quitting for weeks at a time.</p>
+    <div class="meta">
+      <div><span class="label">My role</span><b>Product owner, deployment, operations</b></div>
+      <div><span class="label">Built with</span><b>Claude (AI coding assistant)</b></div>
+      <div><span class="label">Stack</span><b>FastAPI, SQLite, vanilla JS PWA, Docker</b></div>
+      <div><span class="label">Status</span><b>Live on my home server</b></div>
+    </div>
+  </div>
+  <div class="phone"><img src="img/train.webp" width="780" height="1688" alt="LiftQuest Train screen: level 3, XP bar, Pull day with a Deadlift set of 225 × 5 logged"></div>
+</header>
+
+<!-- ============================================================ PROBLEM -->
+<section class="part" id="problem">
+  <div class="part-head col">
+    <span class="tab label"><i style="background:var(--plate-red)"></i>The problem</span>
+    <h2>My data said I kept quitting</h2>
+  </div>
+  <div class="prose col">
+    <p>I tracked lifts in an Excel sheet and, before that, the Hevy app. The spreadsheet worked, but it felt like a spreadsheet. When I exported my Hevy history and looked at the dates, the problem wasn't the tracker. It was consistency.</p>
+  </div>
+  <div class="chart-card">
+    <div class="stats">
+      <div class="stat"><b>11</b><span>sessions logged over 28 weeks</span></div>
+      <div class="stat"><b>11</b><span>days: median gap between sessions</span></div>
+      <div class="stat"><b>4</b><span>breaks of a month or longer (31–45 days)</span></div>
+      <div class="stat"><b>0 of 29</b><span>weeks that hit my goal of 3 sessions</span></div>
+    </div>
+    <div class="chart-scroll">
+      <svg id="weeks" viewBox="0 0 960 230" role="img" aria-labelledby="weeks-title">
+        <title id="weeks-title">Sessions per week, Dec 2025 to Jul 2026. Most weeks have zero sessions; no week reaches the target of three.</title>
+      </svg>
+    </div>
+    <p class="cap">Sessions per week from my Hevy export (Dec 22, 2025 to Jul 12, 2026). The dashed line is the target of 3 a week. Source: <code>workouts.csv</code>, 184 sets, analyzed in pandas.</p>
+  </div>
+  <div class="prose col">
+    <p>That set the requirement: the app had to come to me. Logging had to feel like progress, and the app had to notice when I stopped and keep pushing until I came back. That's what Duolingo does, and it works on people like me.</p>
+  </div>
+</section>
+
+<!-- ============================================================ PRODUCT -->
+<section class="part" id="product">
+  <div class="part-head col">
+    <span class="tab label"><i style="background:var(--plate-blue)"></i>What it does</span>
+    <h2>An app, not a spreadsheet</h2>
+  </div>
+  <div class="shots">
+    <div class="shot">
+      <div class="phone"><img src="img/train.webp" width="780" height="1688" loading="lazy" alt="Train tab with today's Pull workout and a muscle map for each exercise"></div>
+      <h3>Train</h3>
+      <p>Today's Push, Pull or Legs workout, pre-filled with last session's weights. Each lift shows a front and back muscle map.</p>
+    </div>
+    <div class="shot">
+      <div class="phone"><img src="img/sheet.webp" width="780" height="1688" loading="lazy" alt="Exercise detail sheet: animated figure doing a deadlift with glutes, hamstrings and lower back highlighted"></div>
+      <h3>Exercise detail</h3>
+      <p>Tap a lift for an animated figure doing the movement, with the working muscles lit and form cues.</p>
+    </div>
+    <div class="shot">
+      <div class="phone"><img src="img/records.webp" width="780" height="1688" loading="lazy" alt="Records tab listing best estimated one-rep max per lift"></div>
+      <h3>Records</h3>
+      <p>Best estimated one-rep max (e1RM) per lift. Beating it counts as a PR and earns bonus XP.</p>
+    </div>
+    <div class="shot">
+      <div class="phone"><img src="img/league.webp" width="780" height="1688" loading="lazy" alt="League tab: weekly XP race between two profiles and a head-to-head table"></div>
+      <h3>League</h3>
+      <p>My partner has her own profile. There's a weekly XP race, a head-to-head table and an activity feed.</p>
+    </div>
+  </div>
+  <p class="cap col">Screenshots are from a test build with sample data, at iPhone size. Each person installs their own profile URL to the home screen, with its own icon colour.</p>
+</section>
+
+<!-- ============================================================ WEB DEV -->
+<section class="part" id="web">
+  <div class="part-head col">
+    <span class="tab label"><i style="background:var(--plate-yellow)"></i>How it works · Web development</span>
+    <h2>One container, one database, one private network</h2>
+  </div>
+  <div class="prose col">
+    <p>The whole app is a single Docker container on my home server. It's only reachable over my Tailscale network, so it never touches the public internet, and there are no passwords to manage.</p>
+  </div>
+
+  <div class="diagram">
+    <svg id="arch" viewBox="0 0 980 360" role="img" aria-labelledby="arch-title">
+      <title id="arch-title">Architecture: the phone's installed web app talks over Tailscale HTTPS to a FastAPI container with a SQLite database. A scheduler inside the container sends Web Push messages through Apple's or Google's push service back to the phone.</title>
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrow"/></marker>
+        <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrow-red"/></marker>
+      </defs>
+
+      <!-- phone -->
+      <rect class="box" x="20" y="60" width="200" height="200" rx="18"/>
+      <text x="40" y="92" font-weight="600" font-size="15">iPhone / Android</text>
+      <text x="40" y="118" class="small">Installed web app (PWA)</text>
+      <text x="40" y="146" class="mono">index.html + app.js</text>
+      <text x="40" y="166" class="mono">sw.js  service worker</text>
+      <text x="40" y="186" class="mono">manifest + icons</text>
+      <text x="40" y="226" class="small">Shows notifications,</text>
+      <text x="40" y="243" class="small">badges the icon</text>
+
+      <!-- tailnet zone -->
+      <rect class="zone" x="250" y="30" width="710" height="250" rx="14"/>
+      <text x="268" y="54" class="small">Tailscale network (private, WireGuard-encrypted)</text>
+
+      <!-- tailscale serve -->
+      <rect class="box" x="280" y="110" width="170" height="100" rx="10"/>
+      <text x="298" y="140" font-weight="600" font-size="15">Tailscale Serve</text>
+      <text x="298" y="164" class="small">HTTPS with a real</text>
+      <text x="298" y="181" class="small">certificate → :8087</text>
+
+      <!-- container -->
+      <rect class="box-hi" x="490" y="74" width="300" height="182" rx="10"/>
+      <text x="508" y="102" font-weight="600" font-size="15">Docker container</text>
+      <text x="508" y="128" class="mono">FastAPI  REST API + pages</text>
+      <text x="508" y="150" class="mono">reminders.py  scheduler loop</text>
+      <text x="508" y="172" class="mono">push.py  VAPID signing</text>
+      <text x="508" y="194" class="mono">core.py  XP, PRs, streaks</text>
+      <text x="508" y="234" class="small">Home server · Ubuntu · Docker Compose</text>
+
+      <!-- db -->
+      <rect class="box" x="820" y="110" width="120" height="100" rx="10"/>
+      <text x="836" y="140" font-weight="600" font-size="15">SQLite</text>
+      <text x="836" y="164" class="small">Mounted</text>
+      <text x="836" y="181" class="small">volume /data</text>
+
+      <!-- request path -->
+      <path class="line" d="M220 160 H278" marker-end="url(#ah)"/>
+      <text x="226" y="150" class="mono">HTTPS</text>
+      <path class="line" d="M450 160 H488" marker-end="url(#ah)"/>
+      <path class="line" d="M790 160 H818" marker-end="url(#ah)"/>
+
+      <!-- push service -->
+      <rect class="box" x="490" y="300" width="300" height="48" rx="10"/>
+      <text x="508" y="329" font-weight="600" font-size="14">Apple / Google push service</text>
+      <path class="push" d="M640 256 V298" marker-end="url(#ahr)"/>
+      <text x="650" y="282" class="small t-red">signed push</text>
+      <path class="push" d="M490 324 H120 V262" marker-end="url(#ahr)"/>
+      <text x="134" y="316" class="small t-red">delivered even when the app is closed</text>
+    </svg>
+  </div>
+
+  <div class="rows">
+    <div class="row">
+      <h3>Progressive web app</h3>
+      <div class="prose">
+        <p>The front end is plain HTML, CSS and JavaScript with no framework and no build step. A web app manifest and a service worker let it install to the home screen like a native app, with its own icon and full-screen view. The service worker caches the app shell and also receives push messages when the app is closed.</p>
+      </div>
+    </div>
+    <div class="row">
+      <h3>REST API</h3>
+      <div class="prose">
+        <p>FastAPI serves JSON endpoints such as <code>GET /api/state</code>, <code>POST /api/sets</code>, <code>GET /api/league</code> and <code>POST /api/push/subscribe</code>. The browser calls them with <code>fetch()</code> and re-renders. Each request carries the profile, so one server handles both users with their data kept separate.</p>
+      </div>
+    </div>
+    <div class="row">
+      <h3>Profiles by URL</h3>
+      <div class="prose">
+        <p>Each person gets their own address, like <code>/u/toni/</code>. The server fills that profile's name and colour into the page and generates a matching manifest and icon. Installing from that URL gives each phone its own app.</p>
+      </div>
+    </div>
+    <div class="row">
+      <h3>Why HTTPS mattered</h3>
+      <div class="prose">
+        <p>Service workers and Web Push only work over HTTPS, and iPhones only allow push for web apps installed to the home screen (iOS 16.4+). Tailscale Serve provides a valid certificate for a private hostname, which solved both without opening any ports to the internet.</p>
+      </div>
+    </div>
+    <div class="row">
+      <h3>Deployment</h3>
+      <div class="prose">
+        <p>Docker Compose builds the image and mounts a <code>data/</code> folder for the database and the push signing key, so I can rebuild or upgrade the app without touching my data. On the v2 to v3 upgrade, the app migrated the single-user database to multi-user automatically on startup. I took a backup first.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="part-head col" style="margin-top:20px">
+    <h3>The reminder engine</h3>
+  </div>
+  <div class="prose col">
+    <p>Twice a day (before and after my shift), a background loop checks each profile. If you haven't trained, it picks a message tier based on days since your last session, fills in real numbers from your history, signs it with the server's VAPID key, and sends it through Apple's or Google's push service. Subscriptions the push service reports as dead are deleted automatically.</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Days since last session</th><th>Tier</th><th>Example message</th></tr></thead>
+      <tbody>
+        <tr><td class="n">2–3</td><td><span class="pill">nudge</span></td><td><q>Bench Press is waiting. Last time: 135×10. One more rep and that's a PR.</q></td></tr>
+        <tr><td class="n">4–6</td><td><span class="pill">sass</span></td><td><q>Your Pull day called. It wants to know if you're okay.</q></td></tr>
+        <tr><td class="n">7–13</td><td><span class="pill">drama</span></td><td><q>It's not me, it's the 8 days. One session. That's all I'm asking.</q></td></tr>
+        <tr><td class="n">14–29</td><td><span class="pill">guilt</span> every 3rd day</td><td><q>I'm not mad. I'm just going to sit here. In the rack. Alone.</q></td></tr>
+        <tr><td class="n">30+</td><td><span class="pill">ghost</span> weekly</td><td><q>These reminders don't seem to be working. So I'll ease off.</q></td></tr>
+        <tr><td class="n">Streak at risk</td><td><span class="pill" style="color:var(--plate-red)">overrides all</span></td><td><q>3-week streak at risk. You need 1 more session this week.</q></td></tr>
+        <tr><td class="n">Partner ahead</td><td><span class="pill" style="color:var(--plate-blue)">every other day</span></td><td><q>Hanna is pulling ahead. Hanna: 2 sessions this week. You: 0.</q></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cap col">Tiers map onto my real history: each of my four month-long breaks would have passed through nudge, sass, drama and guilt before the app backed off. Templates avoid repeating any of the last six messages sent.</p>
+</section>
+
+<!-- ============================================================ DATA -->
+<section class="part" id="data">
+  <div class="part-head col">
+    <span class="tab label"><i style="background:var(--plate-green)"></i>How it works · Data analytics</span>
+    <h2>Store the raw sets, compute the rest</h2>
+  </div>
+  <div class="prose col">
+    <p>The database stores facts only: users, sessions, sets (weight × reps) and a log of every notification sent. XP, levels, PRs and streaks are never stored. They are calculated in SQL every time from the raw sets, so if I change a rule, the whole history recalculates correctly and nothing drifts out of sync.</p>
+  </div>
+
+  <div class="formula">
+    <div><b>e1RM = weight × (1 + reps / 30)</b><span>The Epley formula turns any set into an estimated one-rep max, so 135 × 10 and 155 × 6 compare on one scale.</span></div>
+    <div><b>XP = 10/set + 50/PR + 30/full session</b><span>Rewards showing up first. A level costs 100 + 50 × (level − 1) XP.</span></div>
+    <div><b>Streak = weeks with ≥ 3 sessions</b><span>Consecutive Monday–Sunday weeks that hit the weekly target. The current week can't break it until it ends.</span></div>
+  </div>
+
+  <div class="prose col">
+    <p>The core query is a window function. For every set, it finds the best e1RM from all <em>earlier</em> sets of the same lift by the same person. A set is a PR if it beats that number. A user's first ever set of a lift has no earlier best, so it's a baseline, not a PR.</p>
+  </div>
+<pre><span class="k">WITH</span> ordered <span class="k">AS</span> (
+  <span class="k">SELECT</span> st.*, se.date, se.user_id,
+         <span class="k">MAX</span>(st.e1rm) <span class="k">OVER</span> (
+           <span class="k">PARTITION BY</span> se.user_id, st.exercise_id
+           <span class="k">ORDER BY</span> se.date, st.set_no, st.id
+           <span class="k">ROWS BETWEEN UNBOUNDED PRECEDING AND</span> 1 <span class="k">PRECEDING</span>
+         ) <span class="k">AS</span> prev_best          <span class="c">-- best of every set before this one</span>
+  <span class="k">FROM</span> sets st <span class="k">JOIN</span> sessions se <span class="k">ON</span> se.id = st.session_id
+)
+<span class="k">SELECT</span> *, <span class="k">CASE WHEN</span> prev_best <span class="k">IS NOT NULL AND</span> e1rm &gt; prev_best
+            <span class="k">THEN</span> 1 <span class="k">ELSE</span> 0 <span class="k">END AS</span> is_pr
+<span class="k">FROM</span> ordered;</pre>
+
+  <div class="rows">
+    <div class="row">
+      <h3>A fair leaderboard</h3>
+      <div class="prose">
+        <p>Comparing raw weights between two people of different sizes isn't meaningful. The head-to-head table uses <strong>strength gain</strong> instead: for each lift, the percent change from your first session's best e1RM to your latest, averaged across lifts. The weekly race uses XP, which counts effort rather than load.</p>
+      </div>
+    </div>
+    <div class="row">
+      <h3>Measuring the reminders</h3>
+      <div class="prose">
+        <p>Every notification is logged with its tier, template and timestamp. Joined to the sessions table, that answers the question this whole project is about: which messages are followed by a workout within 24 hours, and which ones get ignored?</p>
+      </div>
+    </div>
+    <div class="row">
+      <h3>Data in, data out</h3>
+      <div class="prose">
+        <p>An import script loaded my existing Excel tracker into the database, and I can re-run it safely without creating duplicates. Any user can export all their sets as CSV. The SQLite file copies straight into DB Browser for SQL practice on my own data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ ROLE -->
+<section class="part" id="role">
+  <div class="part-head col">
+    <span class="tab label"><i style="background:var(--ink)"></i>How I built it</span>
+    <h2>I directed it; AI wrote the code</h2>
+  </div>
+  <div class="prose col">
+    <p>I built LiftQuest with Claude, an AI coding assistant, which wrote the application code. My part was everything around it: deciding what to build and why, defining the rules, running it on my own infrastructure, and fixing it when it broke in production.</p>
+  </div>
+  <div class="split">
+    <div>
+      <h3>What I did</h3>
+      <ul>
+        <li>Found the problem in my own workout data and set the requirements</li>
+        <li>Specified features: reminders, two profiles, league, muscle visuals</li>
+        <li>Supplied the source data (Excel tracker, Hevy export)</li>
+        <li>Run the home server: Ubuntu, Docker, Tailscale</li>
+        <li>Deployed, upgraded and backed up the app over SSH</li>
+        <li>Tested on real phones and reported what broke</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Problems I solved in production</h3>
+      <div class="incident">
+        <b>HTTPS wasn't available</b>
+        <span class="muted">Push needs HTTPS. <code>tailscale serve</code> failed because Serve wasn't enabled for my network. I enabled it in the admin console and re-ran it.</span>
+      </div>
+      <div class="incident">
+        <b>The upgrade deployed but didn't change anything</b>
+        <span class="muted">The new URLs returned 404. The Docker build output showed every layer as <code>CACHED</code>, and the app folder had no new files. I'd copied an old zip to the server. I replaced it, rebuilt, and v3 came up.</span>
+      </div>
+      <div class="incident">
+        <b>Backup failed on a permission error</b>
+        <span class="muted">The container had written its push key as root. I ran the backup with <code>sudo</code> instead.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ NEXT -->
+<section class="part" id="next">
+  <div class="part-head col">
+    <span class="tab label"><i style="background:var(--ink-2)"></i>Status</span>
+    <h2>What's next</h2>
+  </div>
+  <div class="prose col">
+    <ul>
+      <li><strong>Results:</strong> the app went live in October 2026, so it's too early to say whether it fixed my consistency. The notification log will answer that, and I'll update this page with the numbers.</li>
+      <li><strong>Health data, shelved:</strong> I tried pulling steps and sleep from my Fitbit. Google's Health API expires sign-ins every 7 days for personal apps, and the iPhone Shortcuts route wasn't reliable enough, so I left it out for now.</li>
+      <li><strong>Analysis to write up:</strong> reminder tier vs. session within 24 hours, and weekly volume per day type.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <span>Toni Ciobanu · LiftQuest · 2026</span>
+  <span>Runs on a private network, so there is no public demo.</span>
+</footer>
+
+</div>
+
+<script>
+// Sessions per week from the Hevy export (weeks ending Sunday, Dec 28 2025 → Jul 12 2026).
+(function () {
+  const weeks = [
+    ["2025-12-28",1],["2026-01-04",0],["2026-01-11",0],["2026-01-18",0],["2026-01-25",0],["2026-02-01",0],
+    ["2026-02-08",0],["2026-02-15",1],["2026-02-22",0],["2026-03-01",1],["2026-03-08",1],["2026-03-15",0],
+    ["2026-03-22",0],["2026-03-29",0],["2026-04-05",0],["2026-04-12",0],["2026-04-19",1],["2026-04-26",0],
+    ["2026-05-03",0],["2026-05-10",0],["2026-05-17",0],["2026-05-24",1],["2026-05-31",1],["2026-06-07",2],
+    ["2026-06-14",0],["2026-06-21",0],["2026-06-28",0],["2026-07-05",1],["2026-07-12",1]
+  ];
+  const svg = document.getElementById("weeks");
+  const NS = "http://www.w3.org/2000/svg";
+  const W = 960, H = 230, L = 36, R = 12, T = 14, B = 34;
+  const max = 3, plotW = W - L - R, plotH = H - T - B;
+  const step = plotW / weeks.length, bw = Math.max(6, step * 0.62);
+  const y = v => T + plotH - (v / max) * plotH;
+  const el = (tag, attrs, text) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    svg.appendChild(e); return e;
+  };
+  const css = getComputedStyle(document.documentElement);
+  const tok = n => `var(${n})`;
+  // gridlines + y labels
+  for (let v = 0; v <= max; v++) {
+    el("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), stroke: tok("--rule"), "stroke-width": 1 });
+    el("text", { x: L - 10, y: y(v) + 4, "text-anchor": "end", "font-size": 12, "font-family": "IBM Plex Mono, monospace", fill: tok("--ink-2") }, v);
+  }
+  // target line
+  el("line", { x1: L, x2: W - R, y1: y(3), y2: y(3), stroke: tok("--plate-red"), "stroke-width": 1.5, "stroke-dasharray": "6 4" });
+  el("text", { x: W - R, y: y(3) + 16, "text-anchor": "end", "font-size": 12, "font-family": "IBM Plex Sans, sans-serif", fill: tok("--plate-red") }, "target: 3 / week");
+  // bars, zero weeks shown as a small tick so gaps read as gaps
+  const months = { "01": "Jan", "02": "Feb", "03": "Mar", "04": "Apr", "05": "May", "06": "Jun", "07": "Jul", "12": "Dec" };
+  let lastMonth = null;
+  weeks.forEach(([d, v], i) => {
+    const cx = L + step * i + step / 2;
+    if (v > 0) {
+      el("rect", { class: "bar", x: cx - bw / 2, y: y(v), width: bw, height: y(0) - y(v), rx: 2, fill: tok("--ink") });
+    } else {
+      el("rect", { x: cx - bw / 2, y: y(0) - 2, width: bw, height: 2, fill: tok("--rule") });
+    }
+    // label the first week whose Monday falls in a new month
+    const mon = new Date(d + "T12:00:00"); mon.setDate(mon.getDate() - 6);
+    const m = String(mon.getMonth() + 1).padStart(2, "0");
+    if (m !== lastMonth) {
+      el("text", { x: cx, y: H - 10, "text-anchor": "middle", "font-size": 12, "font-family": "IBM Plex Mono, monospace", fill: tok("--ink-2") }, months[m]);
+      lastMonth = m;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
